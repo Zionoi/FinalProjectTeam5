@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Study 목록</title>
+</head>
+<script type="application/javascript">
+        const studies = /*[[${studies}]]*/ [];
+        console.log('Study 리스트:', studies);
+    </script>
+<body>
+    <h1>Study 목록</h1>
+    <form th:action="@{/studies/search}" method="get">
+		<input type="text" name="keyword" placeholder="키워드 입력">
+		<button type="submit">검색</button>
+	</form>
+	<form th:action="@{/studies}" method="get" style="display: inline-block;">
+		<button type="submit">전체목록 보기</button>
+	</form>
+	
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Study Date</th>
+                <th>Study Description</th>
+                <th>Modality</th>
+                <th>환자 이름</th>
+                <th>상세 보기</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- 타임리프의 th:each를 사용하여 반복 렌더링 -->
+            <tr th:each="study : ${studies}">
+                <td th:text="${study.studyDate}"></td>
+                <td th:text="${study.studyDesc}"></td>
+                <td th:text="${study.modality}"></td>
+                <td th:text="${study.pName}"></td>
+                <td>
+                    <a th:href="@{'/studies/' + ${study.studyKey} + '/series'}">시리즈 보기</a>
+                </td>
+            </tr>
+          <!--  <p th:text="${studies}"></p>-->
+        </tbody>
+    </table>
+</body>
+</html>

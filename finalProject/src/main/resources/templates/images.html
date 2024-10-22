@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	 <link href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+<head>
+    <meta charset="UTF-8">
+    <!-- Cornerstone Latest -->
+    <script src="https://unpkg.com/cornerstone-core"></script>
+    <script src="https://unpkg.com/cornerstone-tools"></script>
+    <script src="https://unpkg.com/dicom-parser"></script>
+    <script src="https://unpkg.com/cornerstone-wado-image-loader"></script>
+    <title>DICOM IMAGE VIEWER</title>
+    <style>
+        #dicomImage {
+            height: 600px;
+        }
+    </style>
+
+    <!-- Thymeleaf로 서버에서 전달된 imagePaths를 JavaScript로 넘겨줌 -->
+    <script th:inline="javascript">
+        var imagePaths = /*[[${imagePaths}]]*/ [];
+        console.log('이미지 경로 리스트:', imagePaths);
+    </script>
+
+</head>
+<body>
+    <h2>DICOM IMAGE VIEWER</h2>
+    <div class="container">
+
+        <h1>
+            changeimage/index.html
+        </h1>
+
+        This is an example of changing the image displayed in an element.  This could be used
+        to show different key images or a stack of images (e.g. MRI series).  Use the mouse wheel
+        to change between images or press the buttons below.
+
+        <br>
+        <br>
+
+        <div id="dicomImage" style="width:512px;height:512px"
+            oncontextmenu="return false"
+            onmousedown="return false">
+        </div>
+
+        <button id="imageButton1" type="button" class="btn btn-default">Image #1</button>
+        <button id="imageButton2" type="button" class="btn btn-default">Image #2</button>
+
+    </div>
+
+    <!-- JavaScript 파일 포함 -->
+    <script src="/js/testjs.js"></script>
+    
+</body>
+</html>

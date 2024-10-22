@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Series 목록</title>
+</head>
+<body>
+    <h1>Series 목록</h1>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Series Number</th>
+                <th>Description</th>
+                <th>Modality</th>
+                <th>이미지 보기</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="series : ${series}">
+                <td th:text="${series.seriesNum}"></td>
+                <td th:text="${series.seriesDesc}"></td>
+                <td th:text="${series.modality}"></td>
+                <td>
+                    <a th:href="@{'/studies/' + ${series.studyKey} + '/series/' + ${series.seriesKey} + '/images'}">이미지 보기</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a th:href="@{'/studies'}">뒤로 가기</a>
+</body>
+</html>

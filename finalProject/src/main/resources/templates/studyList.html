@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>DICOM 검사 리스트</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="dicom-list-container">
+        <h1>DICOM</h1>
+         <form th:action="@{/studyList/search}" method="get">
+			<input type="text" name="keyword" placeholder="키워드 입력">
+			<button type="submit">검색</button>
+		</form>
+		<form th:action="@{/studies}" method="get" style="display: inline-block;">
+			<button type="submit">전체목록 보기</button>
+		</form>
+        <table class="dicom-table">
+            <thead>
+                <tr>
+                    <th>검사날짜</th>
+                    <th>환자이름</th>
+                    <th>환자ID</th>
+                    <th>성별</th>
+                    <th>생일</th>
+                    <th>검사이름</th>
+                    <th>모달리티</th>
+                    <th>Verify</th>
+                    <th>담당의사</th>
+                    <th>상세 보기</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="study : ${studies}">
+                    <td th:text="${study.studyDate}">2024-01-01</td>
+                    <td th:text="${study.pName}">홍길동</td>
+                    <td th:text="${study.pid}">USER01</td>
+                    <td th:text="${study.pSex}">남</td>
+                    <td th:text="${study.pBirthDateTime}">2000-12-31</td>
+                    <td th:text="${study.studyDesc}">전신 CT</td>
+                    <td th:text="${study.modality}">CT</td>
+                    <td th:text="${study.verifyFlag}">O</td>
+                    <td th:text="${study.refPhysicianName}">Dr. Kim</td>
+                    <td>
+	                    <a th:href="@{'/studyList/' + ${study.studyKey} + '/series'}">시리즈 보기</a>
+	                </td>
+                </tr>
+            </tbody>
+        </table>
+        <button class="load-more">더보기</button>
+    </div>
+    <script th:src="@{/js/studyList.js}"></script>
+</body>
+</html>

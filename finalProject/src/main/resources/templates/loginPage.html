@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<script src="https://unpkg.com/cornerstone-core"></script>
+<script src="https://unpkg.com/cornerstone-tools"></script>
+<script src="https://unpkg.com/dicom-parser"></script><!--가져온 이미지를 파싱해주는 문구-->
+<script src="https://unpkg.com/cornerstone-wado-image-loader"></script><!--이미지를 갖고올때 필요한 문구-->
+    <meta charset="UTF-8">
+    <title>로그인</title>
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+</head>
+<body>
+    <div class="login-container">
+        <h1>로그인 이후</h1>
+        <div class="login-box">
+            <form th:action="@{/login_check}" method="post">
+                <input type="text" name="memId" placeholder="아이디" required>
+                <input type="password" name="password" placeholder="비밀번호" required>
+                <button type="submit">로그인</button>
+            </form>
+            <div class="login-links">
+                <a th:href="@{/signup}">회원가입</a>
+                <a th:href="@{/forgot-password}">아이디 / 비밀번호 찾기</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

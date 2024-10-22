@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Image List</title>
+    <script src="https://unpkg.com/cornerstone-core"></script>
+    <script src="https://unpkg.com/cornerstone-tools"></script>
+    <script src="https://unpkg.com/dicom-parser"></script>
+    <script src="https://unpkg.com/cornerstone-wado-image-loader"></script><!--이미지를 갖고올때 필요한 문구-->
+
+</head>
+<body>
+    <h1>Image Viewer</h1>
+
+    <div id="dicomImage" style="width:512px;height:512px;position:relative;color:white;"></div>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Image Name</th>
+                <th>Image Path</th>
+                <th>View Image</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="image : ${images}">
+                <td th:text="${image.fName}"></td>
+                <td th:text="${image.path}"></td>
+                <td>
+                    <button onclick="loadImage('${image.path}/${image.fName}')">이미지 보기</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        
+    </script>
+</body>
+</html>

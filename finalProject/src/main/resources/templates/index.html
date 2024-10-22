@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<script src="https://unpkg.com/cornerstone-core"></script>
+<script src="https://unpkg.com/cornerstone-tools"></script>
+<script src="https://unpkg.com/dicom-parser"></script><!--가져온 이미지를 파싱해주는 문구-->
+<script src="https://unpkg.com/cornerstone-wado-image-loader"></script><!--이미지를 갖고올때 필요한 문구-->
+    <meta charset="UTF-8">
+    <title>로그인</title>
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+</head>
+<body>
+    <div class="login-container">
+        <h1>메인 페이지</h1>
+        <p>여기에 사이트 소개나 간단한 정보를 배치할 수 있습니다.</p>
+        <a th:href="@{/loginPage}">로그인 페이지로 이동</a>
+    </div>
+</body>
+</html>

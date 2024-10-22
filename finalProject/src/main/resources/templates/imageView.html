@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<script src="https://unpkg.com/cornerstone-core"></script>
+<script src="https://unpkg.com/cornerstone-tools"></script>
+<script src="https://unpkg.com/dicom-parser"></script><!--가져온 이미지를 파싱해주는 문구-->
+<script src="https://unpkg.com/cornerstone-wado-image-loader"></script><!--이미지를 갖고올때 필요한 문구-->
+<head>
+    <meta charset="UTF-8">
+    <title>DICOM 이미지 뷰어</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="dicom-viewer-container">
+        <h1>DICOM</h1>
+        <div class="controls">
+            <button>흑백반전</button>
+            <button>밝기/대비조절</button>
+            <button>확대</button>
+            <button>회전</button>
+            <button>플레이클립</button>
+            <button>시리즈모아보기</button>
+            <button>주석</button>
+            <button>초기화</button>
+            <button>다운로드</button>
+            <button>레이아웃 (시리즈, 개별사진)</button>
+        </div>
+        <div class="viewer-section">
+            <div class="series-thumbnails">
+                <div th:each="image : ${imageList}" class="thumbnail">
+                    <img th:src="@{/images/{image.path}(studyKey=${image.studyKey}, seriesKey=${image.seriesKey}, imageKey=${image.imageKey})}" alt="시리즈 미리보기">
+                    <p th:text="${image.seriesDesc}">시리즈 설명</p>
+                </div>
+            </div>
+            <div class="image-viewer">
+                <img th:src="@{/images/{image.path}(studyKey=${selectedStudyKey}, seriesKey=${selectedSeriesKey}, imageKey=${selectedImageKey})}" alt="선택한 이미지" class="selected-image">
+                <p>파일 이름: <span th:text="${image.fName}">파일명</span></p>
+                <p>뷰 포지션: <span th:text="${image.viewPosition}">뷰 포지션</span></p>
+                <p>촬영 날짜: <span th:text="${image.contentDate}">2024-01-01</span></p>
+            </div>
+        </div>
+    </div>
+<script th:src="@{/js/imageView.js}"></script>
+</body>
+</html>

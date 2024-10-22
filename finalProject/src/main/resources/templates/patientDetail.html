@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>상세정보</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="details-container">
+        <h1>상세정보</h1>
+        <button class="edit-button">수정버튼</button>
+        <div class="patient-info">
+            <p>환자 이름: <span th:text="${patient.pName}">홍길동</span></p>
+            <p>환자 ID: <span th:text="${patient.pid}">USER01</span></p>
+            <p>생일: <span th:text="${patient.pBirthDate}">2000-12-31</span></p>
+            <p>성별: <span th:text="${patient.pSex}">남</span></p>
+            <p>코멘트: <span th:text="${patient.comments}">환자 상태 양호</span></p>
+        </div>
+        <button class="back-button">돌아가기</button>
+    </div>
+    <script th:src="@{/js/patientDetail.js}"></script>
+</body>
+</html>
