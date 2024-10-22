@@ -202,7 +202,7 @@ public class StudyController {
     @GetMapping("/studyList/search/reset")
     public String resetSearch(SessionStatus sessionStatus) {
         sessionStatus.setComplete();  // 세션 초기화
-        return "redirect:/studies/search";  // 검색 페이지로 리다이렉트
+        return "redirect:/studyList/search";  // 검색 페이지로 리다이렉트
     }
     
     //특정 검색 조건 제외
