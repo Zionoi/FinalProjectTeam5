@@ -1,56 +1,105 @@
-@charset "UTF-8";
-.dicom-list-container {
-    width: 90%;
-    margin: 20px auto;
-    background: #fff;
-    padding: 20px;
-    border: 1px solid #ddd;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+/* 기본 박스 모델 설정 */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
+/* 페이지 기본 스타일 */
+body {
+    font-family: 'Arial', sans-serif;
+    padding: 20px;
+    background-color: #f4f4f4;
+}
+
+/* 컨테이너 설정 */
+.container {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* 헤더 설정 */
+.header {
+    font-size: 48px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* 섹션 설정 */
+.section {
+    border: 2px solid black;
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: #fff;
+}
+
+/* 검색 섹션 레이아웃 설정 */
 .search-section {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 20px;
+    align-items: center;
 }
 
-.search-input {
-    width: 80%;
+.search-section select, 
+.search-section input[type="text"],
+.search-section input[type="submit"] {
     padding: 8px;
+    font-size: 14px;
     border: 1px solid #ccc;
-    border-radius: 4px;
+    border-radius: 5px;
 }
 
-.search-button {
-    background: #007BFF;
-    color: #fff;
-    padding: 8px 16px;
-    border: none;
+.search-section input[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
     cursor: pointer;
+    margin-left: 10px;
 }
 
-.dicom-table {
+.search-section input[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+/* 환자 리스트 섹션 레이아웃 설정 */
+.patient-list-section {
+    text-align: left;
+}
+
+.patient-list-section table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
 }
 
-.dicom-table th, .dicom-table td {
-    border: 1px solid #ddd;
-    padding: 10px;
-    text-align: left;
+.patient-list-section th, .patient-list-section td {
+    border: 1px solid black;
+    padding: 12px;
+    text-align: center;
+    white-space: nowrap; /* 줄바꿈 없이 한 줄로 표시 */
+    overflow: hidden; /* 넘치는 텍스트 숨김 */
+    text-overflow: ellipsis; /* 넘치는 텍스트를 생략 부호로 표시 (...) */
 }
 
-.dicom-table th {
-    background-color: #f5f5f5;
+/* 테이블 헤더 스타일 */
+.patient-list-section th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+    white-space: nowrap;
 }
 
-.load-more {
-    display: block;
-    margin: 20px auto;
-    padding: 10px 20px;
-    background: #28a745;
-    color: #fff;
-    border: none;
-    cursor: pointer;
+/* 시리즈 보기 링크 스타일 설정 */
+.patient-list-section td a {
+    display: inline-block;
+    padding: 8px 12px;
+    background-color: #4CAF50;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.patient-list-section td a:hover {
+    background-color: #45a049;
 }

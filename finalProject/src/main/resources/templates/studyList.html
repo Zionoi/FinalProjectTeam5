@@ -1,61 +1,193 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script th:src="@{/js/studyList.js}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>DICOM 검사 리스트</title>
-    <link rel="stylesheet" th:href="@{/css/studyList.css}">
+ 
+    <title>DICOM Layout</title>
+   	<link rel="stylesheet" type="text/css" href="/css/studyList.css">
+    <script>
+		// 정렬 기능
+	    function sortTable(columnIndex) {
+	        var table, rows, switching, i, x, y, shouldSwitch, direction, switchCount = 0;
+	        table = document.querySelector(".patient-list-section table");
+	        switching = true;
+	        direction = "asc";  // 정렬 방향: 오름차순(asc)
+	
+	        while (switching) {
+	            switching = false;
+	            rows = table.rows;
+	            for (i = 1; i < (rows.length - 1); i++) {
+	                shouldSwitch = false;
+	                x = rows[i].getElementsByTagName("TD")[columnIndex];
+	                y = rows[i + 1].getElementsByTagName("TD")[columnIndex];
+	                if (!isNaN(x.innerHTML) && !isNaN(y.innerHTML)) {
+	                    if (direction === "asc" && parseFloat(x.innerHTML) > parseFloat(y.innerHTML)) {
+	                        shouldSwitch = true;
+	                        break;
+	                    } else if (direction === "desc" && parseFloat(x.innerHTML) < parseFloat(y.innerHTML)) {
+	                        shouldSwitch = true;
+	                        break;
+	                    }
+	                } else {
+	                    if (direction === "asc" && x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+	                        shouldSwitch = true;
+	                        break;
+	                    } else if (direction === "desc" && x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+	                        shouldSwitch = true;
+	                        break;
+	                    }
+	                }
+	            }
+	            if (shouldSwitch) {
+	                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+	                switching = true;
+	                switchCount++;
+	            } else {
+	                if (switchCount === 0 && direction === "asc") {
+	                    direction = "desc";
+	                    switching = true;
+	                }
+	            }
+	        }
+	    }
+	    
+	</script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script th:src="@{/js/studyList.js}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+	
+    <!-- jQuery, Moment.js, DateRangePicker -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+    <script>
+		$(function() {
+		    $('input[name="datetimes"]').daterangepicker({
+		        timePicker: false,  // 시간 선택 제거
+		        showDropdowns: true,  // 년도와 월을 드롭다운으로 쉽게 선택
+		        startDate: moment().startOf('day'),  // 시작 날짜는 현재 날짜의 시작으로 설정
+		        endDate: moment().startOf('day').add(32, 'day'),  // 종료 날짜는 32일 후로 설정
+		        autoUpdateInput: true,  // 날짜 선택 시 자동으로 input을 업데이트
+		        locale: {
+		            format: 'YYYY-MM-DD',  // 날짜 형식을 '년-월-일'로 변경
+		            applyLabel: "적용",
+		            cancelLabel: "취소",
+		            fromLabel: "시작",
+		            toLabel: "종료",
+		            customRangeLabel: "사용자 정의",
+		            weekLabel: "주",
+		            daysOfWeek: ['일', '월', '화', '수', '목', '금', '토'],  // 요일 한글로 설정
+		            monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],  // 월 한글로 설정
+		            firstDay: 1  // 주의 시작을 월요일로 설정
+		        }
+		    });
+		
+		    // 날짜 선택 후 적용 시, 시작일과 종료일을 숨겨진 입력 필드에 설정하고 폼 제출
+		    $('input[name="datetimes"]').on('apply.daterangepicker', function(ev, picker) {
+		        $('#startDate').val(picker.startDate.format('YYYY-MM-DD'));  // 시간 생략하고 날짜만 전송
+		        $('#endDate').val(picker.endDate.format('YYYY-MM-DD'));
+		        $('#dateSearchForm').submit();
+		    });
+		});
+		
+		function removeCriteria(index) {
+		    const form = document.createElement("form");
+		    form.method = "GET";
+		    form.action = "/studyList/removeCriteria";
+		
+		    const input = document.createElement("input");
+		    input.type = "hidden";
+		    input.name = "index";
+		    input.value = index;
+		
+		    form.appendChild(input);
+		    document.body.appendChild(form);
+		    form.submit();
+		}
+		
+    </script>
 </head>
 <body>
-    <div class="dicom-list-container">
-        <h1>DICOM</h1>
-         <form th:action="@{/studyList/search}" method="get">
-			<input type="text" name="keyword" placeholder="키워드 입력">
-			<button type="submit">검색</button>
-		</form>
-		<form th:action="@{/studies}" method="get" style="display: inline-block;">
-			<button type="submit">전체목록 보기</button>
-		</form>
-        <table class="dicom-table">
-            <thead>
-                <tr>
-                    <th>검사날짜</th>
-                    <th>환자이름</th>
-                    <th>환자ID</th>
-                    <th>성별</th>
-                    <th>생일</th>
-                    <th>검사이름</th>
-                    <th>모달리티</th>
-                    <th>Verify</th>
-                    <th>담당의사</th>
-                    <th>상세 보기</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="study : ${studies}">
-                    <td th:text="${study.studyDate}">2024-01-01</td>
-                    <td th:text="${study.pName}">홍길동</td>
-                    <td th:text="${study.pid}">USER01</td>
-                    <td th:text="${study.pSex}">남</td>
-                    <td th:text="${study.pBirthDateTime}">2000-12-31</td>
-                    <td th:text="${study.studyDesc}">전신 CT</td>
-                    <td th:text="${study.modality}">CT</td>
-                    <td th:text="${study.verifyFlag}">O</td>
-                    <td th:text="${study.refPhysicianName}">Dr. Kim</td>
-                    <td>
+    <div class="container">
+        <div class="header">DICOM</div>
+        <div class="section search-section">
+            <div class="search-options">
+				<form id="dateSearchForm" action="/studyList/dateSearch" method="get">
+				    <input type="text" name="datetimes" value="date" />
+				    <!-- 숨겨진 필드 -->
+				    <input type="hidden" name="startDate" id="startDate">
+				    <input type="hidden" name="endDate" id="endDate">
+				</form>
+
+                <form action="/studyList/search" method="get">
+                    <label for="searchCriteria">검색 조건:</label>
+                    <select name="criteria" id="searchCriteria">
+                        <option value="patientName">환자이름</option>
+                        <option value="doctorName">담당의사</option>
+                        <option value="equipment">검사장비</option>
+                        <option value="examName">검사이름</option>
+                    </select>
+                    <input type="text" name="searchQuery" id="searchQuery" placeholder="검색어 입력">
+                    <input type="submit" value="검색">
+                </form>
+
+                <form action="/studyList/search/reset" method="get">
+                    <input type="submit" value="검색 조건 초기화">
+                </form>
+            </div>
+        </div>
+
+		<div class="section" th:if="${searchCriteria != null}">
+		    <p><strong>검색 조건: </strong>
+		        <span th:each="criteria, stat : ${searchCriteria}">
+		            <a href="#" th:onclick="'removeCriteria(' + ${stat.index} + '); return false;'"
+		               th:text="${criteria} + ' '" style="cursor: pointer; text-decoration: underline;"></a>
+		        </span>
+		    </p>
+		</div>
+
+        <div class="section patient-list-section">
+            <table>
+                <thead>
+                    <tr>
+                        <th onclick="sortTable(0)">검사날짜</th>
+                        <th onclick="sortTable(1)">환자이름</th>
+                        <th onclick="sortTable(2)">환자ID</th>
+                        <th onclick="sortTable(3)">성별</th>
+                        <th onclick="sortTable(4)">생일</th>
+                        <th onclick="sortTable(5)">검사이름</th>
+                        <th onclick="sortTable(6)">검사장비</th>
+                        <th onclick="sortTable(7)">Verify</th>
+                        <th onclick="sortTable(8)">담당의사</th>
+                        <th>상세 보기</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="study : ${searchResults}">
+                        <td th:text="${study.studyDate}"></td>
+                        <td th:text="${study.pName}"></td>
+                        <td th:text="${study.pid}"></td>
+                        <td th:text="${study.pSex}"></td>
+                        <td th:text="${study.pBirthDateTime}"></td>
+                        <td th:text="${study.studyDesc}"></td>
+                        <td th:text="${study.modality}"></td>
+                        <td th:text="${study.verifyFlag}"></td>
+                        <td th:text="${study.operatorsName}"></td>
+                        <td>
+	                    	<a th:href="@{'/studyList/' + ${study.studyKey} + '/series'}">시리즈 보기</a>
+	                	</td>
+                      <td>
 						<button th:onclick="sendPid('[[${study.pid}]]')">시리즈 보기</button>
 
-	                    <a th:href="@{'/studyList/' + ${study.studyKey} + '/series'}">시리즈 보기</a>
 	                </td>
-                </tr>
-            </tbody>
-                    <!--<td>
-	                    <a th:href="@{'/studyList/' + ${study.studyKey} + '/series'}">시리즈 보기</a>
-	                </td>-->
-        </table>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+      <div id="historyContainer" th:replace="~{studyChoice.html :: studyChoice}"> 왜 아무것도 안뜨지</div>
     </div>
-    <div id="historyContainer" th:replace="~{studyChoice.html :: studyChoice}"> 왜 아무것도 안뜨지</div>
+
 </body>
 </html>
