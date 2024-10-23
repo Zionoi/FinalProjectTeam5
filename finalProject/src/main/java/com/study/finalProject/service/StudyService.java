@@ -44,6 +44,11 @@ public class StudyService {
 	public List<Study> searchStudiesByKeyword(String keyword) {
 		return studyRepository.findByStudyDescContainingOrModalityContainingOrPNameContaining(keyword, keyword, keyword);
 	}
+
+	public List<Study> getSeriesByPid(String pid) {
+		// TODO Auto-generated method stub
+		return studyRepository.getSeriesByPid(pid);
+	}
 	
 	
 }
