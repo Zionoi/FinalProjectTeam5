@@ -154,12 +154,13 @@ public class StudyController {
         @ModelAttribute("searchCriteria") List<String> searchCriteria,
         Model model) {
 
-        // 날짜 검색 조건을 세션에 추가
+        // 기존 달력 검색 조건을 삭제
+        searchCriteria.removeIf(condition -> condition.startsWith("dateRange"));
+
+        // 새로운 날짜 검색 조건을 세션에 추가
         if (startDateStr != null && !startDateStr.isEmpty() && endDateStr != null && !endDateStr.isEmpty()) {
             String dateCondition = "dateRange: " + startDateStr + " ~ " + endDateStr;
-            if (!searchCriteria.contains(dateCondition)) {
-                searchCriteria.add(dateCondition);
-            }
+            searchCriteria.add(dateCondition);  // 세션에 새로운 검색 조건 추가
         }
 
         // 검색 실행
