@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
  
     <title>DICOM Layout</title>
-   	<link rel="stylesheet" type="text/css" href="/css/studyList.css">
+   	
     <script>
 		// 정렬 기능
 	    function sortTable(columnIndex) {
@@ -61,6 +61,7 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+	<link rel="stylesheet" type="text/css" href="/css/studyList.css">
 
     <script>
 		$(function() {
@@ -107,6 +108,17 @@
 		    form.submit();
 		}
 		
+		$(document).ready(function () {
+	    // 스터디 목록 클릭 시 상세 페이지로 이동
+	    
+	    $("button[name=pastStudy]").click((e)=>{
+		console.log('버튼 실행확인', e)
+		 const pid = $(e.target).val();
+		sendPid(pid)});
+	    });
+		
+		
+			
     </script>
 </head>
 <body>
@@ -179,14 +191,16 @@
 	                    	<a th:href="@{'/studyList/' + ${study.studyKey} + '/series'}">시리즈 보기</a>
 	                	</td>
                       <td>
-						<button th:onclick="sendPid('[[${study.pid}]]')">검사이력</button>
+						<!--<button th:onclick="sendPid('[[${study.pid}]]')">검사이력</button>-->
+						<button name="pastStudy"  th:value="${study.pid}">검사이력</button>
 
 	                </td>
                     </tr>
                 </tbody>
             </table>
         </div>
-      <div id="historyContainer" th:replace="~{studyChoice.html :: studyChoice}"> 왜 아무것도 안뜨지</div>
+      <!--<div id="historyContainer" th:replace="~{studyChoice.html :: studyChoice}"> 왜 아무것도 안뜨지</div>-->
+      <div id="historyContainer">    	</div>
     </div>
 
 </body>

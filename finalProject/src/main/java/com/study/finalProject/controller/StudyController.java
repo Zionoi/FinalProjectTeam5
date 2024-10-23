@@ -27,6 +27,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import com.study.finalProject.domain.Series;
 import com.study.finalProject.domain.Study;
 import com.study.finalProject.repository.StudyRepository;
+import com.study.finalProject.service.SeriesService;
 import com.study.finalProject.service.StudyService;
 
 import jakarta.persistence.criteria.Predicate;
@@ -39,6 +40,9 @@ public class StudyController {
 
     @Autowired
     private StudyService studyService;
+    
+    @Autowired
+    private SeriesService seriesService;
     
     @Autowired
     private StudyRepository studyRepository;
@@ -82,9 +86,10 @@ public class StudyController {
     public String studyChoice(@PathVariable("pid") String pid, Model model) {
     	System.out.println("초이스 메소드 실행확인 pid : "+pid);
         try {
-            List<Study> choiceStudies = studyService.getSeriesByPid(pid);
+            List<Study> choiceStudies = studyService.getStudyByPid(pid);
             model.addAttribute("choiceStudies", choiceStudies);
-            return "studyChoice";
+            System.out.println("초이스 메소드 실행확인 choiceStudies : "+ choiceStudies);
+            return "studyChoice :: studyChoice";
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
             return "error"; // 에러 페이지로 이동
