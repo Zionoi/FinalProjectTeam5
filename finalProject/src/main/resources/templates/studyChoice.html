@@ -7,43 +7,44 @@
     <title>검사 이력</title>
 </head>
 <body>
-
-    <div th:if="${choiceStudies != null and !choiceStudies.isEmpty()}">
-	    <p>환자 ID: <span th:text="${choiceStudies[0].pid}"></span></p>
-	    <p>환자 이름: <span th:text="${choiceStudies[0].pName}"></span></p>
-	</div>
+	<div th:fragment="studyChoice">
+	    <div th:if="${choiceStudies != null and !choiceStudies.isEmpty()}">
+		    <p>환자 ID: <span th:text="${choiceStudies[0].pid}"></span></p>
+		    <p>환자 이름: <span th:text="${choiceStudies[0].pName}"></span></p>
+		</div>
+		
+		<div th:if="${choiceStudies == null or choiceStudies.isEmpty()}">
+		    <p>환자 ID: 정보 없음</p>
+		    <p>환자 이름: 정보 없음</p>
+		</div>
 	
-	<div th:if="${choiceStudies == null or choiceStudies.isEmpty()}">
-	    <p>환자 ID: 정보 없음</p>
-	    <p>환자 이름: 정보 없음</p>
-	</div>
-
-        <table class="dicom-table">
-            <thead>
-                <tr>
-                    <th>모달리티</th>
-                    <th>검사이름</th>
-                    <th>검사날짜</th>
-                    <th>성별</th>
-                    <th>Verify</th>
-                    <th>담당의사</th>
-                    <th>상세 보기</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="study : ${choiceStudies}">
-                    <td th:text="${study.modality}">CT</td>
-                    <td th:text="${study.studyDesc}">전신 CT</td>
-                    <td th:text="${study.studyDate}">2024-01-01</td>
-                    <td th:text="${study.pSex}">남</td>
-                    <td th:text="${study.verifyFlag}">O</td>
-                    <td th:text="${study.refPhysicianName}">Dr. Kim</td>
-                    <td>
-                        <a th:href="@{'/studyList/' + ${study.studyKey} + '/series'}">시리즈 보기</a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+	        <table class="dicom-table">
+	            <thead>
+	                <tr>
+	                    <th>모달리티</th>
+	                    <th>검사이름</th>
+	                    <th>검사날짜</th>
+	                    <th>성별</th>
+	                    <th>Verify</th>
+	                    <th>담당의사</th>
+	                    <th>상세 보기</th>
+	                </tr>
+	            </thead>
+	            <tbody>
+	                <tr th:each="study : ${choiceStudies}">
+	                    <td th:text="${study.modality}">CT</td>
+	                    <td th:text="${study.studyDesc}">전신 CT</td>
+	                    <td th:text="${study.studyDate}">2024-01-01</td>
+	                    <td th:text="${study.pSex}">남</td>
+	                    <td th:text="${study.verifyFlag}">O</td>
+	                    <td th:text="${study.refPhysicianName}">Dr. Kim</td>
+	                    <td>
+	                        <a th:href="@{'/studyList/' + ${study.studyKey} + '/series'}">시리즈 보기</a>
+	                    </td>
+	                </tr>
+	            </tbody>
+	        </table>
+	    </div>
     </div>
 
 </body>
