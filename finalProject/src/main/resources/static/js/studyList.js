@@ -17,7 +17,27 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     });
+    
+    
 });
+let isRequestInProgress = false;
+
+function sendPid(pid) {
+    if (isRequestInProgress) return; // 중복 요청 방지
+    isRequestInProgress = true;
+    console.log('과거이력 버튼 실행 확인 : ', pid);
+    
+    axios.get(`/studyList/${pid}/choice`)
+        .then(function (response) {
+            document.getElementById('historyContainer').innerHTML = response.data;
+        })
+        .catch(function (error) {
+            console.error('Error:', error);
+        })
+        .finally(function () {
+            isRequestInProgress = false; // 요청 완료 후 다시 활성화
+        });
+}
 /**
  * 
  */
