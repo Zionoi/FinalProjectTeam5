@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
+import com.study.finalProject.domain.Series;
 import com.study.finalProject.domain.Study;
 
 
@@ -13,5 +14,7 @@ import com.study.finalProject.domain.Study;
 public interface StudyRepository extends JpaRepository<Study, Long>, JpaSpecificationExecutor<Study> {
 
 	List<Study> findByStudyDescContainingOrModalityContainingOrPNameContaining(String studyDesc, String modality, String pName);
+
+	List<Study> getSeriesByPid(String pid);
 
 }

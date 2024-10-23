@@ -2,6 +2,7 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
+ 
     <title>DICOM Layout</title>
    	<link rel="stylesheet" type="text/css" href="/css/studyList.css">
     <script>
@@ -51,6 +52,9 @@
 	    }
 	    
 	</script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script th:src="@{/js/studyList.js}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 	
     <!-- jQuery, Moment.js, DateRangePicker -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
@@ -174,10 +178,16 @@
                         <td>
 	                    	<a th:href="@{'/studyList/' + ${study.studyKey} + '/series'}">시리즈 보기</a>
 	                	</td>
+                      <td>
+						<button th:onclick="sendPid('[[${study.pid}]]')">시리즈 보기</button>
+
+	                </td>
                     </tr>
                 </tbody>
             </table>
         </div>
+      <div id="historyContainer" th:replace="~{studyChoice.html :: studyChoice}"> 왜 아무것도 안뜨지</div>
     </div>
+
 </body>
 </html>
