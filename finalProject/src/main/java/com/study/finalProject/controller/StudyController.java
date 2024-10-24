@@ -76,10 +76,11 @@ public class StudyController {
     
     // 특정 Study에 속한 Series 목록을 전달
     @GetMapping("/studyList/{studyKey}/series")
-    public String listSeries(@PathVariable("studyKey") Long studyKey, Model model) {
+    public String seriesList(@PathVariable("studyKey") Long studyKey, Model model) {
+    	System.out.println("시리즈목록 불러오는함수 실행확인 studyKey :"+ studyKey);
         List<Series> seriesList = studyService.getSeriesByStudyKey(studyKey);
         model.addAttribute("series", seriesList);
-        return "series";
+        return "series :: seriesSection";
     }
     
     @GetMapping("/studyList/{pid}/choice")

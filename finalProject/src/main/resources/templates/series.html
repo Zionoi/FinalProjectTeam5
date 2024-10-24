@@ -1,33 +1,54 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+	 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+	<script th:src="@{/js/seriesList.js}"></script>
+	<script th:src="@{/js/serSectionImage.js}"></script>
+	<script>
+		$(document).ready(function () {
+		
+		$("button[name=serSectionImage]").click((e)=>{
+		console.log('시리즈 버튼 실행확인', e)
+		 const studyKey = $(e.target).val();
+		sendStudySeriesKey(studyKey)});
+	    }); 
+	</script>
     <meta charset="UTF-8">
     <title>Series 목록</title>
 </head>
 <body>
-    <h1>Series 목록</h1>
-
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Series Number</th>
-                <th>Description</th>
-                <th>Modality</th>
-                <th>이미지 보기</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="series : ${series}">
-                <td th:text="${series.seriesNum}"></td>
-                <td th:text="${series.seriesDesc}"></td>
-                <td th:text="${series.modality}"></td>
-                <td>
-                    <a th:href="@{'/images' + '/studies/' + ${series.studyKey} + '/series/' + ${series.seriesKey}}">이미지 보기</a>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-
+	<div th:fragment="seriesSection">
+	    <h1>Series 목록 &#40<span th:text="${#lists.size(series)}"></span>&#41;</h1>
+	    <table border="1">
+	        <thead>
+	            <tr>
+	                <th>Series Number</th>
+	                <th>Description</th>
+	                <th>Modality</th>
+	                <th>이미지 보기</th>
+	            </tr>
+	        </thead>
+	        <tbody>
+				<tr th:each="series, iterStat : ${series}">
+				    <!-- 시리즈 넘버를 카운트로 표시 (1부터 시작) -->
+				    <td th:text="${iterStat.index + 1}"></td>
+				    <td th:text="${series.seriesDesc}"></td>
+				    <td th:text="${series.modality}"></td>
+				    <td>
+				        <a th:href="@{'/images' + '/studies/' + ${series.studyKey} + '/series/' + ${series.seriesKey}}">이미지 보기</a>
+				    </td>
+				    <td>
+						<button name="serSectionImage"  th:value="${series.studyKey}">썸네일</button>
+				    </td>
+				</tr>
+	        </tbody>
+	    </table>
+      <div id="serSectionImageContainer">    	</div>
+	</div>
     <a th:href="@{'/studyList'}">뒤로 가기</a>
 </body>
 </html>

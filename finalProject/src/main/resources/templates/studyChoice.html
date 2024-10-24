@@ -1,10 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 	<script th:src="@{/js/studyList.js}"></script>
+	<script th:src="@{/js/seriesList.js}"></script>
 	<link rel="stylesheet" th:href="@{/css/studyChoice.css}">
     <meta charset="EUC-KR">
     <title>검사 이력</title>
+    <script>
+		$(document).ready(function () {
+	    // 스터디 목록 클릭 시 상세 페이지로 이동
+		
+		$("button[name=seriesList]").click((e)=>{
+		console.log('스터디초이스 안에 시리즈목록 버튼 실행확인', e)
+		 const studyKey = $(e.target).val();
+		sendStudyKey(studyKey)});
+	    });
+	</script>
 </head>
 <body>
 	<div th:fragment="studyChoice">
@@ -39,7 +55,7 @@
 	                    <td th:text="${study.verifyFlag}">O</td>
 	                    <td th:text="${study.refPhysicianName}">Dr. Kim</td>
 	                    <td>
-	                        <a th:href="@{'/studyList/' + ${study.studyKey} + '/series'}">시리즈 보기</a>
+	                        <button name="seriesList"  th:value="${study.studyKey}">시리즈</button>
 	                    </td>
 	                </tr>
 	            </tbody>
