@@ -1,3 +1,4 @@
+let isRequestInProgress = false;
 
 function sendStudyKey(studyKey) {
     const seriesContainer = document.getElementById('seriesContainer');
@@ -9,6 +10,8 @@ function sendStudyKey(studyKey) {
     }
 
     console.log('시리즈목록 불러오기 버튼 실행 확인 : ', studyKey);
+     if (isRequestInProgress) return; // 중복 요청 방지
+    isRequestInProgress = true;
 
     axios.get(`/studyList/${studyKey}/series`)
         .then(function (response) {
