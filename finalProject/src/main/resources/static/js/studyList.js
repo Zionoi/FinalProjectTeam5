@@ -24,7 +24,6 @@ let isRequestInProgress = false;
 
 function sendPid(pid) {
     const historyContainer = document.getElementById('historyContainer');
-
     // historyContainer가 존재하는지 확인
     if (!historyContainer) {
         console.error('historyContainer 요소가 존재하지 않습니다.');

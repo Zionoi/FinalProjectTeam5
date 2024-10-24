@@ -109,7 +109,6 @@
 		}
 		
 		$(document).ready(function () {
-	    // 스터디 목록 클릭 시 상세 페이지로 이동
 	    
 	    $("button[name=pastStudy]").click((e)=>{
 		console.log('버튼 실행확인', e)
@@ -192,7 +191,7 @@
 	                	</td>
                       <td>
 						<!--<button th:onclick="sendPid('[[${study.pid}]]')">검사이력</button>-->
-						<button name="pastStudy"  th:value="${study.pid}">검사이력</button>
+						<button name="pastStudy" th:value="${study.pid}">검사이력</button>
 
 	                </td>
                     </tr>
