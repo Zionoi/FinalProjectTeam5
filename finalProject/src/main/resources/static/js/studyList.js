@@ -39,7 +39,7 @@ function sendPid(pid) {
     axios.get(`/studyList/${pid}/choice`)
         .then(function (response) {
             // 서버에서 받은 HTML 프래그먼트를 해당 영역에 삽입
-            console.log('백엔드에서 전달받은 값 response.data', response.data)
+            /*console.log('백엔드에서 전달받은 값 response.data', response.data)*/
             historyContainer.innerHTML = response.data;
         })
         .catch(function (error) {

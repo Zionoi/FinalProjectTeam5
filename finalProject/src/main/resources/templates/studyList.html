@@ -52,8 +52,9 @@
 	    }
 	    
 	</script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script th:src="@{/js/studyList.js}"></script>
+        <script th:src="@{/js/seriesList.js}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 	
     <!-- jQuery, Moment.js, DateRangePicker -->
@@ -115,6 +116,11 @@
 		console.log('버튼 실행확인', e)
 		 const pid = $(e.target).val();
 		sendPid(pid)});
+		
+		$("button[name=seriesList]").click((e)=>{
+		console.log('버튼 실행확인', e)
+		 const studyKey = $(e.target).val();
+		sendStudyKey(studyKey)});
 	    });
 		
 		
@@ -188,7 +194,7 @@
                         <td th:text="${study.verifyFlag}"></td>
                         <td th:text="${study.operatorsName}"></td>
                         <td>
-	                    	<a th:href="@{'/studyList/' + ${study.studyKey} + '/series'}">시리즈 보기</a>
+	                    	<button name="seriesList"  th:value="${study.studyKey}">시리즈</button>
 	                	</td>
                       <td>
 						<!--<button th:onclick="sendPid('[[${study.pid}]]')">검사이력</button>-->
@@ -201,6 +207,7 @@
         </div>
       <!--<div id="historyContainer" th:replace="~{studyChoice.html :: studyChoice}"> 왜 아무것도 안뜨지</div>-->
       <div id="historyContainer">    	</div>
+      <div id="seriesContainer">    	</div>
     </div>
 
 </body>
