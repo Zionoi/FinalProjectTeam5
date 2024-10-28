@@ -111,15 +111,17 @@
 		
 		$(document).ready(function () {
 	    
-	    $("button[name=pastStudy]").click((e)=>{
-		console.log('버튼 실행확인', e)
-		 const pid = $(e.target).val();
-		sendPid(pid)});
+		    $("button[name=pastStudy]").click((e)=>{
+			console.log('버튼 실행확인', e)
+			 const pid = $(e.target).val();
+			sendPid(pid)});
+			
+			$("#historyContainer").on("click", "button[name=seriesList]", function (e) {
+	        console.log('스터디초이스 안에 시리즈목록 버튼 실행확인', e);
+	        const studyKey = $(e.target).val();
+	        sendStudyKey(studyKey);
+	    	});
 		
-		$("button[name=seriesList]").click((e)=>{
-		console.log('버튼 실행확인', e)
-		 const studyKey = $(e.target).val();
-		sendStudyKey(studyKey)});
 	    });
 		
 		
@@ -192,9 +194,9 @@
                         <td th:text="${study.modality}"></td>
                         <td th:text="${study.verifyFlag}"></td>
                         <td th:text="${study.operatorsName}"></td>
-                        <td>
+                       <!-- <td>
 	                    	<button name="seriesList"  th:value="${study.studyKey}">시리즈</button>
-	                	</td>
+	                	</td>-->
                       <td>
 						<!--<button th:onclick="sendPid('[[${study.pid}]]')">검사이력</button>-->
 						<button name="pastStudy" th:value="${study.pid}">검사이력</button>

@@ -49,14 +49,7 @@ public class StudyService {
 
 //	@Transactional(readOnly = true)
 	public List<Study> getStudyByPid(String pid) {
-		System.out.println("스터디서비스 pid222 : "+ pid);
-		System.out.println("스터디서비스 pid333 : "+ "anonymous");
-//		Optional<Study> study = studyRepository.findById(1L);
 		List<Study> study = studyRepository.findByPid(pid);
-		List<Study> studyTest = studyRepository.findByPid("anonymous");
-		System.out.println("service study 쿼리 이후 출력  : "+study.toString());
-		System.out.println("service studyTest쿼리 이후 출력  : "+studyTest.toString());
-//		return studyRepository.findByPid(pid);
 		return study;
 	}
 	

@@ -85,11 +85,9 @@ public class StudyController {
     
     @GetMapping("/studyList/{pid}/choice")
     public String studyChoice(@PathVariable("pid") String pid, Model model) {
-    	System.out.println("초이스 메소드 실행확인 pid : "+pid);
         try {
             List<Study> choiceStudies = studyService.getStudyByPid(pid);
             model.addAttribute("choiceStudies", choiceStudies);
-            System.out.println("초이스 메소드 실행확인 choiceStudies : "+ choiceStudies);
             return "studyChoice :: studyChoice";
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
