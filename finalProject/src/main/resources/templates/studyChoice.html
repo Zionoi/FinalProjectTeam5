@@ -15,10 +15,7 @@
 		$(document).ready(function () {
 	    // 스터디 목록 클릭 시 상세 페이지로 이동
 		
-		$("button[name=seriesList]").click((e)=>{
-		console.log('스터디초이스 안에 시리즈목록 버튼 실행확인', e)
-		 const studyKey = $(e.target).val();
-		sendStudyKey(studyKey)});
+		
 	    });
 	</script>
 </head>
@@ -55,12 +52,12 @@
 	                    <td th:text="${study.verifyFlag}">O</td>
 	                    <td th:text="${study.refPhysicianName}">Dr. Kim</td>
 	                    <td>
-	                        <button name="seriesList"  th:value="${study.studyKey}">시리즈</button>
+	                        <button name="seriesList"  th:value="${study.studyKey}">시리즈11</button>
 	                    </td>
 	                </tr>
 	            </tbody>
 	        </table>
-	    </div>
+	    
     </div>
 
 </body>
