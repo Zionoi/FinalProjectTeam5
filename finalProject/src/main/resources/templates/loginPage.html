@@ -10,19 +10,25 @@
     <link rel="stylesheet" th:href="@{/css/index.css}">
 </head>
 <body>
+	<div class="login-background">
     <div class="login-container">
-        <h1>로그인 이후</h1>
+        <h1 class="login-logo">DICOM</h1>
         <div class="login-box">
             <form th:action="@{/login_check}" method="post">
-                <input type="text" name="memId" placeholder="아이디" required>
-                <input type="password" name="password" placeholder="비밀번호" required>
-                <button type="submit">로그인</button>
+				<label class="login-label">Username</label><br>
+                <input type="text" class="login-line" name="memId" placeholder="Your ID" required><br>
+                <label class="login-label">Password</label><br>
+                <input type="password" class="login-line" name="password" placeholder="Your password" required><br>
+                <a class="find-password" th:href="@{/forgot-password}">Forgot password?</a>
+                <br>
+                <button type="submit">Sign In</button>
             </form>
             <div class="login-links">
-                <a th:href="@{/signup}">회원가입</a>
-                <a th:href="@{/forgot-password}">아이디 / 비밀번호 찾기</a>
+				<label class="signup-label">Don’t have  an account ?</label>
+                <a class="signup" th:href="@{/signup}">Sign Up</a>
             </div>
         </div>
+    </div>
     </div>
 </body>
 </html>

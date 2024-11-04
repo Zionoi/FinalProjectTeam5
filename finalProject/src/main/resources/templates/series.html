@@ -8,15 +8,7 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 	<script th:src="@{/js/seriesList.js}"></script>
 	<script th:src="@{/js/serSectionImage.js}"></script>
-	<script>
-		$(document).ready(function () {
-		
-		$("button[name=serSectionImage]").click((e)=>{
-		console.log('시리즈 버튼 실행확인', e)
-		 const studyKey = $(e.target).val();
-		sendStudySeriesKey(studyKey)});
-	    }); 
-	</script>
+
     <meta charset="UTF-8">
     <title>Series 목록</title>
 </head>
@@ -47,6 +39,10 @@
 				</tr>
 	        </tbody>
 	    </table>
+	            <div id="dicomImage" style="width:240px;height:240px; background-color:aqua;"
+            oncontextmenu="return false"
+            onmousedown="return false">
+        </div>
       <div id="serSectionImageContainer">    	</div>
 	</div>
     <a th:href="@{'/studyList'}">뒤로 가기</a>
