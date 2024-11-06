@@ -4,11 +4,13 @@ function initializeRotationDropdown() {
     const rotateBtn = document.getElementById('rotateBtn');
     const rotationDropdown = document.getElementById('rotationDropdown');
     const element = document.getElementById('dicomImage');
+
     
     if (!rotateBtn || !rotationDropdown) {
         console.error("rotateBtn 또는 rotationDropdown 요소를 찾을 수 없습니다.");
         return;
     }
+
 
     // cornerstone 활성화 확인
     if (!cornerstone.getEnabledElement(element)) {
@@ -33,6 +35,7 @@ function initializeRotationDropdown() {
 function setupRotationControls(element) {
     console.log("setupRotationControls 실행 중...");
     
+
     if (element && cornerstone.getEnabledElement(element)) {
 	    console.log("dicomImage 요소가 활성화되었습니다.");
 	} else {
@@ -46,6 +49,8 @@ function setupRotationControls(element) {
         viewport.hflip = !viewport.hflip;
         console.log("현재 회전 값:", viewport.hflip);  // 회전 값 확인
         cornerstone.setViewport(element, viewport);
+
+
     });
 
     document.getElementById('vFlip').addEventListener('click', () => {
@@ -54,6 +59,7 @@ function setupRotationControls(element) {
         viewport.vflip = !viewport.vflip;
         console.log("현재 회전 값:", viewport.hflip);  // 회전 값 확인
         cornerstone.setViewport(element, viewport);
+
     });
 
     document.getElementById('lRotate').addEventListener('click', () => {
@@ -62,6 +68,7 @@ function setupRotationControls(element) {
         viewport.rotation -= 90;
         console.log("현재 회전 값:", viewport.rotation);  // 회전 값 확인
         cornerstone.setViewport(element, viewport);
+
     });
 
     document.getElementById('rRotate').addEventListener('click', () => {
@@ -70,6 +77,7 @@ function setupRotationControls(element) {
         viewport.rotation += 90;
         console.log("현재 회전 값:", viewport.rotation);  // 회전 값 확인
         cornerstone.setViewport(element, viewport);
+
     });
 
     document.getElementById('resetRotate').addEventListener('click', () => {
@@ -80,3 +88,4 @@ function setupRotationControls(element) {
 
 // 초기화 
 initializeRotationDropdown();
+
