@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-	 <link href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+	 <!--<link href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">-->
 <head>
     <meta charset="UTF-8">
     <!-- Cornerstone Latest -->
@@ -9,219 +9,35 @@
     <script src="https://unpkg.com/dicom-parser"></script>
     <script src="https://unpkg.com/cornerstone-wado-image-loader"></script>
     <title>DICOM IMAGE VIEWER</title>
-    <style>
-        #dicomImage {
-            height: 600px;
-        }
-    </style>
+    <link rel="stylesheet" th:href="@{/css/image.css}">
+
 
     <!-- Thymeleaf로 서버에서 전달된 imagePaths를 JavaScript로 넘겨줌 -->
     <script th:inline="javascript">
         var imagePaths = /*[[${imagePaths}]]*/ [];
         console.log('이미지 경로 리스트:', imagePaths);
     </script>
-	
-	<style>
-        .overlay {
-            /* prevent text selection on overlay */
-            -webkit-touch-callout: none;
-            -webkit-user-select: none;
-            -khtml-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
 
-            /* ignore pointer event on overlay */
-            pointer-events: none;
-        }
-    </style>
-	
 </head>
 <body>
-    <h2>DICOM IMAGE VIEWER</h2>
     <div class="container">
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
         <h2>DICOM IMAGE VIEWER</h2>
         
         <!-- 버튼 레이아웃을 프레그먼트에서 불러오기 -->
         <div th:replace="imageView :: buttonLayout"></div>
         
         <!-- DICOM 이미지 뷰어 영역 -->
-        <!--<div id="dicomImage" oncontextmenu="return false" onmousedown="return false"></div>-->
-         <div style="width:512px;height:512px;position:relative;color:white"
-         oncontextmenu="return false"
-         onmousedown="return false">
-
-        <div id="dicomImage"
-             style="width:512px;height:512px;top:0px;left:0px;position:absolute">
-        </div>
-
-        <div id="topleft" class="overlay" style="position:absolute;top:0px;left:0px">
-            Patient Name
-        </div>
-        <div id="topright" class="overlay" style="position:absolute;top:0px;right:0px">
-            Hospital
-        </div>
-        <div id="bottomright" class="overlay" style="position:absolute;bottom:0px;right:0px">
-            Zoom:
-        </div>
-        <div id="bottomleft" class="overlay" style="position:absolute;bottom:0px;left:0px">
-            WW/WC:
-        </div>
-    </div>
-=======
-=======
->>>>>>> parent of 545421c (이미지 레이아웃, 시리즈 레이아웃, 회전 기능 수정중)
-=======
->>>>>>> parent of 2aa8a4a (Merge pull request #8 from Zionoi/iseulUm)
-=======
->>>>>>> parent of 2aa8a4a (Merge pull request #8 from Zionoi/iseulUm)
-
-        <h1>
-            changeimage/index.html
-        </h1>
-
-        This is an example of changing the image displayed in an element.  This could be used
-        to show different key images or a stack of images (e.g. MRI series).  Use the mouse wheel
-        to change between images or press the buttons below.
-
-        <br>
-        <br>
-
-        <div id="dicomImage" style="width:512px;height:512px"
-            oncontextmenu="return false"
-            onmousedown="return false">
-        </div>
-
-        <button id="imageButton1" type="button" class="btn btn-default">Image #1</button>
-        <button id="imageButton2" type="button" class="btn btn-default">Image #2</button>
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> parent of 545421c (이미지 레이아웃, 시리즈 레이아웃, 회전 기능 수정중)
-=======
->>>>>>> parent of 545421c (이미지 레이아웃, 시리즈 레이아웃, 회전 기능 수정중)
-=======
->>>>>>> parent of 2aa8a4a (Merge pull request #8 from Zionoi/iseulUm)
-=======
->>>>>>> parent of 2aa8a4a (Merge pull request #8 from Zionoi/iseulUm)
+        <div id="dicomImage" oncontextmenu="return false" onmousedown="return false"></div>
     </div>
 
     <!-- JavaScript 파일 포함 -->
-    <script src="/js/testjs.js"></script>
     
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
     <script src="/js/rotation.js"></script>
 	<script src="/js/seriesLayout.js"></script>
 	<script src="/js/imgLayout.js"></script>
 	<script src="/js/imageView.js"></script>
 	<script src="/js/testjs.js"></script>
-	<script src="/js/htmloverlays.js"></script>
 	
 
-=======
->>>>>>> parent of 545421c (이미지 레이아웃, 시리즈 레이아웃, 회전 기능 수정중)
-=======
->>>>>>> parent of 545421c (이미지 레이아웃, 시리즈 레이아웃, 회전 기능 수정중)
-=======
->>>>>>> parent of 2aa8a4a (Merge pull request #8 from Zionoi/iseulUm)
-=======
->>>>>>> parent of 2aa8a4a (Merge pull request #8 from Zionoi/iseulUm)
 </body>
 </html>
-
-
-
-
-
-
-
-
-<!--이슬님 코드-->
-<!--<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-	 <link href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
-<head>
-    <meta charset="UTF-8">
-     Cornerstone Latest 
-  	<script src="https://unpkg.com/cornerstone-core"></script>
-    <script src="https://unpkg.com/cornerstone-wado-image-loader"></script>
-    <script src="https://unpkg.com/cornerstone-tools"></script>
-    <script src="https://unpkg.com/dicom-parser"></script>
-    <script src="https://unpkg.com/cornerstone-math"></script>
-    <script src="https://unpkg.com/hammerjs"></script>
-    
-    <title>DICOM IMAGE VIEWER</title>
-    <link rel="stylesheet" th:href="@{/css/image.css}">
-
-
-     Thymeleaf로 서버에서 전달된 imagePaths를 JavaScript로 넘겨줌 
-    <script th:inline="javascript">
-        var imagePaths = /*[[${imagePaths}]]*/ [];
-        console.log('이미지 경로 리스트:', imagePaths);
-        var studyKey = /*[[${studyKey}]]*/ []; // 추가된 부분
-    	console.log('Study Key:', studyKey);
-        var seriesKeys = /*[[${seriesKeys}]]*/ [];
-    	console.log('Series Keys:', seriesKeys);
-    </script>
-
-</head>
-<body>
-    <h2>DICOM IMAGE VIEWER</h2>
-    <div class="container">
-<<<<<<< HEAD
-        <h2>DICOM IMAGE VIEWER</h2>
-        
-         버튼 레이아웃을 프레그먼트에서 불러오기 
-        <div th:replace="imageView :: buttonLayout"></div>
-        
-         DICOM 이미지 뷰어 영역 
-        <div id="dicomImage" oncontextmenu="return false" onmousedown="return false"></div>
-    </div>
-
-     JavaScript 파일 포함 
-    
-    <script src="/js/imgTool/rotation.js"></script>
-	<script src="/js/imgTool/seriesLayout.js"></script>
-	<script src="/js/imgTool/imgLayout.js"></script>
-	<script src="/js/imageView.js"></script>
-	<script src="/js/testjs.js"></script>
-	
-
-=======
-
-        <h1>
-            changeimage/index.html
-        </h1>
-
-        This is an example of changing the image displayed in an element.  This could be used
-        to show different key images or a stack of images (e.g. MRI series).  Use the mouse wheel
-        to change between images or press the buttons below.
-
-        <br>
-        <br>
-
-        <div id="dicomImage" style="width:512px;height:512px"
-            oncontextmenu="return false"
-            onmousedown="return false">
-        </div>
-
-        <button id="imageButton1" type="button" class="btn btn-default">Image #1</button>
-        <button id="imageButton2" type="button" class="btn btn-default">Image #2</button>
-
-    </div>
-
-    <!-- JavaScript 파일 포함 -->
-    <script src="/js/testjs.js"></script>
-    
->>>>>>> parent of 545421c (이미지 레이아웃, 시리즈 레이아웃, 회전 기능 수정중)
-</body>
-</html>
--->
