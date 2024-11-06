@@ -33,11 +33,6 @@ public class SeriesService {
         seriesRepository.deleteById(seriesKey);
     }
     
-    public List<String> getSeriesKeysByStudyKey(Long studyKey) {
-        return seriesRepository.findSeriesKeysByStudyKey(studyKey);
-    }
-
-    
     
 	
 }
