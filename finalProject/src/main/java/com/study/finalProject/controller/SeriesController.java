@@ -4,6 +4,7 @@ package com.study.finalProject.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -58,4 +59,12 @@ public class SeriesController {
         seriesService.deleteSeries(seriesKey);
         return "redirect:/series";
     }
+    
+    @GetMapping("/images/studies/{studyKey}/series/{seriesKey}")
+    public ResponseEntity<List<String>> getSeriesKeys(@PathVariable Long studyKey) {
+        List<String> seriesKeys = seriesService.getSeriesKeysByStudyKey(studyKey);
+        return ResponseEntity.ok(seriesKeys);
+    }
+
+
 }
