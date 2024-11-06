@@ -4,9 +4,12 @@ import java.net.MalformedURLException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
@@ -15,18 +18,20 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.study.finalProject.domain.Image;
 import com.study.finalProject.service.ImageService;
 import com.study.finalProject.service.SeriesService;
 
 import jakarta.servlet.http.HttpServletRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Controller
 public class ImageController {
 
     @Autowired
-<<<<<<< HEAD
     private ImageService imageService;
     
     @Autowired
@@ -37,9 +42,6 @@ public class ImageController {
     // 하드코딩 방지
     @Value("${pacs.storage.path}")
     private String pacsStoragePath;
-=======
-    ImageService imageService; // ImageService를 통해 데이터베이스 접근
->>>>>>> parent of 2aa8a4a (Merge pull request #8 from Zionoi/iseulUm)
 
     // 스터디키와 시리즈키를 사용해 데이터베이스에서 이미지 경로와 파일 이름을 조회
     @GetMapping("/images/studies/{studyKey}/series/{seriesKey}")
@@ -75,13 +77,10 @@ public class ImageController {
     @GetMapping("/dicom-file/**")
     public ResponseEntity<Resource> getImage(HttpServletRequest request) throws MalformedURLException {
         String fullPath = request.getRequestURI().replace("/dicom-file/", "");
-        Path filePath = Paths.get("C:/Users/TJ/Desktop/PACSStorage/", fullPath); // PACSStorage 경로와 결합
+        Path filePath = Paths.get(pacsStoragePath, fullPath);
         Resource resource = new UrlResource(filePath.toUri());
-<<<<<<< HEAD
 
         logger.info("생성된 파일 경로: {}", filePath);
-=======
->>>>>>> parent of 2aa8a4a (Merge pull request #8 from Zionoi/iseulUm)
 
         if (resource.exists() && resource.isReadable()) {
             return ResponseEntity.ok()
@@ -92,7 +91,6 @@ public class ImageController {
             return ResponseEntity.notFound().build();
         }
     }
-<<<<<<< HEAD
 
     // 여러 시리즈 키를 사용하여 해당하는 이미지들을 가져오는 메서드 추가
     @GetMapping("/studies/{studyKey}/series-images")
@@ -116,48 +114,6 @@ public class ImageController {
 
         return ResponseEntity.ok(seriesImagesMap);
     }
-=======
-    
-//    
-//    
-// 
-//        // 모든 이미지 목록 페이지
-//        @GetMapping
-//        public String getAllImages(Model model) {
-//            List<Image> images = imageService.getAllImages();
-//            model.addAttribute("images", images);
-//            return "imageList"; // 타임리프 템플릿 파일 이름 (imageList.html)
-//        }
-//
-//        // 특정 이미지 상세 페이지
-//        @GetMapping("/{imageKey}")
-//        public String getImageById(@PathVariable Long imageKey, Model model) {
-//            imageService.getImageById(imageKey).ifPresent(image -> model.addAttribute("image", image));
-//            return "imageDetail"; // 타임리프 템플릿 파일 이름 (imageDetail.html)
-//        }
-//
-//        // 이미지 추가 폼 페이지
-//        @GetMapping("/new")
-//        public String createImageForm(Model model) {
-//            model.addAttribute("image", new Image());
-//            return "createImage"; // 타임리프 템플릿 파일 이름 (createImage.html)
-//        }
-//
-//        // 이미지 추가/수정 처리
-//        @PostMapping
-//        public String saveOrUpdateImage(@ModelAttribute Image image) {
-//            imageService.saveOrUpdateImage(image);
-//            return "redirect:/images";
-//        }
-//
-//        // 이미지 삭제
-//        @PostMapping("/{imageKey}/delete")
-//        public String deleteImage(@PathVariable Long imageKey) {
-//            imageService.deleteImage(imageKey);
-//            return "redirect:/images";
-//        }
-//    }
->>>>>>> parent of 2aa8a4a (Merge pull request #8 from Zionoi/iseulUm)
 
 
 }

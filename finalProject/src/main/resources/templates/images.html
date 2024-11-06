@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-	 <link href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+	 <!--<link href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">-->
 <head>
     <meta charset="UTF-8">
     <!-- Cornerstone Latest -->
@@ -9,11 +9,8 @@
     <script src="https://unpkg.com/dicom-parser"></script>
     <script src="https://unpkg.com/cornerstone-wado-image-loader"></script>
     <title>DICOM IMAGE VIEWER</title>
-    <style>
-        #dicomImage {
-            height: 600px;
-        }
-    </style>
+    <link rel="stylesheet" th:href="@{/css/image.css}">
+
 
     <!-- Thymeleaf로 서버에서 전달된 imagePaths를 JavaScript로 넘겨줌 -->
     Thymeleaf로 서버에서 전달된 imagePaths를 JavaScript로 넘겨줌 
@@ -43,9 +40,7 @@
 	
 </head>
 <body>
-    <h2>DICOM IMAGE VIEWER</h2>
     <div class="container">
-<<<<<<< HEAD
         <h2>DICOM IMAGE VIEWER</h2>
         
         <!-- 버튼 레이아웃을 프레그먼트에서 불러오기 -->
@@ -74,34 +69,10 @@
             WW/WC:
         </div>
     </div>
-=======
-
-        <h1>
-            changeimage/index.html
-        </h1>
-
-        This is an example of changing the image displayed in an element.  This could be used
-        to show different key images or a stack of images (e.g. MRI series).  Use the mouse wheel
-        to change between images or press the buttons below.
-
-        <br>
-        <br>
-
-        <div id="dicomImage" style="width:512px;height:512px"
-            oncontextmenu="return false"
-            onmousedown="return false">
-        </div>
-
-        <button id="imageButton1" type="button" class="btn btn-default">Image #1</button>
-        <button id="imageButton2" type="button" class="btn btn-default">Image #2</button>
-
->>>>>>> parent of 2aa8a4a (Merge pull request #8 from Zionoi/iseulUm)
     </div>
 
     <!-- JavaScript 파일 포함 -->
-    <script src="/js/testjs.js"></script>
     
-<<<<<<< HEAD
     <script src="/js/imgTool/rotation.js"></script>
 	<script src="/js/imgTool/seriesLayout.js"></script>
 	<script src="/js/imgTool/imgLayout.js"></script>
@@ -110,8 +81,6 @@
 	<script src="/js/htmloverlays.js"></script>
 	
 
-=======
->>>>>>> parent of 2aa8a4a (Merge pull request #8 from Zionoi/iseulUm)
 </body>
 </html>
 
