@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
  
     <title>DICOM Layout</title>
-   	<form th:action="@{/logout}" method="post">
-   		<button type="submit" >로그아웃</button>
-   	</form>
+   	
     <script>
 		// 정렬 기능
 	    function sortTable(columnIndex) {
@@ -63,8 +61,8 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-	<link rel="stylesheet" type="text/css" href="/css/studyList.css">
+    <!--<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+	<link rel="stylesheet" type="text/css" href="/css/studyList.css">-->
 
     <script>
 		$(function() {
@@ -129,13 +127,13 @@
 		
 			
     </script>
-    
 </head>
 <body>
     <div class="container">
-        <div class="header">DICOM</div>
+        <div class="header">DICOM</div><br><br><br>
         <div class="section search-section">
             <div class="search-options">
+				<div class="section-title">환자 검색</div>
 				<form id="dateSearchForm" action="/studyList/dateSearch" method="get">
 				    <input type="text" name="datetimes" value="date" />
 				    <!-- 숨겨진 필드 -->
@@ -161,8 +159,8 @@
             </div>
         </div>
 
-		<div class="section" th:if="${searchCriteria != null}">
-		    <p><strong>검색 조건: </strong>
+		<div class="section-condition" th:if="${searchCriteria != null}">
+		    <p ><strong>검색 조건: </strong>
 		        <span th:each="criteria, stat : ${searchCriteria}">
 		            <a href="#" th:onclick="'removeCriteria(' + ${stat.index} + '); return false;'"
 		               th:text="${criteria} + ' '" style="cursor: pointer; text-decoration: underline;"></a>
@@ -173,6 +171,9 @@
         <div class="section patient-list-section">
             <table>
                 <thead>
+					<tr>
+						<td colspan="10" class="search-result">검색 결과</td>
+					</tr>
                     <tr>
                         <th onclick="sortTable(0)">검사날짜</th>
                         <th onclick="sortTable(1)">환자이름</th>

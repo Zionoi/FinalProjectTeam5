@@ -9,7 +9,7 @@ body{
     justify-content: center;
     overflow: hidden;
     height: 100vh;
-    background-color: #243235;
+    background-color: #29383A;
     font-family: 'Pretendard-Regular';
 }
 
@@ -18,7 +18,7 @@ body{
 	font-weight:900;
 }
 .login-label {
-	color:#848484;
+	color:#AFAFAF;
 	float:left;
 	font-size: 14px;
 	letter-spacing: 1px;
@@ -26,7 +26,7 @@ body{
 	margin-top:8px;
 }
 .login-box {
-    background: #243235;
+    background: #29383A;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -37,9 +37,9 @@ body{
 	background-color: transparent;
 	border: transparent;
 	border-bottom: solid 1px #8D9C9E;
-	color:#D8D8D8;
+	color:#EAEAEA;
 	font-size: 15px;
-	font-weight:700;
+	font-weight:600;
 	letter-spacing: 0.2px;
 }
 .login-line:focus {
@@ -57,7 +57,7 @@ body{
 }
 
 .login-box button {
-    background: #546A6D;
+    background: #607A7C;
     color: #fff;
     font-size: 17px;
     border: none;
@@ -75,7 +75,7 @@ body{
     margin-top: 8px;
 }
 .find-password {
-	color:#659899;
+	color:#7ABCB2;
 	text-decoration: none;
 	font-size: 11px;
 	float:left;
@@ -84,13 +84,13 @@ body{
 	font-weight: 600;
 }
 .signup-label{
-	color:#659899;
+	color:#7ABCB2;
 	text-decoration: none;
 	font-size: 11px;
 }
 
 .login-links a {
-    color: #659899;
+    color: #7ABCB2;
     text-decoration: none;
     font-size: 11px;
     font-weight: 800;

@@ -35,7 +35,7 @@ public class SecurityConfig {
 //
 //        return http.build();
 //        
-
+    	System.out.println("시큐리티 컨피크 HTTP" + http);
         return http
                 .authorizeRequests()
                 .requestMatchers("/", "/login", "/loginPage", "/signup", "/css/**", "/js/**", "/img/**").permitAll()
@@ -50,7 +50,6 @@ public class SecurityConfig {
                 .defaultSuccessUrl("/studyList")
                 .and()
                 .logout()
-                .logoutUrl("/logout")
                 .logoutSuccessUrl("/loginPage")
                 .invalidateHttpSession(true)
                 .and()
