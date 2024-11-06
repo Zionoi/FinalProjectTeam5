@@ -5,12 +5,18 @@ function initializeRotationDropdown() {
     const rotationDropdown = document.getElementById('rotationDropdown');
     const element = document.getElementById('dicomImage');
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> parent of ee1d356 (Merge branch 'main' into develop)
     
     if (!rotateBtn || !rotationDropdown) {
         console.error("rotateBtn 또는 rotationDropdown 요소를 찾을 수 없습니다.");
         return;
     }
+<<<<<<< HEAD
+>>>>>>> parent of ee1d356 (Merge branch 'main' into develop)
+=======
 >>>>>>> parent of ee1d356 (Merge branch 'main' into develop)
 
     // cornerstone 활성화 확인
@@ -36,12 +42,16 @@ function initializeRotationDropdown() {
 function setupRotationControls() {
     console.log("setupRotationControls 실행 중...");
 <<<<<<< HEAD
+<<<<<<< HEAD
 
     const element = document.getElementById('dicomImage');
     /*if (!element) {
         console.error("dicomImage 요소를 찾을 수 없습니다.");
         return;
     }*/
+=======
+    
+>>>>>>> parent of ee1d356 (Merge branch 'main' into develop)
 =======
     
 >>>>>>> parent of ee1d356 (Merge branch 'main' into develop)
@@ -59,7 +69,10 @@ function setupRotationControls() {
         console.log("현재 회전 값:", viewport.hflip);  // 회전 값 확인
         cornerstone.setViewport(element, viewport);
 <<<<<<< HEAD
+<<<<<<< HEAD
         cornerstone.updateImage(element);  // 강제 업데이트
+=======
+>>>>>>> parent of ee1d356 (Merge branch 'main' into develop)
 =======
 >>>>>>> parent of ee1d356 (Merge branch 'main' into develop)
     });
@@ -71,7 +84,10 @@ function setupRotationControls() {
         console.log("현재 회전 값:", viewport.hflip);  // 회전 값 확인
         cornerstone.setViewport(element, viewport);
 <<<<<<< HEAD
+<<<<<<< HEAD
         cornerstone.updateImage(element);  // 강제 업데이트
+=======
+>>>>>>> parent of ee1d356 (Merge branch 'main' into develop)
 =======
 >>>>>>> parent of ee1d356 (Merge branch 'main' into develop)
     });
@@ -83,7 +99,10 @@ function setupRotationControls() {
         console.log("현재 회전 값:", viewport.rotation);  // 회전 값 확인
         cornerstone.setViewport(element, viewport);
 <<<<<<< HEAD
+<<<<<<< HEAD
         cornerstone.updateImage(element);  // 강제 업데이트
+=======
+>>>>>>> parent of ee1d356 (Merge branch 'main' into develop)
 =======
 >>>>>>> parent of ee1d356 (Merge branch 'main' into develop)
     });
@@ -95,7 +114,10 @@ function setupRotationControls() {
         console.log("현재 회전 값:", viewport.rotation);  // 회전 값 확인
         cornerstone.setViewport(element, viewport);
 <<<<<<< HEAD
+<<<<<<< HEAD
         cornerstone.updateImage(element);  // 강제 업데이트
+=======
+>>>>>>> parent of ee1d356 (Merge branch 'main' into develop)
 =======
 >>>>>>> parent of ee1d356 (Merge branch 'main' into develop)
     });
@@ -110,5 +132,9 @@ function setupRotationControls() {
 =======
 
 // 초기화 
+<<<<<<< HEAD
+initializeRotationDropdown();
+>>>>>>> parent of ee1d356 (Merge branch 'main' into develop)
+=======
 initializeRotationDropdown();
 >>>>>>> parent of ee1d356 (Merge branch 'main' into develop)
