@@ -202,8 +202,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // 기본 1x1 그리드로 시작
     generateImageGrid(1, 1);
 
-    // 이미지 전환 기능 추가
-	element.addEventListener('wheel', (event) => {
+   // 이미지 전환 기능 추가
+	/*element.addEventListener('wheel', (event) => {
 	    event.preventDefault();
 	    console.log('deltaY:', event.deltaY);
 	
@@ -215,5 +215,20 @@ document.addEventListener('DOMContentLoaded', () => {
 	
 	    const nextImagePath = imagePaths[currentIndex];
 	    loadAndDisplayImage(nextImagePath);
-	});
+	});*/
+	element.addEventListener('wheel', function (e) {
+        e.preventDefault();
+        console.log('deltaY:', e.deltaY);
+
+        if (e.deltaY > 0 && currentIndex < totalImages - 1) {
+            currentIndex += 1;
+        } else if (e.deltaY < 0 && currentIndex > 0) {
+            currentIndex -= 1;
+        }
+        loadAndDisplayImage(imagePaths[currentIndex]);
+    }, { passive: false });
+
+    // 첫 번째 이미지를 페이지 로드 시 표시
+    updateTheImage(0);
+	
 });

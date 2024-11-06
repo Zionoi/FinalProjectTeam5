@@ -84,7 +84,6 @@ function sendStudyKey(studyKey) {
 
 
 
-
 /**
  * 
  */
