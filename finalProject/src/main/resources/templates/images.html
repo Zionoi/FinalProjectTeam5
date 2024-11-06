@@ -13,14 +13,9 @@
 
 
     <!-- Thymeleaf로 서버에서 전달된 imagePaths를 JavaScript로 넘겨줌 -->
-    Thymeleaf로 서버에서 전달된 imagePaths를 JavaScript로 넘겨줌 
     <script th:inline="javascript">
         var imagePaths = /*[[${imagePaths}]]*/ [];
         console.log('이미지 경로 리스트:', imagePaths);
-        var studyKey = /*[[${studyKey}]]*/ []; // 추가된 부분
-    	console.log('Study Key:', studyKey);
-        var seriesKeys = /*[[${seriesKeys}]]*/ [];
-    	console.log('Series Keys:', seriesKeys);
     </script>
 	
 	<style>
