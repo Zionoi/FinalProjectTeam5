@@ -1,4 +1,19 @@
-document.addEventListener('DOMContentLoaded', () => {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//이슬님 코드
+/*document.addEventListener('DOMContentLoaded', () => {
 	
 	// cornerstone 초기화 함수 호출
     initializeCornerstoneTools();
@@ -48,3 +63,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
     console.log("StackScrollTool 활성화 완료 - 마우스 휠 사용");
 });
+*/
+  
