@@ -1,0 +1,111 @@
+@charset "UTF-8";
+#dicomImage {
+    width: 512px;
+    height: 512px;
+    background-color: black;
+    display: grid;
+	grid-gap: 10px;  /* 그리드 셀 사이 간격 설정 */
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+/* 버튼 스타일링 */
+.btn {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+/* 드롭다운 상자 스타일링 (기본적으로 숨겨짐) */
+.dropdown {
+    display: none;
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+}
+
+/* 그리드 셀렉터 스타일 (5x5 그리드) */
+.grid-selector-container {
+    display: grid;
+    grid-template-columns: repeat(5, 30px);
+    grid-template-rows: repeat(5, 30px);
+    gap: 2px;
+    margin-bottom: 10px;
+}
+
+/* 각 셀 스타일 */
+.grid-selector-item {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #ccc;
+    background-color: white;
+    cursor: pointer;
+}
+
+/* 선택된 셀 스타일 */
+.grid-selector-item.selected {
+    background-color: rgb(128, 128, 128);
+}
+
+/* 이미지 그리드 컨테이너 (이미지 표시 영역) */
+.dicomImage {
+    display: grid;
+    grid-gap: 10px;
+    margin-top: 20px;
+}
+
+/* 이미지 아이템 스타일 */
+.grid-item {
+    border: 2px solid #333;
+    background-color: #ddd;
+    overflow: hidden;
+}
+
+/* 이미지 크기 조정 (그리드에 맞추기) */
+.grid-item img {
+    width: 100px;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.5s ease-in-out;  /* 0.5초 동안 부드럽게 전환 */
+	opacity: 0;
+}
+
+.grid-item img.loaded {
+    opacity: 1;  /* 이미지가 로드되면 나타남 */
+}
+
+.grid-item.loading img {
+    opacity: 0;  /* 로딩 중일 때 투명하게 표시 */
+}
+
+#seriesGrid {
+    width: 100%;
+    background-color: black;
+    display: grid;
+    grid-gap: 10px;  /* 그리드 셀 간격 설정 */
+}
+.grid-item {
+    border: 2px solid #333;
+    background-color: #ddd;
+    overflow: hidden;
+    pointer-events: auto;
+}
+.grid-option {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #ccc;
+    background-color: white;
+    cursor: pointer;
+}
+.grid-option.selected {
+    background-color: grey;
+}
