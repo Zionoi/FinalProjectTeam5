@@ -1,13 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-	
-	// cornerstone 초기화 함수 호출
-    initializeCornerstoneTools();
-    
-    // cornerstone 및 cornerstoneTools 초기화
-    if (typeof cornerstone === 'undefined' || typeof cornerstoneWADOImageLoader === 'undefined') {
-        console.error("Cornerstone 또는 Cornerstone WADO Image Loader가 초기화되지 않았습니다.");
-        return;
-    }
+
 
     cornerstoneWADOImageLoader.external.cornerstone = cornerstone;
     cornerstoneWADOImageLoader.external.cornerstoneTools = cornerstoneTools;
@@ -17,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     cornerstoneTools.init();
     
     const element = document.getElementById('dicomImage');
+
     if (!element) {
         console.error("dicomImage 요소를 찾을 수 없습니다.");
         return;
@@ -80,6 +73,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
+
+    // 이미지 버튼 이벤트 핸들러 추가
+    document.getElementById('imageButton1').addEventListener('click', function (e) {
+        updateTheImage(0);
+    });
+
+    document.getElementById('imageButton2').addEventListener('click', function (e) {
+        updateTheImage(1);
+    });
+
+    const wheelEvents = ['mousewheel', 'DOMMouseScroll'];
+
+    wheelEvents.forEach((eventType) => {
+        element.addEventListener(eventType, function (e) {
+            e.preventDefault();
+
+            // 마우스 휠 방향에 따라 이미지 인덱스 변경
+            let delta = e.wheelDelta || -e.detail;
+            if (delta > 0) {
+                // 휠 업
+                if (currentIndex > 0) {
+                    updateTheImage(currentIndex - 1);
+                }
+            } else {
+                // 휠 다운
+                if (currentIndex < totalImages - 1) {
+                    updateTheImage(currentIndex + 1);
+                }
+            }
+
+            return false; // 페이지 스크롤 방지
+        });
+    });
 });
 
 
