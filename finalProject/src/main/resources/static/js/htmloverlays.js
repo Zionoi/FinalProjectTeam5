@@ -1,16 +1,15 @@
-/* // image enable the element
+// image enable the element
     const element = document.getElementById('dicomImage');
     cornerstone.enable(element);
 
-    // load the image and display it
-    const imageId = 'example://1';
+  /* // load the image and display it
     cornerstone.loadImage(imageId).then(function(image) {
         cornerstone.displayImage(element, image);
         const viewport = cornerstone.getViewport(element);
         document.getElementById('bottomright').textContent = "Zoom: " + viewport.scale + "x";
         document.getElementById('bottomleft').textContent = "WW/WC:" + Math.round(viewport.voi.windowWidth)
             + "/" + Math.round(viewport.voi.windowCenter);
-    });
+    });*/
 
     // add event handlers to mouse move to adjust window/center
     element.addEventListener('mousedown', function (e) {
@@ -39,4 +38,4 @@
 
         document.addEventListener('mousemove', mouseMoveHandler);
         document.addEventListener('mouseup', mouseUpHandler);
-    });*/
+    });

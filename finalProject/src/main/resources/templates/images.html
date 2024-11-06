@@ -18,7 +18,7 @@
         console.log('이미지 경로 리스트:', imagePaths);
     </script>
 	
-	<!--<style>
+	<style>
         .overlay {
             /* prevent text selection on overlay */
             -webkit-touch-callout: none;
@@ -31,7 +31,7 @@
             /* ignore pointer event on overlay */
             pointer-events: none;
         }
-    </style>-->
+    </style>
 	
 </head>
 <body>
@@ -42,7 +42,28 @@
         <div th:replace="imageView :: buttonLayout"></div>
         
         <!-- DICOM 이미지 뷰어 영역 -->
-        <div id="dicomImage" oncontextmenu="return false" onmousedown="return false"></div>
+        <!--<div id="dicomImage" oncontextmenu="return false" onmousedown="return false"></div>-->
+         <div style="width:512px;height:512px;position:relative;color:white"
+         oncontextmenu="return false"
+         onmousedown="return false">
+
+        <div id="dicomImage"
+             style="width:512px;height:512px;top:0px;left:0px;position:absolute">
+        </div>
+
+        <div id="topleft" class="overlay" style="position:absolute;top:0px;left:0px">
+            Patient Name
+        </div>
+        <div id="topright" class="overlay" style="position:absolute;top:0px;right:0px">
+            Hospital
+        </div>
+        <div id="bottomright" class="overlay" style="position:absolute;bottom:0px;right:0px">
+            Zoom:
+        </div>
+        <div id="bottomleft" class="overlay" style="position:absolute;bottom:0px;left:0px">
+            WW/WC:
+        </div>
+    </div>
     </div>
 
     <!-- JavaScript 파일 포함 -->

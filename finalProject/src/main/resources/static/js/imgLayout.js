@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let gridSize = { rows: 1, cols: 1 };  // 그리드 사이즈 정보
     
     // loadAndDisplayImage 함수 정의 (또는 기존 함수를 대체)
-    function loadAndDisplayImage(gridItem, filename, seriesKey) {
+    function loadAndDisplayImage(filename) {
 		
 		if (filename instanceof HTMLElement) {
 	        console.error("filename이 HTML 요소로 전달되었습니다. 텍스트로 변환을 시도합니다.");
@@ -96,6 +96,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const imageId = `wadouri:http://localhost:8080/dicom-file/${filename}`;
 	    cornerstone.loadImage(imageId).then(image => {
 	        cornerstone.displayImage(gridItem, image);
+	        const viewport = cornerstone.getViewport(element);
+        document.getElementById('bottomright').textContent = "Zoom: " + viewport.scale + "x";
+        document.getElementById('bottomleft').textContent = "WW/WC:" + Math.round(viewport.voi.windowWidth)
+            + "/" + Math.round(viewport.voi.windowCenter);
 	    }).catch(err => {
 	        console.error(`Failed to load image for seriesKey ${seriesKey}:`, err);
 	        gridItem.style.backgroundColor = 'black';
@@ -228,7 +232,10 @@ document.addEventListener('DOMContentLoaded', () => {
         loadAndDisplayImage(imagePaths[currentIndex]);
     }, { passive: false });
 
-    // 첫 번째 이미지를 페이지 로드 시 표시
-    updateTheImage(0);
+/*    // 첫 번째 이미지를 페이지 로드 시 표시
+    updateTheImage(0);*/
 	
 });
+
+
+
