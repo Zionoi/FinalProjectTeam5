@@ -14,7 +14,6 @@ public class ImageService {
 	@Autowired
 	ImageRepository imageRepository;
 
-	// studyKey와 seriesKey로 이미지 목록 가져오기
 	public List<Image> getImagesByStudyKeyAndSeriesKey(Long studyKey, Long seriesKey) {
 		
 		return imageRepository.getImagesByStudyKeyAndSeriesKey(studyKey, seriesKey);
