@@ -1,3 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	 <!--<link href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">-->
+<head>
+    <meta charset="UTF-8">
+    <!-- Cornerstone Latest -->
+    <script src="https://unpkg.com/cornerstone-core"></script>
+    <script src="https://unpkg.com/cornerstone-tools"></script>
+    <script src="https://unpkg.com/dicom-parser"></script>
+    <script src="https://unpkg.com/cornerstone-wado-image-loader"></script>
+    <title>DICOM IMAGE VIEWER</title>
+    <link rel="stylesheet" th:href="@{/css/image.css}">
+
+
+    <!-- Thymeleaf로 서버에서 전달된 imagePaths를 JavaScript로 넘겨줌 -->
+    <script th:inline="javascript">
+        var imagePaths = /*[[${imagePaths}]]*/ [];
+        console.log('이미지 경로 리스트:', imagePaths);
+    </script>
+	
+	<style>
+        .overlay {
+            /* prevent text selection on overlay */
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+
+            /* ignore pointer event on overlay */
+            pointer-events: none;
+        }
+    </style>
+	
+</head>
+<body>
+    <div class="container">
+        <h2>DICOM IMAGE VIEWER</h2>
+        
+        <!-- 버튼 레이아웃을 프레그먼트에서 불러오기 -->
+        <div th:replace="imageView :: buttonLayout"></div>
+        
+        <!-- DICOM 이미지 뷰어 영역 -->
+        <!--<div id="dicomImage" oncontextmenu="return false" onmousedown="return false"></div>-->
+         <div style="width:512px;height:512px;position:relative;color:white"
+         oncontextmenu="return false"
+         onmousedown="return false">
+
+        <div id="dicomImage"
+             style="width:512px;height:512px;top:0px;left:0px;position:absolute">
+        </div>
+
+        <div id="topleft" class="overlay" style="position:absolute;top:0px;left:0px">
+            Patient Name
+        </div>
+        <div id="topright" class="overlay" style="position:absolute;top:0px;right:0px">
+            Hospital
+        </div>
+        <div id="bottomright" class="overlay" style="position:absolute;bottom:0px;right:0px">
+            Zoom:
+        </div>
+        <div id="bottomleft" class="overlay" style="position:absolute;bottom:0px;left:0px">
+            WW/WC:
+        </div>
+    </div>
+    </div>
+
+    <!-- JavaScript 파일 포함 -->
+    
+    <script src="/js/rotation.js"></script>
+	<script src="/js/seriesLayout.js"></script>
+	<script src="/js/imgLayout.js"></script>
+	<script src="/js/imageView.js"></script>
+	<script src="/js/testjs.js"></script>
+	<script src="/js/htmloverlays.js"></script>
+	
+
+</body>
+</html>
 
 
 
