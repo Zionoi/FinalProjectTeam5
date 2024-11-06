@@ -1,9 +1,18 @@
-<!DOCTYPE html>
+
+
+
+
+
+
+
+
+<!--이슬님 코드-->
+<!--<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-	 <!--<link href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">-->
+	 <link href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
 <head>
     <meta charset="UTF-8">
-    <!-- Cornerstone Latest -->
+     Cornerstone Latest 
   	<script src="https://unpkg.com/cornerstone-core"></script>
     <script src="https://unpkg.com/cornerstone-wado-image-loader"></script>
     <script src="https://unpkg.com/cornerstone-tools"></script>
@@ -15,7 +24,7 @@
     <link rel="stylesheet" th:href="@{/css/image.css}">
 
 
-    <!-- Thymeleaf로 서버에서 전달된 imagePaths를 JavaScript로 넘겨줌 -->
+     Thymeleaf로 서버에서 전달된 imagePaths를 JavaScript로 넘겨줌 
     <script th:inline="javascript">
         var imagePaths = /*[[${imagePaths}]]*/ [];
         console.log('이미지 경로 리스트:', imagePaths);
@@ -30,14 +39,14 @@
     <div class="container">
         <h2>DICOM IMAGE VIEWER</h2>
         
-        <!-- 버튼 레이아웃을 프레그먼트에서 불러오기 -->
+         버튼 레이아웃을 프레그먼트에서 불러오기 
         <div th:replace="imageView :: buttonLayout"></div>
         
-        <!-- DICOM 이미지 뷰어 영역 -->
+         DICOM 이미지 뷰어 영역 
         <div id="dicomImage" oncontextmenu="return false" onmousedown="return false"></div>
     </div>
 
-    <!-- JavaScript 파일 포함 -->
+     JavaScript 파일 포함 
     
     <script src="/js/imgTool/rotation.js"></script>
 	<script src="/js/imgTool/seriesLayout.js"></script>
@@ -48,3 +57,4 @@
 
 </body>
 </html>
+-->
