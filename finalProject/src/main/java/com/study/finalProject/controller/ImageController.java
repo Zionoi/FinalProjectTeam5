@@ -5,9 +5,12 @@ import java.net.MalformedURLException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
@@ -16,17 +19,26 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.study.finalProject.domain.Image;
 import com.study.finalProject.service.ImageService;
 
 import jakarta.servlet.http.HttpServletRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Controller
 public class ImageController {
 
     @Autowired
     ImageService imageService; // ImageService를 통해 데이터베이스 접근
+    
+    private static final Logger logger = LoggerFactory.getLogger(ImageController.class);
+
+    // 하드코딩 방지
+    @Value("${pacs.storage.path}")
+    private String pacsStoragePath;
 
     // 스터디키와 시리즈키를 사용해 데이터베이스에서 이미지 경로와 파일 이름을 조회
     @GetMapping("/images/studies/{studyKey}/series/{seriesKey}")
@@ -59,8 +71,10 @@ public class ImageController {
     public ResponseEntity<Resource> getImage(HttpServletRequest request) throws MalformedURLException {
         // 경로 얻어오기 ("/dicom-file/" 이후 경로)
         String fullPath = request.getRequestURI().replace("/dicom-file/", "");
-        Path filePath = Paths.get("C:/Users/TJ/Desktop/PACSStorage/", fullPath); // PACSStorage 경로와 결합
+        Path filePath = Paths.get(pacsStoragePath, fullPath);
         Resource resource = new UrlResource(filePath.toUri());
+        
+        logger.info("생성된 파일 경로: {}", filePath);
 
         System.out.println("생성된 파일 경로: " + filePath.toString()); // 경로 확인 로그
         System.out.println("생성된 resource 파일 경로: " + resource); // 경로 확인 로그
@@ -75,6 +89,29 @@ public class ImageController {
             System.out.println("파일을 찾을 수 없습니다: " + filePath.toString());
             return ResponseEntity.notFound().build();
         }
+    }
+    
+    // 여러 시리즈 키를 사용하여 해당하는 이미지들을 가져오는 메서드 추가
+    @GetMapping("/studies/{studyKey}/series-images")
+    public ResponseEntity<Map<Long, List<String>>> getSeriesImagesByStudyKey(
+            @PathVariable("studyKey") Long studyKey,
+            @RequestParam("seriesKeys") List<Long> seriesKeys) {
+
+        Map<Long, List<String>> seriesImagesMap = new HashMap<>();
+
+        for (Long seriesKey : seriesKeys) {
+            List<Image> images = imageService.getImagesByStudyKeyAndSeriesKey(studyKey, seriesKey);
+            List<String> imagePaths = new ArrayList<>();
+            
+            for (Image image : images) {
+                String fullPath = Paths.get(image.getPath(), image.getFName()).toString().replace("\\", "/");
+                imagePaths.add(fullPath);
+            }
+            
+            seriesImagesMap.put(seriesKey, imagePaths);
+        }
+
+        return ResponseEntity.ok(seriesImagesMap);
     }
     
 //    
