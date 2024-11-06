@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 	
 	// cornerstone 초기화 함수 호출
     initializeCornerstoneTools();
@@ -12,6 +13,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 =======
 =======
+=======
+
+    // Cornerstone 초기화
+    cornerstoneWADOImageLoader.external.cornerstone = cornerstone;
+    cornerstoneWADOImageLoader.external.cornerstoneTools = cornerstoneTools;
+>>>>>>> parent of 545421c (이미지 레이아웃, 시리즈 레이아웃, 회전 기능 수정중)
 
     // Cornerstone 초기화
     cornerstoneWADOImageLoader.external.cornerstone = cornerstone;
@@ -31,6 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
     cornerstoneTools.init();
     
     const element = document.getElementById('dicomImage');
+<<<<<<< HEAD
 <<<<<<< HEAD
     if (!element) {
         console.error("dicomImage 요소를 찾을 수 없습니다.");
@@ -95,6 +103,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 =======
+=======
+>>>>>>> parent of 545421c (이미지 레이아웃, 시리즈 레이아웃, 회전 기능 수정중)
     cornerstone.enable(element);
 
     let currentIndex = 0;  // 현재 이미지 인덱스 초기화
@@ -127,6 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateTheImage(index) {
         loadAndDisplayImage(index);
     }
+<<<<<<< HEAD
 
     // 초기 이미지 로드
     updateTheImage(0);
@@ -263,6 +274,9 @@ document.addEventListener('DOMContentLoaded', () => {
         loadAndDisplayImage(index);
     }
 
+=======
+
+>>>>>>> parent of 545421c (이미지 레이아웃, 시리즈 레이아웃, 회전 기능 수정중)
     // 초기 이미지 로드
     updateTheImage(0);
 
@@ -298,6 +312,9 @@ document.addEventListener('DOMContentLoaded', () => {
             return false; // 페이지 스크롤 방지
         });
     });
+<<<<<<< HEAD
+>>>>>>> parent of 545421c (이미지 레이아웃, 시리즈 레이아웃, 회전 기능 수정중)
+=======
 >>>>>>> parent of 545421c (이미지 레이아웃, 시리즈 레이아웃, 회전 기능 수정중)
 });
 */
