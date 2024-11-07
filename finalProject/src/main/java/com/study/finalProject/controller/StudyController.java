@@ -87,6 +87,9 @@ public class StudyController {
     public String studyChoice(@PathVariable("pid") String pid, Model model) {
         try {
             List<Study> choiceStudies = studyService.getStudyByPid(pid);
+            if (choiceStudies == null || choiceStudies.isEmpty()) {
+                model.addAttribute("errorMessage", "해당 환자의 검사 이력이 없습니다.");
+            }
             model.addAttribute("choiceStudies", choiceStudies);
             return "studyChoice :: studyChoice";
         } catch (Exception e) {
@@ -248,6 +251,5 @@ public class StudyController {
         // 나머지 조건으로 검색 수행
         return performSearch(searchCriteria, model);
     }
-    
-    
+
 }

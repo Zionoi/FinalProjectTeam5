@@ -1,6 +1,9 @@
 package com.study.finalProject.repository;
 import java.util.List;
+import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -22,5 +25,11 @@ public interface StudyRepository extends JpaRepository<Study, Long>, JpaSpecific
 	    List<Study> findStudiesByPid(@Param("pid") String pid);
 
 //	List<Study> findAllByPid(String pid);
+
+
+    // 특정 pid와 연관된 모든 Study 반환
+    List<Study> findByPatient_Pid(String pid);
+    
+    Optional<Study> findById(Long studyKey);
 
 }
