@@ -11,6 +11,7 @@ import java.util.List; // 리스트를 사용하기 위해 필요
 //import com.study.dicom.Study; // Study 엔티티 클래스 경로 (패키지명은 실제 프로젝트에 맞게 수정)
 //import com.study.dicom.Series; // Series 엔티티 클래스 경로
 //import com.study.dicom.Image; // Image 엔티티 클래스 경로
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
@@ -24,9 +25,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
+import com.study.finalProject.domain.Patient;
 import com.study.finalProject.domain.Series;
 import com.study.finalProject.domain.Study;
 import com.study.finalProject.repository.StudyRepository;
+import com.study.finalProject.service.PatientService;
 import com.study.finalProject.service.SeriesService;
 import com.study.finalProject.service.StudyService;
 
@@ -47,6 +50,8 @@ public class StudyController {
     @Autowired
     private StudyRepository studyRepository;
 
+    @Autowired
+    private PatientService patientService;
     
     @GetMapping("/")
     public String home() {
@@ -249,5 +254,20 @@ public class StudyController {
         return performSearch(searchCriteria, model);
     }
     
+    // pid를 기반으로 Study 상세 페이지를 보여주는 메서드
+    @GetMapping("/studyList/{pid}/patientDetail")
+    public String getpatientDetail(@PathVariable("pid") String pid, Model model) {
+        // pid로 Study 조회
+    	Optional<Patient> patient = patientService.getPatientById(pid);
+
+        if (patient.isPresent()) {
+        	Patient pa = patient.get();
+            model.addAttribute("patient", pa);
+        } else {
+            model.addAttribute("patient", null);
+        }
+
+        return "patientDetail"; 
+    }
     
 }
