@@ -1,8 +1,9 @@
 package com.study.finalProject.controller;
 
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -63,20 +64,21 @@ public class PatientController {
         return "redirect:/patients";
     }
 
-    // 환자의 Study 목록 페이지
+ // pid를 기반으로 Study 상세 페이지를 보여주는 메서드
     @GetMapping("/studyList/{pid}/patientDetail")
-    public String getPatientDetail(@PathVariable("pid") String pid,
-                                   @RequestParam(value = "page", defaultValue = "0") int page,
-                                   Model model) {
-        int size = 10;
-        Page<Study> studyPage = studyService.findStudiesByPid(pid, page, size);
+    public String getpatientDetail(@PathVariable("pid") String pid, Model model) {
+        // pid로 Study 조회
+    	Optional<Patient> patient = patientService.getPatientById(pid);
 
-        model.addAttribute("choiceStudies", studyPage.getContent());
-        model.addAttribute("totalPages", studyPage.getTotalPages());
-        model.addAttribute("currentPage", page);
-        return "studyChoice"; // studyChoice.html
+        if (patient.isPresent()) {
+        	Patient pa = patient.get();
+            model.addAttribute("patient", pa);
+        } else {
+            model.addAttribute("patient", null);
+        }
+
+        return "patientDetail"; 
     }
-
     // 환자 댓글 업데이트
     @PostMapping("/updateComment")
     public String updateComment(@RequestParam("pid") String pid, 
@@ -88,15 +90,5 @@ public class PatientController {
         return "redirect:/patients/" + pid; // 댓글 업데이트 후 환자 상세 페이지로 리디렉션
     }
 
-    // 보고서 페이지
-    @GetMapping("/reportPage")
-    public String reportPage(@RequestParam("pid") String pid, Model model) {
-        Patient patient = patientService.findPatientByPid(pid);
-        List<Study> studies = studyService.getStudyByPid(pid); // 변경된 메서드 호출
 
-        model.addAttribute("patient", patient);
-        model.addAttribute("studies", studies);
-
-        return "reportPage"; // reportPage.html
-    }
 }

@@ -1,5 +1,7 @@
 package com.study.finalProject.service;
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -25,8 +27,8 @@ public class StudyService {
         return studyRepository.findAll();
     }
 
-    public Study getStudyById(Long id) {
-        return studyRepository.findById(id).orElse(null);
+    public Optional<Study> getStudyById(Long id) {
+        return studyRepository.findById(id);
     }
 
     public Study saveStudy(Study study) {
@@ -59,5 +61,5 @@ public class StudyService {
     public Study findStudyByPatientId(String pid) {
         return studyRepository.findByPatient_Pid(pid).stream().findFirst().orElse(null);
     }
-	
+
 }

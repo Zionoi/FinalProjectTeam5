@@ -92,6 +92,9 @@ public class StudyController {
     public String studyChoice(@PathVariable("pid") String pid, Model model) {
         try {
             List<Study> choiceStudies = studyService.getStudyByPid(pid);
+            if (choiceStudies == null || choiceStudies.isEmpty()) {
+                model.addAttribute("errorMessage", "해당 환자의 검사 이력이 없습니다.");
+            }
             model.addAttribute("choiceStudies", choiceStudies);
             return "studyChoice :: studyChoice";
         } catch (Exception e) {
@@ -254,20 +257,5 @@ public class StudyController {
         return performSearch(searchCriteria, model);
     }
     
-    // pid를 기반으로 Study 상세 페이지를 보여주는 메서드
-    @GetMapping("/studyList/{pid}/patientDetail")
-    public String getpatientDetail(@PathVariable("pid") String pid, Model model) {
-        // pid로 Study 조회
-    	Optional<Patient> patient = patientService.getPatientById(pid);
 
-        if (patient.isPresent()) {
-        	Patient pa = patient.get();
-            model.addAttribute("patient", pa);
-        } else {
-            model.addAttribute("patient", null);
-        }
-
-        return "patientDetail"; 
-    }
-    
 }

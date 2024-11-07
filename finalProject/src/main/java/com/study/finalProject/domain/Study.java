@@ -20,6 +20,10 @@ public class Study {
     @JoinColumn(name = "pid", insertable = false, updatable = false)
     private Patient patient;
     
+    public String getPName() {
+        return patient != null ? patient.getPName() : "이름 정보 없음";
+    }
+    
     @Column(name = "STUDYINSUID", nullable = false, length = 64)
     private String studyInsUid;
 
