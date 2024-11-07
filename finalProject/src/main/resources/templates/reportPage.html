@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>환자 리포트</title>
+    <link rel="stylesheet" th:href="@{/css/reportPage.css}">
+</head>
+<body>
+    <div class="report-container">
+        <h2>환자 정보</h2>
+        <p>환자 정보: <span th:text="${patient.pName}"></span> / <span th:text="${patient.pid}"></span> / <span th:text="${patient.patientNo}"></span></p>
+        <p>검사 날짜: <span th:text="${study.examDate}"></span></p>
+        <p>검사명: <span th:text="${study.examName}"></span></p>
+
+        <div class="comment-box">
+            <h3>코멘트</h3>
+            <textarea rows="4" cols="50" placeholder="[코멘트]"></textarea>
+        </div>
+
+        <div class="finding-box">
+            <h3>[Finding]</h3>
+            <textarea rows="4" cols="50"></textarea>
+        </div>
+
+        <div class="conclusion-box">
+            <h3>[Conclusion]</h3>
+            <textarea rows="4" cols="50"></textarea>
+        </div>
+
+        <div class="recommend-box">
+            <h3>[Recommend]</h3>
+            <textarea rows="4" cols="50"></textarea>
+        </div>
+
+        <div class="macro-section">
+            <label>판독 매크로:</label>
+            <select>
+                <option>Common</option>
+                <option>Other Option</option>
+            </select>
+
+            <label>Report Code:</label>
+            <select>
+                <option>None</option>
+                <option>Code1</option>
+            </select>
+
+            <p>판독 일시: <input type="text" th:value="${#dates.format(study.readingDate, 'yyyy-MM-dd HH:mm:ss')}" readonly></p>
+            <p>예비판독의: <input type="text" th:value="${study.preliminaryReader}" readonly></p>
+            <p>판독의1: <input type="text" th:value="${study.reader1}" readonly></p>
+            <p>판독의2: <input type="text" th:value="${study.reader2}" readonly></p>
+        </div>
+
+        <button type="button">판독</button>
+        <button type="button">예비판독</button>
+        <button type="button" onclick="window.close();">닫기</button>
+    </div>
+</body>
+</html>
