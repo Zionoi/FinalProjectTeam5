@@ -24,6 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const totalImages = imagePaths.length;  // 전체 이미지 개수
     let playInterval = null; // 클립 재생을 위한 변수
     let playCheck = false; // 재생 상태를 나타내는 변수
+    let toolCheck = false; // 주석 모드 상태를 나타내는 변수
 
     // 이미지를 로드하고 표시하는 함수
     function loadAndDisplayImage(filename) {
@@ -74,9 +75,45 @@ document.addEventListener('DOMContentLoaded', () => {
     // 첫 번째 이미지를 로드하고, 로드 후 추가 이벤트 설정
     updateTheImage(0).then(function () {
         // 이미지가 로드된 후에 이벤트 핸들러 설정
+        
+     	
+        // 주석 선택 옵션 이벤트
+	    document.getElementById('annotateSelect').addEventListener('click', function () {
+	        const selectedValue = this.value;
+	
+	        if (selectedValue === 'angle') {
+	            toolCheck = !toolCheck; // 선택할 때마다 토글
+	            if (toolCheck) {
+	                // Angle 도구 활성화
+	                const AngleTool = cornerstoneTools.AngleTool;
+	                cornerstoneTools.addTool(AngleTool);
+	                cornerstoneTools.setToolActive('Angle', { mouseButtonMask: 1 });
+	                console.log("각도 도구 활성화됨");
+	            } else {
+	                // Angle 도구 비활성화
+	                cornerstoneTools.setToolDisabled('Angle');
+	                console.log("각도 도구 비활성화됨");
+	            }
+	        } else if (selectedValue === 'arrow') {  // 화살표 도구 활성화
+	        	toolCheck = !toolCheck;
+                // Init cornerstone tools
+				cornerstoneTools.init();
+				
+				// Enable any elements, and display images
+				// ...
+				
+				// Add our tool, and set it's mode
+				const ArrowAnnotateTool = cornerstoneTools.ArrowAnnotateTool;
+				
+				cornerstoneTools.addTool(ArrowAnnotateTool)
+				cornerstoneTools.setToolActive('ArrowAnnotate', { mouseButtonMask: 1 })
+                }
+	    });
 
         // 마우스 버튼에 따라 다른 동작 수행
         element.addEventListener('mousedown', function (e) {
+            if (toolCheck) return; // 주석 모드 활성화 시 이미지 조작 막기
+
             let lastX = e.pageX;
             let lastY = e.pageY;
             const mouseButton = e.which; // 1: 왼쪽, 2: 가운데, 3: 오른쪽
@@ -114,6 +151,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // 플레이클립 버튼 클릭 이벤트 추가
         document.getElementById('playClipBtn').addEventListener('click', function () {
+            if (toolCheck) return; // 주석 모드 활성화 시 클립 재생 막기
+
             if (playInterval) {
                 // 재생 중이면 중지
                 clearInterval(playInterval);
@@ -125,15 +164,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 playInterval = setInterval(() => {
                     currentIndex = (currentIndex + 1) % totalImages; // 순환 재생
                     updateTheImage(currentIndex);
-                }, 50); // 500ms 간격으로 이미지 변경
+                }, 50); // 50ms 간격으로 이미지 변경
             }
         });
 
         // 마우스 휠 이벤트로 이미지 전환
         element.addEventListener('wheel', function (e) {
+            if (toolCheck) return; // 주석 모드 활성화 시 이미지 전환 막기
             e.preventDefault();
-            if (playCheck) return; // 클립 재생 중이면 이미지 전환 막기
-
+            
             console.log('deltaY:', e.deltaY);
 
             if (e.deltaY > 0 && currentIndex < totalImages - 1) {
@@ -144,44 +183,51 @@ document.addEventListener('DOMContentLoaded', () => {
             loadAndDisplayImage(imagePaths[currentIndex]);
         }, { passive: false });
 
-        // 버튼 이벤트 핸들러 추가
+        // 기타 버튼 이벤트 핸들러 추가 (toolCheck가 활성화되면 동작하지 않음)
         document.getElementById('x256').addEventListener('click', function () {
+            if (toolCheck) return;
             element.style.width = '256px';
             element.style.height = '256px';
             cornerstone.resize(element);
         });
 
         document.getElementById('x512').addEventListener('click', function () {
+            if (toolCheck) return;
             element.style.width = '512px';
             element.style.height = '512px';
             cornerstone.resize(element);
         });
 
         document.getElementById('invert').addEventListener('click', function () {
+            if (toolCheck) return;
             const viewport = cornerstone.getViewport(element);
             viewport.invert = !viewport.invert;
             cornerstone.setViewport(element, viewport);
         });
 
         document.getElementById('interpolation').addEventListener('click', function () {
+            if (toolCheck) return;
             const viewport = cornerstone.getViewport(element);
             viewport.pixelReplication = !viewport.pixelReplication;
             cornerstone.setViewport(element, viewport);
         });
 
         document.getElementById('hflip').addEventListener('click', function () {
+            if (toolCheck) return;
             const viewport = cornerstone.getViewport(element);
             viewport.hflip = !viewport.hflip;
             cornerstone.setViewport(element, viewport);
         });
 
         document.getElementById('vflip').addEventListener('click', function () {
+            if (toolCheck) return;
             const viewport = cornerstone.getViewport(element);
             viewport.vflip = !viewport.vflip;
             cornerstone.setViewport(element, viewport);
         });
 
         document.getElementById('rotate').addEventListener('click', function () {
+            if (toolCheck) return;
             const viewport = cornerstone.getViewport(element);
             viewport.rotation += 90;
             cornerstone.setViewport(element, viewport);

@@ -20,12 +20,19 @@
 		    <button id="rotate" class="btn">회전</button>
             <button class="btn" id="playClipBtn">플레이클립</button>
             <button class="btn" id="viewSeriesBtn">시리즈모아보기</button>
-            <button class="btn" id="annotateBtn">주석</button>
+            <!-- 주석을 선택할 수 있는 드롭다운 메뉴 -->
+            <select id="annotateSelect" class="btn">
+                <option value="" selected disabled>주석</option>
+                <option value="angle">각도</option>
+                <option value="arrow">화살표</option>
+                <!-- 추가 옵션 필요 시 여기에 추가 -->
+            </select>
             <button class="btn" id="resetBtn">초기화</button>
             <button class="btn" id="downloadBtn">다운로드</button>
             <button class="btn" id="seriesLayoutBtn">시리즈 레이아웃</button>
             <button class="btn" id="imgLayoutBtn">이미지 레이아웃</button>
         </div>
+        
         
         <!-- 회전 드롭다운 메뉴 -->
         <div id="rotationDropdown" class="dropdown-menu" style="display: none;">
