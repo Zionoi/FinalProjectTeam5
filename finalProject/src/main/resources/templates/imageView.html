@@ -11,10 +11,13 @@
     <!-- 버튼 레이아웃 프레그먼트 정의 -->
     <div th:fragment="buttonLayout">
         <div class="button-container">
-            <button class="btn" id="invertBtn">흑백반전</button>
-            <button class="btn" id="brightnessBtn">밝기/대비조절</button>
-            <button class="btn" id="zoomBtn">확대</button>
-            <button class="btn" id="rotateBtn">회전</button>
+			<button id="x256" class="btn">256x256</button>
+		    <button id="x512" class="btn">512x512</button>
+		    <button id="invert" class="btn">흑백반전</button>
+		    <button id="interpolation" class="btn">Toggle Interpolation</button>
+		    <button id="hflip" class="btn">Horizontal Flip</button>
+		    <button id="vflip" class="btn">Vertical Flip</button>
+		    <button id="rotate" class="btn">회전</button>
             <button class="btn" id="playClipBtn">플레이클립</button>
             <button class="btn" id="viewSeriesBtn">시리즈모아보기</button>
             <button class="btn" id="annotateBtn">주석</button>

@@ -24,8 +24,8 @@
 	    <div th:if="${choiceStudies != null and !choiceStudies.isEmpty()}">
 		    <p>환자 ID: <span th:text="${choiceStudies[0].pid}"></span></p>
 		    <p>환자 이름: <span th:text="${choiceStudies[0].pName}"></span></p>
-			<a th:href="@{/patients/studyList/{pid}/patientDetail(pid=${choiceStudies[0].pid})}">상세 보기</a>
- 
+			  <a th:href="@{/patients/studyList/{pid}/patientDetail(pid=${choiceStudies[0].pid})}">상세 보기</a>
+
 		</div>
 		
 		<div th:if="${choiceStudies == null or choiceStudies.isEmpty()}">
@@ -42,6 +42,7 @@
 	                    <th>성별</th>
 	                    <th>Verify</th>
 	                    <th>담당의사</th>
+
 	                </tr>
 	            </thead>
 	            <tbody>

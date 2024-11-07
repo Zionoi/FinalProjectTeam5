@@ -6,9 +6,9 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import com.study.finalProject.domain.Member;
 import com.study.finalProject.service.MemberService;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 
@@ -109,6 +111,15 @@ public class MemberController {
 	public @ResponseBody boolean checkId(@RequestParam("id") String id) {
 		return memberService.idCheck(id);
 	}
+    
+    
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request, HttpServletResponse response) {
+        new SecurityContextLogoutHandler().logout(request, response, SecurityContextHolder.getContext().getAuthentication());
+        return "redirect:/loginPage";
+    }
+    
+    
     
 //    
 //    @PostMapping("/login")

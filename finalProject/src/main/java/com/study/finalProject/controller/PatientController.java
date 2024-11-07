@@ -1,5 +1,6 @@
 package com.study.finalProject.controller;
 
+
 import java.util.List;
 import java.util.Optional;
 
@@ -11,22 +12,20 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.study.finalProject.domain.Patient;
-import com.study.finalProject.domain.Study;
 import com.study.finalProject.service.PatientService;
-import com.study.finalProject.service.StudyService;
+
+
 
 @Controller
 @RequestMapping("/patients")
 public class PatientController {
-
-    @Autowired
+	
+	@Autowired
     private PatientService patientService;
 
-    @Autowired
-    private StudyService studyService;
+    
 
     // 모든 환자 목록 페이지
     @GetMapping
@@ -63,6 +62,7 @@ public class PatientController {
         patientService.deletePatient(pid);
         return "redirect:/patients";
     }
+
 
  // pid를 기반으로 Study 상세 페이지를 보여주는 메서드
     @GetMapping("/studyList/{pid}/patientDetail")
