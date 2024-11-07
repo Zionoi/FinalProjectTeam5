@@ -80,9 +80,9 @@ document.addEventListener('DOMContentLoaded', () => {
         // 주석 선택 옵션 이벤트
 	    document.getElementById('annotateSelect').addEventListener('click', function () {
 	        const selectedValue = this.value;
+	            toolCheck = ture; 
 	
 	        if (selectedValue === 'angle') {
-	            toolCheck = !toolCheck; // 선택할 때마다 토글
 	            if (toolCheck) {
 	                // Angle 도구 활성화
 	                const AngleTool = cornerstoneTools.AngleTool;
@@ -90,23 +90,26 @@ document.addEventListener('DOMContentLoaded', () => {
 	                cornerstoneTools.setToolActive('Angle', { mouseButtonMask: 1 });
 	                console.log("각도 도구 활성화됨");
 	            } else {
-	                // Angle 도구 비활성화
-	                cornerstoneTools.setToolDisabled('Angle');
-	                console.log("각도 도구 비활성화됨");
+	                return;
 	            }
 	        } else if (selectedValue === 'arrow') {  // 화살표 도구 활성화
-	        	toolCheck = !toolCheck;
-                // Init cornerstone tools
-				cornerstoneTools.init();
-				
-				// Enable any elements, and display images
-				// ...
-				
-				// Add our tool, and set it's mode
-				const ArrowAnnotateTool = cornerstoneTools.ArrowAnnotateTool;
-				
-				cornerstoneTools.addTool(ArrowAnnotateTool)
-				cornerstoneTools.setToolActive('ArrowAnnotate', { mouseButtonMask: 1 })
+	        	if(toolCheck){
+	                // Init cornerstone tools
+					cornerstoneTools.init();
+					
+					// Enable any elements, and display images
+					// ...
+					
+					// Add our tool, and set it's mode
+					const ArrowAnnotateTool = cornerstoneTools.ArrowAnnotateTool;
+					
+					cornerstoneTools.addTool(ArrowAnnotateTool)
+					cornerstoneTools.setToolActive('ArrowAnnotate', { mouseButtonMask: 1 })
+				} else {
+	                return;
+	            }
+            } else if (selectedValue === 'toolExit') { // 주석 종료
+	        	toolCheck = false;
                 }
 	    });
 
