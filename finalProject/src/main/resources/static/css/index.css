@@ -1,103 +1,42 @@
-@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
-body{
-   margin:0px;
-}
 .login-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    overflow: hidden;
     height: 100vh;
-    background-color: #29383A;
-    font-family: 'Pretendard-Regular';
+    background: #f9f9f9;
 }
 
-.login-logo {
-	color:#889DA0;
-	font-weight:900;
-}
-.login-label {
-	color:#AFAFAF;
-	float:left;
-	font-size: 14px;
-	letter-spacing: 1px;
-	font-weight: 400;
-	margin-top:8px;
-}
 .login-box {
-    background: #29383A;
+    background: #fff;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     text-align: center;
 }
 
-.login-line {
-	background-color: transparent;
-	border: transparent;
-	border-bottom: solid 1px #8D9C9E;
-	color:#EAEAEA;
-	font-size: 15px;
-	font-weight:600;
-	letter-spacing: 0.2px;
-}
-.login-line:focus {
-	outline: none;
-}
-.login-line::placeholder{
-	font-size: 12px;
-	letter-spacing: 0.5px;
-	}
-
 .login-box input {
-    width: 256px;
-    margin: 8px 0px;
-    padding-bottom: 6px;
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
 
 .login-box button {
-    background: #607A7C;
+    background: #007BFF;
     color: #fff;
-    font-size: 17px;
     border: none;
     padding: 10px 20px;
-    width: 260px;
-    height: 40px;
     cursor: pointer;
-    margin-top:12px;
-}
-.login-box button:hover {
-	background-color: #889DA0;
 }
 
 .login-links {
-    margin-top: 8px;
-}
-.find-password {
-	color:#7ABCB2;
-	text-decoration: none;
-	font-size: 11px;
-	float:left;
-}
-.find-password:hover {
-	font-weight: 600;
-}
-.signup-label{
-	color:#7ABCB2;
-	text-decoration: none;
-	font-size: 11px;
+    margin-top: 10px;
 }
 
 .login-links a {
-    color: #7ABCB2;
+    color: #007BFF;
     text-decoration: none;
-    font-size: 11px;
-    font-weight: 800;
-}
-.login-links a:hover {
-	text-decoration:underline;
-}
-.login-links {
-	margin-top:0px;
+    margin: 0 5px;
 }

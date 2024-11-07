@@ -1,64 +1,59 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 	<script th:src="@{/js/studyList.js}"></script>
-	<script th:src="@{/js/seriesList.js}"></script>
 	<link rel="stylesheet" th:href="@{/css/studyChoice.css}">
     <meta charset="EUC-KR">
     <title>검사 이력</title>
-    <script>
-		$(document).ready(function () {
-	    // 스터디 목록 클릭 시 상세 페이지로 이동
-		
-		
-	    });
-	</script>
 </head>
 <body>
-	<div th:fragment="studyChoice">
-	    <div th:if="${choiceStudies != null and !choiceStudies.isEmpty()}">
-		    <p>환자 ID: <span th:text="${choiceStudies[0].pid}"></span></p>
-		    <p>환자 이름: <span th:text="${choiceStudies[0].pName}"></span></p>
-		</div>
-		
-		<div th:if="${choiceStudies == null or choiceStudies.isEmpty()}">
-		    <p>환자 ID: 정보 없음</p>
-		    <p>환자 이름: 정보 없음</p>
-		</div>
-	
-	        <table class="dicom-table">
-	            <thead>
-	                <tr>
-	                    <th>모달리티</th>
-	                    <th>검사이름</th>
-	                    <th>검사날짜</th>
-	                    <th>성별</th>
-	                    <th>Verify</th>
-	                    <th>담당의사</th>
-	                    <th>상세 보기</th>
-	                </tr>
-	            </thead>
-	            <tbody>
-	                <tr th:each="study : ${choiceStudies}">
-	                    <td th:text="${study.modality}">CT</td>
-	                    <td th:text="${study.studyDesc}">전신 CT</td>
-	                    <td th:text="${study.studyDate}">2024-01-01</td>
-	                    <td th:text="${study.pSex}">남</td>
-	                    <td th:text="${study.verifyFlag}">O</td>
-	                    <td th:text="${study.refPhysicianName}">Dr. Kim</td>
-	                    <td>
-	                        <button name="seriesList"  th:value="${study.studyKey}">시리즈11</button>
-	                    </td>
-	                </tr>
-	            </tbody>
-	        </table>
-	    
-    </div>
+    <div th:fragment="studyChoice">
+        <div th:if="${choiceStudies != null and !choiceStudies.isEmpty()}">
+            <p>환자 ID: <span th:text="${choiceStudies[0].pid}">정보 없음</span></p>
+            <p>환자 이름: <span th:text="${choiceStudies[0].pName}">정보 없음</span></p>
+        </div>
+        
+        <div th:if="${choiceStudies == null or choiceStudies.isEmpty()}">
+            <p>환자 ID: 정보 없음</p>
+            <p>환자 이름: 정보 없음</p>
+        </div>
 
+        <table class="dicom-table">
+            <thead>
+                <tr>
+                    <th>상세 보기</th>
+                    <th>시리즈 보기</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="study : ${choiceStudies}">
+                    <td>
+                        <!-- pid로 상세 보기 페이지로 이동 -->
+                        <a th:href="@{|/studyList/${study.pid}/patientDetail|}">상세 보기</a>
+                    </td>
+                    <td>
+                        <!-- studyKey로 시리즈 보기 페이지로 이동 -->
+                        <a th:href="@{|/studyList/${study.studyKey}/series|}">시리즈 보기</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- 페이지네이션 -->
+        <div class="pagination">
+            <ul>
+                <li th:if="${currentPage != null and currentPage > 0}">
+                    <a th:href="@{|/studyList/${choiceStudies[0].pid}/patientDetail(page=${currentPage - 1})|}">이전</a>
+                </li>
+                <li th:each="i : ${#numbers.sequence(0, totalPages != null ? totalPages - 1 : 0)}">
+                    <a th:href="@{|/studyList/${choiceStudies[0].pid}/patientDetail(page=${i})|}"
+                       th:text="${i + 1}" th:classappend="${i == currentPage} ? 'active' : ''">1</a>
+                </li>
+                <li th:if="${currentPage != null and totalPages != null and currentPage < totalPages - 1}">
+                    <a th:href="@{|/studyList/${choiceStudies[0].pid}/patientDetail(page=${currentPage + 1})|}">다음</a>
+                </li>
+            </ul>
+        </div>
+    </div>
 </body>
 </html>

@@ -1,16 +1,32 @@
 /* 기본 박스 모델 설정 */
-@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
+:root {
+    /* Light Mode Colors */
+    --background-color: #f5f5f5;
+    --text-color: #333;
+    --card-color: #fff;
+    --button-color: #007bff;
+
+    /* Dark Mode Colors */
+    --background-color-dark: #2b2b2b;
+    --text-color-dark: #f5f5f5;
+    --card-color-dark: #3a3a3a;
+    --button-color-dark: #ff5722;
+}
+
 /* 페이지 기본 스타일 */
-body {    
-	font-family: 'Pretendard-Regular';
+body {
+    font-family: 'Arial', sans-serif;
     padding: 20px;
-    background-color: #3E5254;
+    background-color: #f4f4f4;
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
 }
 
 /* 컨테이너 설정 */
@@ -22,37 +38,34 @@ body {
 
 /* 헤더 설정 */
 .header {
-	float:left;
-	color:#A4BBBC;
-    font-size: 40px;
-    font-weight: 800;
-    position:absolute;
-    left:4%;
+    font-size: 48px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Card 스타일 */
+.card {
+    background-color: var(--card-color);
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s;
 }
 
 /* 섹션 설정 */
-.section-title {
-	color:#D8D8D8;
-	font-weight: 500;
-	font-size: 20px;
+.section {
+    border: 2px solid black;
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: #fff;
 }
 
 /* 검색 섹션 레이아웃 설정 */
 .search-section {
-	position:absolute;
-    left:4%;
     display: flex;
     justify-content: space-between;
-}
-.section-condition {
-	position:absolute;
-    left:4%;
-    top:26%;
-    width: 1088px;
-    margin-bottom: 20px;
-    padding: 20px;
-    background-color: #192426;
-    color:#D8D8D8;
+    align-items: center;
 }
 
 .search-section select, 
@@ -81,13 +94,9 @@ body {
 }
 
 .patient-list-section table {
-	position:absolute;
-    left:4%;
-    top:32%;
+    width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
-    color:#D8D8D8;
-    font-size: 14px;
 }
 
 .patient-list-section th, .patient-list-section td {
@@ -98,18 +107,14 @@ body {
     overflow: hidden; /* 넘치는 텍스트 숨김 */
     text-overflow: ellipsis; /* 넘치는 텍스트를 생략 부호로 표시 (...) */
 }
-.search-result{
-	background-color: #192426;
-}
+
 /* 테이블 헤더 스타일 */
 .patient-list-section th {
-    background-color: #192426;
-    font-weight: 400;
+    background-color: #f2f2f2;
+    font-weight: bold;
     white-space: nowrap;
 }
-.patient-list-section td {
-	font-weight: 600;
-}
+
 /* 시리즈 보기 링크 스타일 설정 */
 .patient-list-section td a {
     display: inline-block;

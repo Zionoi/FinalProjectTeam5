@@ -52,17 +52,16 @@
 	    }
 	    
 	</script>
-    <script th:src="@{/js/studyList.js}"></script>
-        <script th:src="@{/js/seriesList.js}"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script th:src="@{/js/studyList.js}"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 	
     <!-- jQuery, Moment.js, DateRangePicker -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-    <!--<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-	<link rel="stylesheet" type="text/css" href="/css/studyList.css">-->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+	<link rel="stylesheet" type="text/css" href="/css/studyList.css">
 
     <script>
 		$(function() {
@@ -110,18 +109,12 @@
 		}
 		
 		$(document).ready(function () {
+	    // 스터디 목록 클릭 시 상세 페이지로 이동
 	    
-		    $("button[name=pastStudy]").click((e)=>{
-			console.log('버튼 실행확인', e)
-			 const pid = $(e.target).val();
-			sendPid(pid)});
-			
-			$("#historyContainer").on("click", "button[name=seriesList]", function (e) {
-	        console.log('스터디초이스 안에 시리즈목록 버튼 실행확인', e);
-	        const studyKey = $(e.target).val();
-	        sendStudyKey(studyKey);
-	    	});
-		
+	    $("button[name=pastStudy]").click((e)=>{
+		console.log('버튼 실행확인', e)
+		 const pid = $(e.target).val();
+		sendPid(pid)});
 	    });
 		
 		
@@ -130,10 +123,9 @@
 </head>
 <body>
     <div class="container">
-        <div class="header">DICOM</div><br><br><br>
+        <div class="header">DICOM</div>
         <div class="section search-section">
             <div class="search-options">
-				<div class="section-title">환자 검색</div>
 				<form id="dateSearchForm" action="/studyList/dateSearch" method="get">
 				    <input type="text" name="datetimes" value="date" />
 				    <!-- 숨겨진 필드 -->
@@ -159,8 +151,8 @@
             </div>
         </div>
 
-		<div class="section-condition" th:if="${searchCriteria != null}">
-		    <p ><strong>검색 조건: </strong>
+		<div class="section" th:if="${searchCriteria != null}">
+		    <p><strong>검색 조건: </strong>
 		        <span th:each="criteria, stat : ${searchCriteria}">
 		            <a href="#" th:onclick="'removeCriteria(' + ${stat.index} + '); return false;'"
 		               th:text="${criteria} + ' '" style="cursor: pointer; text-decoration: underline;"></a>
@@ -171,9 +163,6 @@
         <div class="section patient-list-section">
             <table>
                 <thead>
-					<tr>
-						<td colspan="10" class="search-result">검색 결과</td>
-					</tr>
                     <tr>
                         <th onclick="sortTable(0)">검사날짜</th>
                         <th onclick="sortTable(1)">환자이름</th>
@@ -198,12 +187,12 @@
                         <td th:text="${study.modality}"></td>
                         <td th:text="${study.verifyFlag}"></td>
                         <td th:text="${study.operatorsName}"></td>
-                       <!-- <td>
-	                    	<button name="seriesList"  th:value="${study.studyKey}">시리즈</button>
-	                	</td>-->
+                        <td>
+	                    	<a th:href="@{'/studyList/' + ${study.studyKey} + '/series'}">시리즈 보기</a>
+	                	</td>
                       <td>
 						<!--<button th:onclick="sendPid('[[${study.pid}]]')">검사이력</button>-->
-						<button name="pastStudy" th:value="${study.pid}">검사이력</button>
+						<button name="pastStudy"  th:value="${study.pid}">검사이력</button>
 
 	                </td>
                     </tr>
@@ -212,7 +201,6 @@
         </div>
       <!--<div id="historyContainer" th:replace="~{studyChoice.html :: studyChoice}"> 왜 아무것도 안뜨지</div>-->
       <div id="historyContainer">    	</div>
-      <div id="seriesContainer">    	</div>
     </div>
 
 </body>
