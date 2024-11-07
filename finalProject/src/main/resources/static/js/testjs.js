@@ -13,6 +13,8 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error("dicomImage 요소를 찾을 수 없습니다.");
         return;
     }
+    
+    
     cornerstone.enable(element);
 
     if (!Array.isArray(imagePaths) || imagePaths.length === 0) {
@@ -77,40 +79,39 @@ document.addEventListener('DOMContentLoaded', () => {
         // 이미지가 로드된 후에 이벤트 핸들러 설정
         
      	
-        // 주석 선택 옵션 이벤트
-	    document.getElementById('annotateSelect').addEventListener('click', function () {
+         // 주석 선택 옵션 이벤트
+	    document.getElementById('annotateSelect').addEventListener('change', function () {
 	        const selectedValue = this.value;
-	            toolCheck = ture; 
+	        toolCheck = true;
 	
 	        if (selectedValue === 'angle') {
-	            if (toolCheck) {
-	                // Angle 도구 활성화
-	                const AngleTool = cornerstoneTools.AngleTool;
-	                cornerstoneTools.addTool(AngleTool);
-	                cornerstoneTools.setToolActive('Angle', { mouseButtonMask: 1 });
-	                console.log("각도 도구 활성화됨");
-	            } else {
-	                return;
-	            }
-	        } else if (selectedValue === 'arrow') {  // 화살표 도구 활성화
-	        	if(toolCheck){
-	                // Init cornerstone tools
-					cornerstoneTools.init();
-					
-					// Enable any elements, and display images
-					// ...
-					
-					// Add our tool, and set it's mode
-					const ArrowAnnotateTool = cornerstoneTools.ArrowAnnotateTool;
-					
-					cornerstoneTools.addTool(ArrowAnnotateTool)
-					cornerstoneTools.setToolActive('ArrowAnnotate', { mouseButtonMask: 1 })
-				} else {
-	                return;
-	            }
-            } else if (selectedValue === 'toolExit') { // 주석 종료
-	        	toolCheck = false;
-                }
+				cornerstoneTools.init();
+	            const AngleTool = cornerstoneTools.AngleTool;
+	            console.log('각도 함수 확인 : ', AngleTool);
+	            cornerstoneTools.addTool(AngleTool);
+	            cornerstoneTools.setToolActive('Angle', { mouseButtonMask: 1 });
+	            console.log("각도 도구 활성화됨");
+	
+	        } else if (selectedValue === 'arrow') {
+				cornerstoneTools.init();
+	            const ArrowAnnotateTool = cornerstoneTools.ArrowAnnotateTool;
+	            cornerstoneTools.addTool(ArrowAnnotateTool);
+	            cornerstoneTools.setToolActive('ArrowAnnotate', { mouseButtonMask: 1 });
+	            console.log("화살표 주석 도구 활성화됨");
+	
+	        } else if (selectedValue === 'toolExit') {
+				cornerstoneTools.init();
+	            toolCheck = false;
+	            cornerstoneTools.setToolDisabled('Angle');
+	            cornerstoneTools.setToolDisabled('ArrowAnnotate');
+	            console.log("주석 모드 비활성화됨");
+	        }
+	    });
+	
+	    // 이미지 조작 이벤트 핸들러 (주석 모드 활성화 시 이미지 조작 막기)
+	    element.addEventListener('mousedown', function (e) {
+	        if (toolCheck) return;
+	        // 나머지 이미지 조작 관련 코드
 	    });
 
         // 마우스 버튼에 따라 다른 동작 수행
