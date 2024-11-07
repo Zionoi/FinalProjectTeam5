@@ -50,6 +50,7 @@ public class SecurityConfig {
                 .defaultSuccessUrl("/studyList")
                 .and()
                 .logout()
+                .logoutUrl("/logout")
                 .logoutSuccessUrl("/loginPage")
                 .invalidateHttpSession(true)
                 .and()
