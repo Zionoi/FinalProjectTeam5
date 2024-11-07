@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
     loadAndDisplayImage(imagePaths[currentIndex]);
 
     // 이미지를 로드하고 표시하는 함수
-    function loadAndDisplayImage(filename, targetElement) {
+    function loadAndDisplayImage(filename) {
 		if (!filename) {
             console.error("filename이 비어 있습니다.");
             return;
@@ -38,7 +38,12 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log("filename 넘겨받은 경로 :: ", filename);
         
         cornerstone.loadImage(imageId).then(image => {
-            cornerstone.displayImage(targetElement, image);
+            cornerstone.displayImage(element, image);
+            
+            const viewport = cornerstone.getViewport(element);
+        document.getElementById('bottomright').textContent = "Zoom: " + viewport.scale + "x";
+        document.getElementById('bottomleft').textContent = "WW/WC:" + Math.round(viewport.voi.windowWidth)
+            + "/" + Math.round(viewport.voi.windowCenter);
         }).catch(err => {
             console.error('이미지 로드 실패:', err);
         });
@@ -79,5 +84,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 첫 번째 이미지를 페이지 로드 시 표시
     updateTheImage(0);
+    
+    // add event handlers to mouse move to adjust window/center
+    element.addEventListener('mousedown', function (e) {
+        let lastX = e.pageX;
+        let lastY = e.pageY;
+
+        function mouseMoveHandler(e) {
+            const deltaX = e.pageX - lastX;
+            const deltaY = e.pageY - lastY;
+            lastX = e.pageX;
+            lastY = e.pageY;
+
+            let viewport = cornerstone.getViewport(element);
+            viewport.voi.windowWidth += (deltaX / viewport.scale);
+            viewport.voi.windowCenter += (deltaY / viewport.scale);
+            cornerstone.setViewport(element, viewport);
+
+            document.getElementById('bottomleft').textContent = "WW/WC:" + Math.round(viewport.voi.windowWidth)
+                + "/" + Math.round(viewport.voi.windowCenter);
+        }
+
+        function mouseUpHandler() {
+            document.removeEventListener('mousemove', mouseMoveHandler);
+            document.removeEventListener('mouseup', mouseUpHandler);
+        }
+
+        document.addEventListener('mousemove', mouseMoveHandler);
+        document.addEventListener('mouseup', mouseUpHandler);
+    });
 
 });

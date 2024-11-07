@@ -1,4 +1,4 @@
-cornerstoneWADOImageLoader.external.cornerstone = cornerstone;
+/*cornerstoneWADOImageLoader.external.cornerstone = cornerstone;
 cornerstoneWADOImageLoader.external.cornerstoneTools = cornerstoneTools;
 
 
@@ -217,3 +217,4 @@ document.addEventListener('DOMContentLoaded', () => {
 	    loadAndDisplayImage(nextImagePath);
 	});
 });
+*/
