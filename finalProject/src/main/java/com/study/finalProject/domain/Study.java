@@ -15,10 +15,6 @@ public class Study {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "STUDYKEY")
     private Long studyKey;
-    
-    @ManyToOne
-    @JoinColumn(name = "pid", insertable = false, updatable = false)
-    private Patient patient;
 
     @Column(name = "STUDYINSUID", nullable = false, length = 64)
     private String studyInsUid;

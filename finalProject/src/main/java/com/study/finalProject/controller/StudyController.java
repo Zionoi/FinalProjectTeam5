@@ -11,7 +11,6 @@ import java.util.List; // 리스트를 사용하기 위해 필요
 //import com.study.dicom.Study; // Study 엔티티 클래스 경로 (패키지명은 실제 프로젝트에 맞게 수정)
 //import com.study.dicom.Series; // Series 엔티티 클래스 경로
 //import com.study.dicom.Image; // Image 엔티티 클래스 경로
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
@@ -25,11 +24,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
-import com.study.finalProject.domain.Patient;
 import com.study.finalProject.domain.Series;
 import com.study.finalProject.domain.Study;
 import com.study.finalProject.repository.StudyRepository;
-import com.study.finalProject.service.PatientService;
 import com.study.finalProject.service.SeriesService;
 import com.study.finalProject.service.StudyService;
 
@@ -46,9 +43,6 @@ public class StudyController {
     
     @Autowired
     private SeriesService seriesService;
-    
-    @Autowired
-    private PatientService patientService;
     
     @Autowired
     private StudyRepository studyRepository;
@@ -82,20 +76,19 @@ public class StudyController {
     
     // 특정 Study에 속한 Series 목록을 전달
     @GetMapping("/studyList/{studyKey}/series")
-    public String listSeries(@PathVariable("studyKey") Long studyKey, Model model) {
+    public String seriesList(@PathVariable("studyKey") Long studyKey, Model model) {
+    	System.out.println("시리즈목록 불러오는함수 실행확인 studyKey :"+ studyKey);
         List<Series> seriesList = studyService.getSeriesByStudyKey(studyKey);
         model.addAttribute("series", seriesList);
-        return "series";
+        return "series :: seriesSection";
     }
     
     @GetMapping("/studyList/{pid}/choice")
     public String studyChoice(@PathVariable("pid") String pid, Model model) {
-        System.out.println("초이스 메소드 실행확인 pid : "+pid);
         try {
             List<Study> choiceStudies = studyService.getStudyByPid(pid);
             model.addAttribute("choiceStudies", choiceStudies);
-            System.out.println("초이스 메소드 실행확인 choiceStudies : "+ choiceStudies);
-            return "studyChoice";  // 전체 페이지를 렌더링할 경우
+            return "studyChoice :: studyChoice";
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
             return "error"; // 에러 페이지로 이동
@@ -178,16 +171,14 @@ public class StudyController {
         return performSearch(searchCriteria, model);
     }
 
+    // 공통 검색 메서드
     private String performSearch(List<String> searchCriteria, Model model) {
         Specification<Study> spec = (root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
 
             // 세션에 저장된 모든 검색 조건을 기준으로 검색
             for (String condition : searchCriteria) {
-                if (!condition.contains(": ")) continue; // 잘못된 형식 무시
                 String[] parts = condition.split(": ");
-                if (parts.length != 2) continue; // 유효하지 않은 조건 무시
-
                 String searchType = parts[0];
                 String searchValue = parts[1];
 
@@ -207,17 +198,15 @@ public class StudyController {
                     case "dateRange":
                         // 날짜 범위 검색 처리
                         String[] dates = searchValue.split(" ~ ");
-                        if (dates.length == 2) {
-                            try {
-                                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                                Date startDate = dateFormat.parse(dates[0].trim());
-                                Date endDate = dateFormat.parse(dates[1].trim());
+                        try {
+                            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                            Date startDate = dateFormat.parse(dates[0].trim());
+                            Date endDate = dateFormat.parse(dates[1].trim());
 
-                                // 날짜 타입으로 between 조건을 처리
-                                predicates.add(criteriaBuilder.between(root.get("studyDate").as(Date.class), startDate, endDate));
-                            } catch (ParseException e) {
-                                e.printStackTrace();
-                            }
+                            // 날짜 타입으로 between 조건을 처리
+                            predicates.add(criteriaBuilder.between(root.get("studyDate").as(Date.class), startDate, endDate));
+                        } catch (ParseException e) {
+                            e.printStackTrace();
                         }
                         break;
                 }
@@ -260,20 +249,5 @@ public class StudyController {
         return performSearch(searchCriteria, model);
     }
     
-    // pid를 기반으로 Study 상세 페이지를 보여주는 메서드
-    @GetMapping("/studyList/{pid}/patientDetail")
-    public String getpatientDetail(@PathVariable("pid") String pid, Model model) {
-        // pid로 Study 조회
-    	Optional<Patient> patient = patientService.getPatientById(pid);
-
-        if (patient.isPresent()) {
-        	Patient pa = patient.get();
-            model.addAttribute("patient", pa);
-        } else {
-            model.addAttribute("patient", null);
-        }
-
-        return "patientDetail"; 
-    }
     
 }

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	 <link href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+<head>
+    <meta charset="UTF-8">
+    <!-- Cornerstone Latest -->
+    <script src="https://unpkg.com/cornerstone-core"></script>
+    <script src="https://unpkg.com/cornerstone-tools"></script>
+    <script src="https://unpkg.com/dicom-parser"></script>
+    <script src="https://unpkg.com/cornerstone-wado-image-loader"></script>
+    <title>DICOM IMAGE VIEWER</title>
+    <style>
+        #dicomImage {
+            height: 600px;
+        }
+    </style>
+
+    <!-- Thymeleaf로 서버에서 전달된 imagePaths를 JavaScript로 넘겨줌 -->
+    <script th:inline="javascript">
+        var imagePaths = /*[[${imagePaths}]]*/ [];
+        console.log('이미지 경로 리스트:', imagePaths);
+    </script>
+
+</head>
+<body>
+	<div th:fragment="serSectionImage">
+	        <div id="dicomImage" style="width:400px;height:400px"
+            oncontextmenu="return false"
+            onmousedown="return false">
+        </div>
+     </div>
+    <script src="/js/serSectionImage.js"></script>
+</body>
+</html>

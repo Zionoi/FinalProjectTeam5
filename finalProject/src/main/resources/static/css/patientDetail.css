@@ -5,40 +5,6 @@ body {
     padding: 0;
 }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-
-th, td {
-    padding: 12px;
-    border: 1px solid #ddd;
-    text-align: left;
-}
-
-th {
-    background-color: #f0f0f0;
-    font-weight: bold;
-}
-
-body.dark-mode th {
-    background-color: #444;
-    color: var(--text-color-dark);
-}
-
-body.dark-mode td {
-    color: var(--text-color-dark);
-}
-
-tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
-body.dark-mode tr:nth-child(even) {
-    background-color: #3a3a3a;
-}
-
 .details-container {
     width: 80%;
     margin: 20px auto;
