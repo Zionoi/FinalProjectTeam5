@@ -1,10 +1,11 @@
 package com.study.finalProject.service;
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.study.finalProject.domain.Series;
 import com.study.finalProject.domain.Study;
 import com.study.finalProject.repository.SeriesRepository;
@@ -48,16 +49,8 @@ public class StudyService {
 
 //	@Transactional(readOnly = true)
 	public List<Study> getStudyByPid(String pid) {
-        return studyRepository.findByPatient_Pid(pid);
-    }
-
-    public Page<Study> findStudiesByPid(String pid, int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        return studyRepository.findByPatient_Pid(pid, pageable);
-    }
-
-    public Study findStudyByPatientId(String pid) {
-        return studyRepository.findByPatient_Pid(pid).stream().findFirst().orElse(null);
-    }
+		List<Study> study = studyRepository.findByPid(pid);
+		return study;
+	}
 	
 }
