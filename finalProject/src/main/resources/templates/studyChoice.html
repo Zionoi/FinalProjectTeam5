@@ -24,6 +24,8 @@
 	    <div th:if="${choiceStudies != null and !choiceStudies.isEmpty()}">
 		    <p>환자 ID: <span th:text="${choiceStudies[0].pid}"></span></p>
 		    <p>환자 이름: <span th:text="${choiceStudies[0].pName}"></span></p>
+			  <a th:href="@{/patients/studyList/{pid}/patientDetail(pid=${choiceStudies[0].pid})}">상세 보기</a>
+
 		</div>
 		
 		<div th:if="${choiceStudies == null or choiceStudies.isEmpty()}">
@@ -40,7 +42,7 @@
 	                    <th>성별</th>
 	                    <th>Verify</th>
 	                    <th>담당의사</th>
-	                    <th>상세 보기</th>
+
 	                </tr>
 	            </thead>
 	            <tbody>
@@ -51,14 +53,13 @@
 	                    <td th:text="${study.pSex}">남</td>
 	                    <td th:text="${study.verifyFlag}">O</td>
 	                    <td th:text="${study.refPhysicianName}">Dr. Kim</td>
+
 	                    <td>
 	                        <button name="seriesList"  th:value="${study.studyKey}">시리즈11</button>
 	                    </td>
 	                </tr>
 	            </tbody>
-	        </table>
-	    
+	        </table>          
     </div>
-
 </body>
 </html>
