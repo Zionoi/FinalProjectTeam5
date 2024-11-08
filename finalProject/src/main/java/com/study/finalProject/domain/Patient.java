@@ -2,22 +2,20 @@ package com.study.finalProject.domain;
 
 
 
+
 import java.util.ArrayList;
 import java.util.List;
+
 
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.CollectionTable;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "PATIENTTAB")
