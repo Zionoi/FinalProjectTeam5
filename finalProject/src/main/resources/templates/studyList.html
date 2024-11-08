@@ -153,15 +153,14 @@
                     <input type="text" name="searchQuery" id="searchQuery" placeholder="검색어 입력">
                     <input type="submit" value="검색">
                 </form>
-
-                <form action="/studyList/search/reset" method="get">
+                <form class="search-reset" action="/studyList/search/reset" method="get">
                     <input type="submit" value="검색 조건 초기화">
                 </form>
             </div>
         </div>
 
 		<div class="section-condition" th:if="${searchCriteria != null}">
-		    <p ><strong>검색 조건: </strong>
+		    <p class="section-condition"><strong>검색 조건: </strong>
 		        <span th:each="criteria, stat : ${searchCriteria}">
 		            <a href="#" th:onclick="'removeCriteria(' + ${stat.index} + '); return false;'"
 		               th:text="${criteria} + ' '" style="cursor: pointer; text-decoration: underline; color: white;"></a>
@@ -169,12 +168,9 @@
 		    </p>
 		</div>
 
-        <div class="section patient-list-section">
-            <table>
-                <thead>
-					<tr>
-						<td colspan="10" class="search-result">검색 결과</td>
-					</tr>
+        <div >
+			<div class="search-result">검색 결과</div>
+            <table class="table-header">
                     <tr>
                         <th onclick="sortTable(0)">검사날짜</th>
                         <th onclick="sortTable(1)">환자이름</th>
@@ -187,8 +183,10 @@
                         <th onclick="sortTable(8)">담당의사</th>
                         <th>상세 보기</th>
                     </tr>
-                </thead>
-                <tbody>
+                </table>
+                
+            <div class="table-body">
+                <table class="section patient-list-section">
                     <tr th:each="study : ${searchResults}">
                         <td th:text="${study.studyDate}"></td>
                         <td th:text="${study.pName}"></td>
@@ -208,8 +206,8 @@
 
 	                </td>
                     </tr>
-                </tbody>
             </table>
+         </div>
         </div>
       <!--<div id="historyContainer" th:replace="~{studyChoice.html :: studyChoice}"> 왜 아무것도 안뜨지</div>-->
       <div id="historyContainer">    	</div>
