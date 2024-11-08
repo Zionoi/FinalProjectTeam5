@@ -1,9 +1,7 @@
 package com.study.finalProject.controller;
 
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.study.finalProject.domain.Patient;
 import com.study.finalProject.service.PatientService;
@@ -85,26 +82,14 @@ public class PatientController {
     }
     // 환자 댓글 업데이트
     @PostMapping("/updateComment")
-    @ResponseBody
-    public Map<String, Object> updateComment(@RequestParam(value = "pid") String pid, 
-                                             @RequestParam(value = "comments") String comments) {
-        Map<String, Object> response = new HashMap<>();
+    public String updateComment(@RequestParam("pid") String pid, 
+                                @RequestParam("comments") String comments) {
+        System.out.println("컨트롤러 pid 확인: " + pid);
+        System.out.println("컨트롤러 코멘트 확인: " + comments);
         
-        // 날짜와 시간을 포함하여 코멘트를 추가하는 메서드 호출
-        patientService.addCommentWithTimestamp(pid, comments);
-
-        response.put("success", true); // 성공 여부를 JSON에 포함
-        return response;
+        patientService.updateComments(pid, comments);
+        return "redirect:/patients/" + pid; // 댓글 업데이트 후 환자 상세 페이지로 리디렉션
     }
 
-    @PostMapping("/deleteComment")
-    @ResponseBody
-    public Map<String, Object> deleteComment(@RequestParam("pid") String pid, 
-                                             @RequestParam("commentIndex") int commentIndex) {
-        Map<String, Object> response = new HashMap<>();
 
-        patientService.deleteComment(pid, commentIndex);
-        response.put("success", true);
-        return response;
-    }
 }
