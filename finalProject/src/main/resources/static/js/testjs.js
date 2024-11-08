@@ -29,24 +29,24 @@ document.addEventListener('DOMContentLoaded', () => {
     let toolCheck = false; // 주석 모드 상태를 나타내는 변수
 
     // 이미지를 로드하고 표시하는 함수
-    function loadAndDisplayImage(filename) {
-        if (!filename) {
-            console.error("filename이 비어 있습니다.");
-            return;
-        }
-
-        const imageId = `wadouri:http://localhost:8080/dicom-file/${filename}`;
-        return cornerstone.loadImage(imageId).then(image => {
-            cornerstone.displayImage(element, image);
-
-            const viewport = cornerstone.getViewport(element);
-            document.getElementById('bottomright').textContent = "Zoom: " + viewport.scale + "x";
-            document.getElementById('bottomleft').textContent = "WW/WC:" + Math.round(viewport.voi.windowWidth)
-                + "/" + Math.round(viewport.voi.windowCenter);
-        }).catch(err => {
-            console.error('이미지 로드 실패:', err);
-        });
-    }
+   function loadAndDisplayImage(filename) {
+	    if (!filename) {
+	        console.error("filename이 비어 있습니다.");
+	        return;
+	    }
+		
+	    const imageId = `wadouri:/dicom-file/${filename}`;
+	    return cornerstone.loadImage(imageId).then(image => {
+	        cornerstone.displayImage(element, image);
+	
+	        const viewport = cornerstone.getViewport(element);
+	        document.getElementById('bottomright').textContent = "Zoom: " + viewport.scale + "x";
+	        document.getElementById('bottomleft').textContent = "WW/WC:" + Math.round(viewport.voi.windowWidth)
+	            + "/" + Math.round(viewport.voi.windowCenter);
+	    }).catch(err => {
+	        console.error('이미지 로드 실패:', err);
+	    });
+	}
 
     // 이미지를 인덱스로 업데이트하는 함수 (Promise 반환 추가)
     function updateTheImage(imageIndex) {
@@ -59,8 +59,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     reject("Filename not found");
                     return;
                 }
-                const imageId = `wadouri:http://localhost:8080/dicom-file/${filename}`;
-
+                /*const imageId = `wadouri:http://localhost:8080/dicom-file/${filename}`;*/
+				const imageId = `wadouri:/dicom-file/${filename}`;
+				
                 cornerstone.loadImage(imageId).then(image => {
                     cornerstone.displayImage(element, image);
                     resolve();
