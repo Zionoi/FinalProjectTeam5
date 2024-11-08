@@ -37,4 +37,10 @@ public class PatientService {
     public void deletePatient(String pid) {
         patientRepository.deleteById(pid);
     }
+    
+	public void updateComments(String pid, String comments) {
+		Optional<Patient> patient = patientRepository.findById(pid);
+		patient.get().setComments(comments);
+		patientRepository.save(patient.get());
+	}
 }

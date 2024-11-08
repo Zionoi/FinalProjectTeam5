@@ -16,7 +16,7 @@ body {
 /* 컨테이너 설정 */
 .container {
     width: 100%;
-    max-width: 900px;
+    max-width: 1600px;
     margin: 0 auto;
 }
 
@@ -27,7 +27,7 @@ body {
     font-size: 40px;
     font-weight: 800;
     position:absolute;
-    left:72px;
+    left:4%;
 }
 
 /* 섹션 설정 */
@@ -40,7 +40,7 @@ body {
 /* 검색 섹션 레이아웃 설정 */
 .search-section {
 	position:absolute;
-    left:82px;
+    left:4%;
     display: flex;
     justify-content: space-between;
 }
@@ -51,9 +51,10 @@ body {
     width: 200px;
     margin-bottom: 20px;
     padding: 20px;
-	background-color: transparent;
+    background-color: #192426;
     color:#D8D8D8;
 }
+
 .search-section select, 
 .search-section input[type="text"],
 .search-section input[type="submit"] {
@@ -64,8 +65,7 @@ body {
 }
 
 .search-section input[type="submit"] {
-    background-color: #192426;
-    border:none;
+    background-color: #4CAF50;
     color: white;
     cursor: pointer;
     margin-left: 10px;
@@ -81,6 +81,7 @@ body {
     left:954px;
     top:100px;
 }
+
 /* 환자 리스트 섹션 레이아웃 설정 */
 .patient-list-section {
     text-align: left;
@@ -99,38 +100,14 @@ body {
 
 .table-header{
 	position:absolute;
-    left: 72px;
-    top:270px;
+    left:4%;
+    top:32%;
     border-collapse: collapse;
     margin-top: 20px;
     color:#D8D8D8;
-    font-size: 15px;
-    font-weight: 200;
-    width: 1088px;
-    height: 44px;
-    table-layout: fixed;
-   	background-color: #192426;
-}
-.patient-list-section {
-    border-collapse: collapse;
-    color:#D8D8D8;
     font-size: 14px;
-    width: 100%;
-    overflow-y:auto;
-    table-layout: fixed;
 }
-.table-body{
-	position: absolute;
-	left: 72px;
-	top: 340px;
-	width: 1088px;
-	height: 560px;
-	overflow-y: auto;
-	background-color: #243235;
-}
-.table-body::-webkit-scrollbar {
-  display: none;
-}
+
 .patient-list-section th, .patient-list-section td {
     border: 1px solid black;
     padding: 12px;
@@ -143,8 +120,14 @@ body {
 	font-weight: 500;
 	border:none;
 }
-tr:nth-child(even) {
-	background-color:rgba(84,106,109,0.2);
+/* 테이블 헤더 스타일 */
+.patient-list-section th {
+    background-color: #192426;
+    font-weight: 400;
+    white-space: nowrap;
+}
+.patient-list-section td {
+	font-weight: 600;
 }
 /* 시리즈 보기 링크 스타일 설정 */
 .patient-list-section td a {
@@ -187,3 +170,4 @@ tr:nth-child(even) {
 .head-container{
 	border:none;
 }
+

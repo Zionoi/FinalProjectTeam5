@@ -26,8 +26,8 @@ public class StudyService {
         return studyRepository.findAll();
     }
 
-    public Study getStudyById(Long id) {
-        return studyRepository.findById(id).orElse(null);
+    public Optional<Study> getStudyById(Long id) {
+        return studyRepository.findById(id);
     }
 
     public Study saveStudy(Study study) {
@@ -52,5 +52,4 @@ public class StudyService {
 		List<Study> study = studyRepository.findByPid(pid);
 		return study;
 	}
-	
 }
