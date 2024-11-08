@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<meta charset="UTF-8">
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
@@ -8,8 +9,7 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 	<script th:src="@{/js/studyList.js}"></script>
 	<script th:src="@{/js/seriesList.js}"></script>
-	<link rel="stylesheet" th:href="@{/css/studyChoice.css}">
-    <meta charset="EUC-KR">
+	<link rel="stylesheet" href="/css/studyChoice.css">
     <title>검사 이력</title>
     <script>
 		$(document).ready(function () {
@@ -21,45 +21,50 @@
 </head>
 <body>
 	<div th:fragment="studyChoice">
-	    <div th:if="${choiceStudies != null and !choiceStudies.isEmpty()}">
-		    <p>환자 ID: <span th:text="${choiceStudies[0].pid}"></span></p>
-		    <p>환자 이름: <span th:text="${choiceStudies[0].pName}"></span></p>
-			  <a th:href="@{/patients/studyList/{pid}/patientDetail(pid=${choiceStudies[0].pid})}">상세 보기</a>
-
-		</div>
-		
-		<div th:if="${choiceStudies == null or choiceStudies.isEmpty()}">
-		    <p>환자 ID: 정보 없음</p>
-		    <p>환자 이름: 정보 없음</p>
-		</div>
-	
-	        <table class="dicom-table">
-	            <thead>
-	                <tr>
-	                    <th>모달리티</th>
-	                    <th>검사이름</th>
-	                    <th>검사날짜</th>
-	                    <th>성별</th>
-	                    <th>Verify</th>
-	                    <th>담당의사</th>
-
-	                </tr>
-	            </thead>
-	            <tbody>
-	                <tr th:each="study : ${choiceStudies}">
-	                    <td th:text="${study.modality}">CT</td>
-	                    <td th:text="${study.studyDesc}">전신 CT</td>
-	                    <td th:text="${study.studyDate}">2024-01-01</td>
-	                    <td th:text="${study.pSex}">남</td>
-	                    <td th:text="${study.verifyFlag}">O</td>
-	                    <td th:text="${study.refPhysicianName}">Dr. Kim</td>
-
-	                    <td>
-	                        <button name="seriesList"  th:value="${study.studyKey}">시리즈</button>
-	                    </td>
-	                </tr>
-	            </tbody>
-	        </table>          
+		<div class="studyChoice-section">
+				<div class="studyChoice-title">검사 이력</div>
+				<table class="studyChoice-titleSection">
+				    <div th:if="${choiceStudies != null and !choiceStudies.isEmpty()}">
+					    <td><p>환자 아이디: <span th:text="${choiceStudies[0].pid}"></span></p></td>
+					    <td><p>환자 이름: <span th:text="${choiceStudies[0].pName}"></span></p></td>
+						<td style="text-align:right ;">상세정보</td>
+					</div>
+				</table>
+				<table>
+					<div th:if="${choiceStudies == null or choiceStudies.isEmpty()}">
+					    <td><p>환자 아이디: 정보 없음</p></td>
+					    <td><p>환자 이름: 정보 없음</p></td>
+					</div>
+				</table>
+			        <table class="dicom-table">
+						<div class="head-container">
+				            <thead>
+				                <tr>
+				                    <th>모달리티</th>
+				                    <th>검사이름</th>
+				                    <th>검사날짜</th>
+				                    <th>성별</th>
+				                    <th>Verify</th>
+				                    <th>담당의사</th>
+				                    <th>상세 보기</th>
+				                </tr>
+				            </thead>
+			            </div>
+			            <tbody>
+			                <tr th:each="study : ${choiceStudies}">
+			                    <td th:text="${study.modality}">CT</td>
+			                    <td th:text="${study.studyDesc}">전신 CT</td>
+			                    <td th:text="${study.studyDate}">2024-01-01</td>
+			                    <td th:text="${study.pSex}">남</td>
+			                    <td th:text="${study.verifyFlag}">O</td>
+			                    <td th:text="${study.refPhysicianName}">Dr. Kim</td>
+			                    <td>
+			                        <button name="seriesList"  th:value="${study.studyKey}">시리즈11</button>
+			                    </td>
+			                </tr>
+			            </tbody>
+			        </table>
+			    </div>
     </div>
 </body>
 </html>
