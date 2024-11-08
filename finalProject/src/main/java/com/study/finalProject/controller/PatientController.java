@@ -83,7 +83,7 @@ public class PatientController {
 
         return "patientDetail"; 
     }
-    //코멘트 업데이트
+    // 환자 댓글 업데이트
     @PostMapping("/updateComment")
     @ResponseBody
     public Map<String, Object> updateComment(@RequestParam(value = "pid") String pid, 

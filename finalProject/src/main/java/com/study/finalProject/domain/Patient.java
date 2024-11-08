@@ -8,7 +8,6 @@ import java.util.List;
 
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
-import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -26,7 +25,7 @@ public class Patient {
 
     @Id
     @Column(name = "PID", length = 64)
-    private String pid;  // @ElementCollection 제거
+    private String pid;
 
     @Column(name = "PNAME", nullable = false, length = 64)
     private String pName;
@@ -52,11 +51,8 @@ public class Patient {
     @Column(name = "PBIRTHTIME", length = 8)
     private String pBirthTime;
 
-    // 코멘트를 저장할 필드 정의
-    @ElementCollection
-    @CollectionTable(name = "PATIENT_COMMENTS", joinColumns = @JoinColumn(name = "PID"))
-    @Column(name = "COMMENT_TEXT")
-    private List<String> comments = new ArrayList<>();
+    @Column(name = "COMMENTS", length = 64)
+    private String comments;
 
     @Column(name = "INSERTDATE", length = 8)
     private String insertDate;
