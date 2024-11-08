@@ -2,10 +2,11 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
- 
+
+
     <title>DView Layout</title>
-    <a href="/logout" style="color: white;"> 로그아웃</a>
-   	
+
+    <a href="/logout"> 로그아웃</a>
     <script>
 		// 정렬 기능
 	    function sortTable(columnIndex) {
@@ -62,8 +63,8 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-	<link rel="stylesheet" type="text/css" href="/css/studyList.css">
+    <!--<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+	<link rel="stylesheet" type="text/css" href="/css/studyList.css">-->
 
     <script>
 		$(function() {
@@ -164,7 +165,7 @@
 		    <p ><strong>검색 조건: </strong>
 		        <span th:each="criteria, stat : ${searchCriteria}">
 		            <a href="#" th:onclick="'removeCriteria(' + ${stat.index} + '); return false;'"
-		               th:text="${criteria} + ' '" style="cursor: pointer; text-decoration: underline; color: white;"></a>
+		               th:text="${criteria} + ' '" style="cursor: pointer; text-decoration: underline;"></a>
 		        </span>
 		    </p>
 		</div>
