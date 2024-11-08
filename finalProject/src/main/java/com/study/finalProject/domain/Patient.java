@@ -1,14 +1,26 @@
 package com.study.finalProject.domain;
 
+<<<<<<< Updated upstream
+=======
 
 
+import java.util.ArrayList;
+import java.util.List;
+
+>>>>>>> Stashed changes
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.CollectionTable;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "PATIENTTAB")
@@ -18,6 +30,9 @@ import lombok.Setter;
 public class Patient {
 
     @Id
+    @ElementCollection
+
+    
     @Column(name = "PID", length = 64)
     private String pid;
 
@@ -45,8 +60,11 @@ public class Patient {
     @Column(name = "PBIRTHTIME", length = 8)
     private String pBirthTime;
 
-    @Column(name = "COMMENTS", length = 64)
-    private String comments;
+    // 코멘트를 저장할 필드 정의
+    @ElementCollection
+    @CollectionTable(name = "PATIENT_COMMENTS", joinColumns = @JoinColumn(name = "PID"))
+    @Column(name = "COMMENT_TEXT")
+    private List<String> comments = new ArrayList<>();
 
     @Column(name = "INSERTDATE", length = 8)
     private String insertDate;
