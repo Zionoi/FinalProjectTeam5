@@ -67,7 +67,6 @@ public class ImageController {
     }
 
     // 이미지 파일을 제공하는 메서드: 파일 시스템에서 파일을 찾아서 클라이언트에 제공
-    
     @GetMapping("/dicom-file/**")
     public ResponseEntity<Resource> getImage(HttpServletRequest request) throws MalformedURLException {
         // 경로 얻어오기 ("/dicom-file/" 이후 경로)
@@ -76,7 +75,7 @@ public class ImageController {
         Resource resource = new UrlResource(filePath.toUri());
         
         logger.info("생성된 파일 경로: {}", filePath);
-        System.out.println("fullPath :"+ fullPath);
+
         System.out.println("생성된 파일 경로: " + filePath.toString()); // 경로 확인 로그
         System.out.println("생성된 resource 파일 경로: " + resource); // 경로 확인 로그
 
