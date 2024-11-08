@@ -13,18 +13,23 @@
     <title>Series 목록</title>
 </head>
 <body>
-	<div th:fragment="seriesSection">
+	<div class="series-container" th:fragment="seriesSection">
+			<div class="dicomImage" id="dicomImage" style="width:240px;height:240px; background-color:black;"
+		            oncontextmenu="return false"
+		            onmousedown="return false">
+        	</div>
+		<div class="series-list">
 	    <h1>Series 목록 &#40<span th:text="${#lists.size(series)}"></span>&#41;</h1>
-	    <table border="1">
-	        <thead>
+	    <table class="series-table-header">
 	            <tr>
-	                <th>Series Number</th>
-	                <th>Description</th>
-	                <th>Modality</th>
+	                <th>No.</th>
+	                <th>검사이름</th>
+	                <th>검사장비</th>
 	                <th>이미지 보기</th>
 	            </tr>
-	        </thead>
-	        <tbody>
+	     </table>
+	     <div class="series-table">
+	        <table class="series-table-body">
 				<tr th:each="series, iterStat : ${series}">
 				    <!-- 시리즈 넘버를 카운트로 표시 (1부터 시작) -->
 				    <td th:text="${iterStat.index + 1}"></td>
@@ -33,17 +38,12 @@
 				    <td>
 				        <a th:href="@{'/images' + '/studies/' + ${series.studyKey} + '/series/' + ${series.seriesKey}}">이미지 보기</a>
 				    </td>
-				    <td>
-						<button name="serSectionImage"  th:value="${series.studyKey}">썸네일</button>
-				    </td>
+
 				</tr>
-	        </tbody>
-	    </table>
-	            <!--<div id="dicomImage" style="width:240px;height:240px; background-color:aqua;"
-            oncontextmenu="return false"
-            onmousedown="return false">
-        </div>-->
+	        </table>
+        </div>
       <div id="serSectionImageContainer">    	</div>
+	</div>
 	</div>
     <a th:href="@{'/studyList'}">뒤로 가기</a>
 </body>
