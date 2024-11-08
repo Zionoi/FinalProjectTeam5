@@ -16,7 +16,7 @@ body {
 /* 컨테이너 설정 */
 .container {
     width: 100%;
-    max-width: 1100px;
+    max-width: 1600px;
     margin: 0 auto;
 }
 
@@ -126,6 +126,7 @@ body {
 }
 
 #historyContainer, #seriesContainer{
-	 margin-left: 700px;
+	 margin-left: 1100px;
+	 color: whitesmoke;
 	 /* justify-content: flex-end;  오른쪽 정렬 */
 }
