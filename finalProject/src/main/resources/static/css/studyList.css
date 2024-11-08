@@ -27,7 +27,7 @@ body {
     font-size: 40px;
     font-weight: 800;
     position:absolute;
-    left:72px;
+    left:4%;
 }
 
 /* 섹션 설정 */
@@ -40,20 +40,21 @@ body {
 /* 검색 섹션 레이아웃 설정 */
 .search-section {
 	position:absolute;
-    left:82px;
+    left:4%;
     display: flex;
     justify-content: space-between;
 }
 .section-condition {
 	position:absolute;
-    left:32px;
-    top:92px;
+    left:4%;
+    top:26%;
     width: 1088px;
     margin-bottom: 20px;
     padding: 20px;
-	background-color: transparent;
+    background-color: #192426;
     color:#D8D8D8;
 }
+
 .search-section select, 
 .search-section input[type="text"],
 .search-section input[type="submit"] {
@@ -64,70 +65,31 @@ body {
 }
 
 .search-section input[type="submit"] {
-    background-color: #192426;
-    border:none;
+    background-color: #4CAF50;
     color: white;
     cursor: pointer;
     margin-left: 10px;
 }
 
 .search-section input[type="submit"]:hover {
-    background-color: #D8D8D8;
-    border:none;
+    background-color: #45a049;
 }
-.search-reset{
-	position:absolute;
-    left:954px;
-    top:100px;
-}
+
 /* 환자 리스트 섹션 레이아웃 설정 */
 .patient-list-section {
     text-align: left;
 }
-.search-result{
-	background-color: #192426;
+
+.patient-list-section table {
 	position:absolute;
-    left:72px;
-    top:250px;
-    width: 1088px;
-	color:#D8D8D8;
-	padding:10px 0 10px 24px;
-    font-size: 14px;
-}
-.table-header{
-	position:absolute;
-    left: 72px;
-    top:270px;
+    left:4%;
+    top:32%;
     border-collapse: collapse;
     margin-top: 20px;
     color:#D8D8D8;
-    font-size: 15px;
-    font-weight: 200;
-    width: 1088px;
-    height: 44px;
-    table-layout: fixed;
-   	background-color: #192426;
-}
-.patient-list-section {
-    border-collapse: collapse;
-    color:#D8D8D8;
     font-size: 14px;
-    width: 100%;
-    overflow-y:auto;
-    table-layout: fixed;
 }
-.table-body{
-	position: absolute;
-	left: 72px;
-	top: 340px;
-	width: 1088px;
-	height: 560px;
-	overflow-y: auto;
-	background-color: #243235;
-}
-.table-body::-webkit-scrollbar {
-  display: none;
-}
+
 .patient-list-section th, .patient-list-section td {
     border: 1px solid black;
     padding: 12px;
@@ -136,14 +98,17 @@ body {
     overflow: hidden; /* 넘치는 텍스트 숨김 */
     text-overflow: ellipsis; /* 넘치는 텍스트를 생략 부호로 표시 (...) */
 }
-
-
-.patient-list-section td {
-	font-weight: 500;
-	border:none;
+.search-result{
+	background-color: #192426;
 }
-tr:nth-child(even) {
-	background-color:rgba(84,106,109,0.2);
+/* 테이블 헤더 스타일 */
+.patient-list-section th {
+    background-color: #192426;
+    font-weight: 400;
+    white-space: nowrap;
+}
+.patient-list-section td {
+	font-weight: 600;
 }
 /* 시리즈 보기 링크 스타일 설정 */
 .patient-list-section td a {
