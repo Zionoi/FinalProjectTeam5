@@ -6,7 +6,7 @@ package com.study.finalProject.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-import jakarta.persistence.CollectionTable;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
@@ -26,7 +26,7 @@ public class Patient {
 
     @Id
     @Column(name = "PID", length = 64)
-    private String pid;
+    private String pid;  // @ElementCollection 제거
 
     @Column(name = "PNAME", nullable = false, length = 64)
     private String pName;

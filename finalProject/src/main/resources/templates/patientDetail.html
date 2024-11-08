@@ -39,14 +39,6 @@
 			</li>
 		</ul>
 		</div>
-        <div class="comment-list">
-            <h2>저장된 코멘트</h2>
-            <ul>
-                <li th:each="comment : ${comments}">
-                    <p th:text="${comment}"></p> <!-- 각 코멘트 표시 -->
-                </li>
-            </ul>
-        </div>
 
         <button class="back-button" id="backBtn">돌아가기</button>
     </div>
