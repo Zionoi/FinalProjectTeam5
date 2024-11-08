@@ -31,7 +31,7 @@ body {
 }
 
 /* 섹션 설정 */
-.section-title {
+.section-title, .studyChoice-title {
 	color:#D8D8D8;
 	font-weight: 500;
 	font-size: 20px;
@@ -48,7 +48,7 @@ body {
 	position:absolute;
     left:32px;
     top:92px;
-    width: 1088px;
+    width: 200px;
     margin-bottom: 20px;
     padding: 20px;
 	background-color: transparent;
@@ -75,6 +75,7 @@ body {
     background-color: #D8D8D8;
     border:none;
 }
+
 .search-reset{
 	position:absolute;
     left:954px;
@@ -84,6 +85,7 @@ body {
 .patient-list-section {
     text-align: left;
 }
+
 .search-result{
 	background-color: #192426;
 	position:absolute;
@@ -94,6 +96,7 @@ body {
 	padding:10px 0 10px 24px;
     font-size: 14px;
 }
+
 .table-header{
 	position:absolute;
     left: 72px;
@@ -136,8 +139,6 @@ body {
     overflow: hidden; /* 넘치는 텍스트 숨김 */
     text-overflow: ellipsis; /* 넘치는 텍스트를 생략 부호로 표시 (...) */
 }
-
-
 .patient-list-section td {
 	font-weight: 500;
 	border:none;
@@ -158,4 +159,31 @@ tr:nth-child(even) {
 
 .patient-list-section td a:hover {
     background-color: #45a049;
+}
+
+
+/* studyChoice 프래그먼트 css*/
+.studyChoice-section{
+	width: 670px;
+	height: 520px;
+	background-color: #243235;
+	padding: 28px;
+	position: absolute;
+	top:120px;
+	left:1172px;
+}
+
+.studyChoice-titleSection td{
+	color:#D8D8D8;
+	background-color: #192426;
+	width: 620px;
+	height: 28px;
+	font-size: 14px;
+	padding:0px 8px 0 8px;
+}
+.dicom-table {
+	border:none;
+}
+.head-container{
+	border:none;
 }
