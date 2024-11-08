@@ -1,5 +1,13 @@
 package com.study.finalProject.domain;
 
+<<<<<<< Updated upstream
+=======
+
+
+import java.util.ArrayList;
+import java.util.List;
+
+>>>>>>> Stashed changes
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
@@ -22,6 +30,9 @@ import java.util.List;
 public class Patient {
 
     @Id
+    @ElementCollection
+
+    
     @Column(name = "PID", length = 64)
     private String pid;
 

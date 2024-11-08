@@ -20,7 +20,6 @@ public class PatientService {
 	@Autowired
     private PatientRepository patientRepository;
 
-    
 
     // 모든 환자 조회
     public List<Patient> getAllPatients() {
