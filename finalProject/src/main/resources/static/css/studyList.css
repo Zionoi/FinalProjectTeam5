@@ -31,7 +31,7 @@ body {
 }
 
 /* 섹션 설정 */
-.section-title, .studyChoice-title {
+.section-title {
 	color:#D8D8D8;
 	font-weight: 500;
 	font-size: 20px;
@@ -46,9 +46,9 @@ body {
 }
 .section-condition {
 	position:absolute;
-    left:32px;
-    top:92px;
-    width: 200px;
+    left:4%;
+    top:26%;
+    width: 1088px;
     margin-bottom: 20px;
     padding: 20px;
     background-color: #192426;
@@ -72,14 +72,7 @@ body {
 }
 
 .search-section input[type="submit"]:hover {
-    background-color: #D8D8D8;
-    border:none;
-}
-
-.search-reset{
-	position:absolute;
-    left:954px;
-    top:100px;
+    background-color: #45a049;
 }
 
 /* 환자 리스트 섹션 레이아웃 설정 */
@@ -87,18 +80,7 @@ body {
     text-align: left;
 }
 
-.search-result{
-	background-color: #192426;
-	position:absolute;
-    left:72px;
-    top:250px;
-    width: 1088px;
-	color:#D8D8D8;
-	padding:10px 0 10px 24px;
-    font-size: 14px;
-}
-
-.table-header{
+.patient-list-section table {
 	position:absolute;
     left:4%;
     top:32%;
@@ -116,9 +98,8 @@ body {
     overflow: hidden; /* 넘치는 텍스트 숨김 */
     text-overflow: ellipsis; /* 넘치는 텍스트를 생략 부호로 표시 (...) */
 }
-.patient-list-section td {
-	font-weight: 500;
-	border:none;
+.search-result{
+	background-color: #192426;
 }
 /* 테이블 헤더 스타일 */
 .patient-list-section th {
@@ -144,30 +125,8 @@ body {
     background-color: #45a049;
 }
 
-
-/* studyChoice 프래그먼트 css*/
-.studyChoice-section{
-	width: 670px;
-	height: 520px;
-	background-color: #243235;
-	padding: 28px;
-	position: absolute;
-	top:120px;
-	left:1172px;
+#historyContainer, #seriesContainer{
+	 margin-left: 1100px;
+	 color: whitesmoke;
+	 /* justify-content: flex-end;  오른쪽 정렬 */
 }
-
-.studyChoice-titleSection td{
-	color:#D8D8D8;
-	background-color: #192426;
-	width: 620px;
-	height: 28px;
-	font-size: 14px;
-	padding:0px 8px 0 8px;
-}
-.dicom-table {
-	border:none;
-}
-.head-container{
-	border:none;
-}
-
