@@ -33,6 +33,9 @@ public class SeriesService {
         seriesRepository.deleteById(seriesKey);
     }
     
-    
+    // 스터디키 가져오기
+    public List<String> getSeriesKeysByStudyKey(Long studyKey) {
+        return seriesRepository.findSeriesKeysByStudyKey(studyKey);
+    }
 	
 }

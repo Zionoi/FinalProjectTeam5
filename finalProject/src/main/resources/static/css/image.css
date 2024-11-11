@@ -2,7 +2,7 @@
 #dicomImage {
     width: 512px;
     height: 512px;
-    background-color: black;
+    /*background-color: black;*/
     display: grid;
 	grid-gap: 10px;  /* 그리드 셀 사이 간격 설정 */
 }

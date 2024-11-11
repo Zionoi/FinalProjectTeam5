@@ -40,7 +40,6 @@ function enableImageLayoutButton() {
     if (imgLayoutBtn) imgLayoutBtn.disabled = false;
 }
 
-
 // 드롭다운에서 선택된 행과 열에 맞춰 시리즈 레이아웃을 적용하기 위한 그리드 생성
 function setupSeriesGridSelector() {
     const seriesGridSelector = document.getElementById('series-grid-selector');
@@ -124,9 +123,7 @@ function generateSeriesLayout(rows, cols, seriesImagesMap) {
     const totalCells = rows * cols;
     let currentIndex = 0;
 
-
      Object.keys(seriesImagesMap).slice(0, totalCells).forEach(seriesKey => {
-
         const gridItem = document.createElement('div');
         gridItem.classList.add('grid-item');
         gridContainer.appendChild(gridItem);
@@ -136,48 +133,41 @@ function generateSeriesLayout(rows, cols, seriesImagesMap) {
         const imagePaths = seriesImagesMap[seriesKey];
         if (imagePaths && imagePaths.length > 0) {
             let filename = imagePaths[currentIndex % imagePaths.length];
-
             loadAndDisplayImage(gridItem, filename, seriesKey);
 
             // 마우스 휠 이벤트로 이미지 전환
             gridItem.addEventListener('wheel', event => {
-
                 event.preventDefault();
                 currentIndex = (currentIndex + (event.deltaY > 0 ? 1 : -1) + imagePaths.length) % imagePaths.length;
                 loadAndDisplayImage(gridItem, imagePaths[currentIndex], seriesKey);
             });
-
             
              // 더블 클릭 이벤트로 1x1 레이아웃 전환
             gridItem.addEventListener('dblclick', () => {
-                applySingleSeriesLayout(seriesKey);
+				const newUrl = `/images/studies/${studyKey}/series/${seriesKey}`;
+                window.location.href = newUrl;
+                /*applySingleSeriesLayout(seriesKey);*/
                 enableImageLayoutButton(); // 더블 클릭 시 이미지 레이아웃 버튼 활성화
             });
         } else {
             gridItem.style.backgroundColor = 'black';
             console.warn(`No images found for seriesKey: ${seriesKey}.`);
-
         }
     });
 }
 
 // 셀에 이미지를 로드하고 표시하는 함수
 function loadAndDisplayImage(gridItem, filename, seriesKey) {
-
-
-    const imageId = `wadouri:http://localhost:8080/dicom-file/${filename}`;
+    const imageId = `wadouri:/dicom-file/${filename}`;
     console.log("Loading image with ID:", imageId);
 
     cornerstone.loadImage(imageId).then(image => {
         cornerstone.displayImage(gridItem, image);
-        console.log(`Displayed image for seriesKey: ${seriesKey}, imageId: ${imageId}`);
     }).catch(err => {
         console.error(`Failed to load image for seriesKey ${seriesKey}:`, err);
         gridItem.style.backgroundColor = 'black';
     });
 }
-
-
 
 // 시리즈 이미지 데이터를 가져와서 레이아웃 생성 함수 호출
 async function fetchImagesAndGenerateLayout(rows, cols) {
@@ -187,7 +177,6 @@ async function fetchImagesAndGenerateLayout(rows, cols) {
         console.error("studyKey가 URL에서 찾을 수 없습니다.");
         return;
     }
-
 
     // 서버에 요청을 보내 시리즈 키 목록에 해당하는 이미지 데이터를 가져옴
     fetch(`/studies/${studyKey}/series-images?seriesKeys=${seriesKeys.join(',')}`)
@@ -204,67 +193,69 @@ async function fetchImagesAndGenerateLayout(rows, cols) {
         .catch(error => {
             console.error('Error fetching series images:', error);
         });
-
 }
 
 // 선택된 시리즈에 대해 1x1 레이아웃을 적용하는 함수
+// applySingleSeriesLayout 함수 - axios 버전
 function applySingleSeriesLayout(seriesKey) {
-    const gridContainer = document.getElementById('dicomImage');
+    if (!studyKey || !seriesKey) {
+        console.error("StudyKey 또는 SeriesKey가 정의되지 않았습니다.");
+        return;
+    }
 
+	console.log('스터디 키 ', studyKey);
+	console.log('시리즈 키 ', seriesKey);
+    const gridContainer = document.getElementById('dicomImage');
 
     // 기존 콘텐츠 완전히 제거
     gridContainer.innerHTML = '';
     gridContainer.style.display = 'block';
 
-
     // cornerstone 활성화 - 중복 활성화를 방지하기 위해 gridContainer가 이미 활성화되었는지 확인
-    if (!cornerstone.getEnabledElement(gridContainer)) {
+    if (!cornerstone.getEnabledElements().some(el => el.element === gridContainer)) {
         cornerstone.enable(gridContainer);
+        console.log("Cornerstone 활성화됨");
     }
 
-    // Thymeleaf로 전달된 studyKey 변수를 사용하여 fetch 요청
-
-    fetch(`/images/studies/${studyKey}/series/${seriesKey}`, {
-        headers: { 'Accept': 'text/html' }  // HTML 형식으로 응답 요청
+    // axios를 사용하여 이미지 정보 요청
+    axios.get(`/image/click/${studyKey}/series/${seriesKey}`, {
+        headers: { 'Accept': 'application/json' }
     })
     .then(response => {
+        const imagePaths = response.data;
+        console.log('더블클릭한 이미지 경로 imagePaths :', imagePaths);
 
-        if (!response.ok) {
-            throw new Error(`Network response was not ok: ${response.status} ${response.statusText}`);
-        }
-        return response.text();  // HTML 형식 응답을 텍스트로 변환
-    })
-    .then(html => {
-        // HTML 응답이 이미지 경로를 포함하고 있다고 가정하고 파싱합니다.
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, 'text/html');
-        const imgElement = doc.querySelector('img');
-        
-        if (imgElement) {
-            let imagePath = imgElement.getAttribute('src');
-
-            // 경로의 '\' 문자를 '/'로 변경
-            imagePath = imagePath.replace(/\\/g, '/');
-            const imageId = `wadouri:http://localhost:8080${imagePath}`;
-
+        const imageIds = imagePaths.map(filename => `wadouri:/dicom-file/${filename}`);
+            console.log("시리즈레이아웃js imageIds : ", imageIds);
+			console.log('imagePaths 타입:', Array.isArray(imagePaths))
             // cornerstone을 통해 이미지를 로드하고 표시
-            cornerstone.loadImage(imageId).then(image => {
-                cornerstone.displayImage(gridContainer, image);
-                console.log(`Displayed image for seriesKey: ${seriesKey}, imageId: ${imageId}`);
+            const stack = {
+	        currentImageIdIndex: 0,
+	        imageIds: imageIds,
+	        preload: false	// 프리로딩을 비활성화
+	    };
+	
+	    // 첫 번째 이미지를 로드하고 스택 상태 설정
+	    cornerstone.loadImage(imageIds[0]).then((image) => {
+	        console.log('더블클릭한 시리즈 이미지 경로 image : ', image);
+	        cornerstone.displayImage(gridContainer, image);
+	        cornerstoneTools.addStackStateManager(gridContainer, ['stack']);
+	        cornerstoneTools.addToolState(gridContainer, 'stack', stack);
+             
             }).catch(err => {
                 console.error(`Failed to load image for seriesKey ${seriesKey}:`, err);
                 gridContainer.style.backgroundColor = 'black';
             });
-        } else {
-            console.error('No image found in the HTML response');
-            gridContainer.style.backgroundColor = 'black';
-        }
+       
     })
     .catch(error => {
-        console.error(`Error fetching HTML content for series ${seriesKey}:`, error);
+        console.error(`Error fetching JSON content for series ${seriesKey}:`, error);
         gridContainer.style.backgroundColor = 'black';
     });
 }
+
+
+
 
 // 초기화 호출
 setupSeriesGridSelector();
