@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
     cornerstone.enable(element);
-
+	console.log('테스트js imagePaths : ', imagePaths[0]);
     // 이미지 스택 정의
     const imageIds = imagePaths.map(filename => `wadouri:/dicom-file/${filename}`);
     const stack = {
@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
         imageIds: imageIds,
         preload: false	// 프리로딩을 비활성화
     };
-
+	console.log('테스트js imageIds : ', imageIds[0]);
     // 첫 번째 이미지를 로드하고 스택 상태 설정
     cornerstone.loadImage(imageIds[0]).then((image) => {
         cornerstone.displayImage(element, image);

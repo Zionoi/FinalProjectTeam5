@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
@@ -20,14 +22,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.study.finalProject.domain.Image;
 import com.study.finalProject.service.ImageService;
 import com.study.finalProject.service.SeriesService;
 
 import jakarta.servlet.http.HttpServletRequest;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @Controller
 public class ImageController {
@@ -75,6 +76,28 @@ public class ImageController {
         } else {
             return "errorView"; // 이미지가 없을 경우 에러 페이지로 이동
         }
+    }
+    
+    @GetMapping("/image/click/{studyKey}/series/{seriesKey}")
+    @ResponseBody  // JSON 형식으로 응답을 반환
+    public List<String> clickImagesByStudyKeyAndSeriesKey(
+            @PathVariable("studyKey") Long studyKey,
+            @PathVariable("seriesKey") Long seriesKey) {
+
+        // 스터디 키를 통해 해당하는 모든 시리즈 키 목록 가져오기
+        List<Image> images = imageService.getImagesByStudyKeyAndSeriesKey(studyKey, seriesKey);
+        List<String> imagePaths = new ArrayList<>();
+
+        if (images != null && !images.isEmpty()) {
+            // 각 이미지의 경로와 파일명을 결합하여 리스트에 추가
+            for (Image image : images) {
+                String fullPath = Paths.get(image.getPath(), image.getFName()).toString().replace("\\", "/");
+                imagePaths.add(fullPath); // 전체 경로를 추가
+            }
+        }
+        System.out.println("더블클릭한 시리즈 이미지 경로+이름 리스트 imagePaths: " + imagePaths);
+        
+        return imagePaths;  // JSON 형식으로 이미지 경로 리스트 반환
     }
 
     // 이미지 파일을 제공하는 메서드: 파일 시스템에서 파일을 찾아서 클라이언트에 제공
