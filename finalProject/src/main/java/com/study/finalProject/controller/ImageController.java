@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.study.finalProject.domain.Image;
 import com.study.finalProject.service.ImageService;
+import com.study.finalProject.service.SeriesService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
@@ -32,7 +33,10 @@ import org.slf4j.LoggerFactory;
 public class ImageController {
 
     @Autowired
-    ImageService imageService; // ImageService를 통해 데이터베이스 접근
+    private ImageService imageService; // ImageService를 통해 데이터베이스 접근
+    
+    @Autowired
+    private SeriesService seriesService; 
     
     private static final Logger logger = LoggerFactory.getLogger(ImageController.class);
 
@@ -45,6 +49,13 @@ public class ImageController {
     public String getImagesByStudyKeyAndSeriesKey(@PathVariable("studyKey") Long studyKey,
                                                   @PathVariable("seriesKey") Long seriesKey,
                                                   Model model) {
+    	
+    	// 스터디 키를 통해 해당하는 모든 시리즈 키 목록 가져오기
+    	List<String> seriesKeys = seriesService.getSeriesKeysByStudyKey(studyKey);
+        model.addAttribute("studyKey", studyKey);
+        model.addAttribute("seriesKey", seriesKey);
+        model.addAttribute("seriesKeys", seriesKeys);
+        
         // 데이터베이스에서 이미지 정보 조회
         List<Image> images = imageService.getImagesByStudyKeyAndSeriesKey(studyKey, seriesKey);
 
