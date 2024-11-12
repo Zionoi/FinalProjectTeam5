@@ -78,7 +78,9 @@ public class ImageController {
         }
     }
     
-    @GetMapping("/image/click/{studyKey}/series/{seriesKey}")
+   
+    
+    @GetMapping("/image/Thumbnail/{studyKey}/series/{seriesKey}")
     @ResponseBody  // JSON 형식으로 응답을 반환
     public List<String> clickImagesByStudyKeyAndSeriesKey(
             @PathVariable("studyKey") Long studyKey,
@@ -146,6 +148,24 @@ public class ImageController {
         }
 
         return ResponseEntity.ok(seriesImagesMap);
+    }
+    
+    @GetMapping("/images/studies/{studyKey}/series/{seriesKey}/next")
+    public ResponseEntity<List<String>> getNextSeriesImages(
+    		@PathVariable("studyKey") Long studyKey,
+    	    @PathVariable("seriesKey") Long seriesKey
+    ) {
+        List<String> nextSeriesImages = imageService.getNextSeriesImages(studyKey, seriesKey);
+        return ResponseEntity.ok(nextSeriesImages);
+    }
+
+    @GetMapping("/images/studies/{studyKey}/series/{seriesKey}/previous")
+    public ResponseEntity<List<String>> getPreviousSeriesImages(
+    		@PathVariable("studyKey") Long studyKey,
+    	    @PathVariable("seriesKey") Long seriesKey
+    ) {
+        List<String> previousSeriesImages = imageService.getPreviousSeriesImages(studyKey, seriesKey);
+        return ResponseEntity.ok(previousSeriesImages);
     }
     
 //    

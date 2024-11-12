@@ -14,15 +14,36 @@ document.addEventListener('DOMContentLoaded', () => {
 	cornerstoneTools.external.cornerstone = cornerstone;
     cornerstoneTools.external.cornerstoneMath = cornerstoneMath;
     cornerstoneTools.external.Hammer = Hammer;
-    cornerstoneTools.init();
-    
+    //cornerstoneTools.init();
+
     const element = document.getElementById('dicomImage');
     if (!element) {
         console.error("dicomImage 요소를 찾을 수 없습니다.");
         return;
     }
     cornerstone.enable(element);
+	cornerstoneTools.init();
+
+
+    // 돋보기
+    const MagnifyTool = cornerstoneTools.MagnifyTool;
+	cornerstoneTools.addTool(MagnifyTool);
+	
+	// 주석
+	cornerstoneTools.addTool(cornerstoneTools.AngleTool);
+	cornerstoneTools.addTool(cornerstoneTools.ArrowAnnotateTool);
+	cornerstoneTools.addTool(cornerstoneTools.BidirectionalTool);
+	cornerstoneTools.addTool(cornerstoneTools.CobbAngleTool);
+	cornerstoneTools.addTool(cornerstoneTools.EllipticalRoiTool);
+	cornerstoneTools.addTool(cornerstoneTools.FreehandRoiTool);
+	cornerstoneTools.addTool(cornerstoneTools.LengthTool);
+	cornerstoneTools.addTool(cornerstoneTools.ProbeTool);
+	cornerstoneTools.addTool(cornerstoneTools.RectangleRoiTool);
+	cornerstoneTools.addTool(cornerstoneTools.TextMarkerTool);
+
+    
 	console.log('테스트js imagePaths : ', imagePaths[0]);
+	
     // 이미지 스택 정의
     const imageIds = imagePaths.map(filename => `wadouri:/dicom-file/${filename}`);
     const stack = {
@@ -31,6 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
         preload: false	// 프리로딩을 비활성화
     };
 	console.log('테스트js imageIds : ', imageIds[0]);
+	
     // 첫 번째 이미지를 로드하고 스택 상태 설정
     cornerstone.loadImage(imageIds[0]).then((image) => {
         cornerstone.displayImage(element, image);
