@@ -22,12 +22,30 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
     cornerstone.enable(element);
+    
 	cornerstoneTools.init();
 
+
+	// 이동
+	
+	// 확대
+	cornerstoneTools.addTool(cornerstoneTools.ZoomTool, {
+	  // Optional configuration
+	  configuration: {
+	    invert: false,
+	    preventZoomOutsideImage: false,
+	    minScale: .1,
+	    maxScale: 20.0,
+	  }
+	});
+	
+	cornerstoneTools.setToolActive('Zoom', { mouseButtonMask: 1 })
 
     // 돋보기
     const MagnifyTool = cornerstoneTools.MagnifyTool;
 	cornerstoneTools.addTool(MagnifyTool);
+	// 회전
+	cornerstoneTools.addTool(cornerstoneTools.RotateTool);
 	
 	// 주석
 	cornerstoneTools.addTool(cornerstoneTools.AngleTool);
