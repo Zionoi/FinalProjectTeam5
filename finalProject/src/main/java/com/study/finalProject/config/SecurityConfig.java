@@ -38,7 +38,7 @@ public class SecurityConfig {
     	System.out.println("시큐리티 컨피크 HTTP" + http);
         return http
                 .authorizeRequests()
-                .requestMatchers("/", "/login", "/loginPage", "/signup", "/css/**", "/js/**", "/img/**").permitAll()
+                .requestMatchers("/", "/login", "/loginPage", "/signup", "/css/**", "/js/**", "/img/**", "/dicom-file/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
