@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-    <script th:src="@{/js/seriesList.js}"></script>
-    <script th:src="@{/js/serSectionImage.js}"></script>
+    
 
     <meta charset="UTF-8">
+    
+    <!--<script>
+    $(document).ready(function () {
+		$(".series-table-body tr").on("click", function (e) {
+			 console.log("Thumbnail 함수가 호출되었습니다.");
+	        Thumbnail()                
+	    });
+	});
+	</script>-->
     <title>Series 목록</title>
 </head>
 <body>
@@ -31,19 +34,37 @@
             <div class="series-table">
                 <table class="series-table-body">
                     <tr th:each="series, iterStat : ${series}" style="cursor: pointer;"
-                        th:data-url="@{'/images' + '/studies/' + ${series.studyKey} + '/series/' + ${series.seriesKey}}"
-                        onclick="window.location=this.getAttribute('data-url')">
-                        <!-- 시리즈 넘버를 카운트로 표시 (1부터 시작) -->
-                        <td th:text="${iterStat.index + 1}"></td>
-                        <td th:text="${series.seriesDesc}"></td>
-                        <td th:text="${series.modality}"></td>
-                        <td th:text="${series.imageCnt}" style="text-align:center; color:#D8D8D8;"></td>
-                    </tr>
+			            th:data-study-key="${series.studyKey}"
+			            th:data-series-key="${series.seriesKey}"
+			            th:data-url="@{'/images/studies/' + ${series.studyKey} + '/series/' + ${series.seriesKey}}"
+			            ondblclick="window.location=this.getAttribute('data-url')">
+			            <td th:text="${iterStat.index + 1}"></td>
+			            <td th:text="${series.seriesDesc}"></td>
+			            <td th:text="${series.modality}"></td>
+			            <td th:text="${series.imageCnt}" style="text-align:center; color:#D8D8D8;"></td>
+			        </tr>
                 </table>
             </div>
-            <div id="serSectionImageContainer"></div>
+           <!-- <div id="serSectionImageContainer"></div>-->
         </div>
     </div>
     <a th:href="@{'/studyList'}">뒤로 가기</a>
+
+    <!-- Cornerstone 및 Cornerstone Tools 라이브러리 로드 -->
+	<script src="https://unpkg.com/cornerstone-core"></script>
+	<script src="https://unpkg.com/cornerstone-wado-image-loader"></script>
+	<script src="https://unpkg.com/cornerstone-tools"></script>
+	<script src="https://unpkg.com/dicom-parser"></script>
+	<script src="https://unpkg.com/cornerstone-math"></script>
+	<script src="https://unpkg.com/hammerjs"></script>
+
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+	<script th:src="@{/js/seriesList.js}"></script>
+	<script th:src="@{/js/testjs.js}"></script>
+	<!--<script th:src="@{/js/serSectionImage.js}"></script>-->
 </body>
 </html>

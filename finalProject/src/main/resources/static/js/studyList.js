@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // 스터디 목록 클릭 시 상세 페이지로 이동
+    // 기존 코드: 스터디 목록 클릭 시 상세 페이지로 이동
     const studyItems = document.querySelectorAll(".study-item");
     studyItems.forEach(item => {
         item.addEventListener("click", function () {
@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    // 삭제 버튼 클릭 시 확인 메시지 표시
+    // 기존 코드: 삭제 버튼 클릭 시 확인 메시지 표시
     const deleteButtons = document.querySelectorAll(".delete-study");
     deleteButtons.forEach(button => {
         button.addEventListener("click", function (event) {
@@ -17,9 +17,59 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     });
-    
-    
+
+    // cornerstone 및 cornerstone-wado-image-loader 설정
+    if (typeof cornerstone === 'undefined' || typeof cornerstoneWADOImageLoader === 'undefined') {
+        console.error("Cornerstone 또는 Cornerstone WADO Image Loader가 초기화되지 않았습니다.");
+        return;
+    }
+
+    cornerstoneWADOImageLoader.external.cornerstone = cornerstone;
+    cornerstoneWADOImageLoader.configure({
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader('Accept', 'application/json');
+        }
+    });
+
+    // Thumbnail 함수 정의
+    window.Thumbnail = function (studyKey, seriesKey) {
+        console.log("Thumbnail 함수 실행 - studyKey:", studyKey, "seriesKey:", seriesKey);
+
+        // Axios 요청을 통해 이미지 경로 가져오기
+        axios.get(`/image/Thumbnail/${studyKey}/series/${seriesKey}`, {
+            headers: { 'Accept': 'application/json' }
+        })
+        .then(response => {
+            const imagePaths = response.data;
+            console.log('받은 썸네일 이미지 경로:', imagePaths);
+
+            if (imagePaths.length > 0) {
+                const imageId = `wadouri:/dicom-file/${imagePaths[0]}`;
+                console.log("imageId:", imageId);
+
+                const element = document.getElementById('dicomImage');
+                if (!element) {
+                    console.error("dicomImage 요소가 존재하지 않습니다.");
+                    return;
+                }
+
+                cornerstone.enable(element);
+
+                cornerstone.loadImage(imageId).then((image) => {
+                    cornerstone.displayImage(element, image);
+                }).catch(err => {
+                    console.error('이미지 로드 실패:', err);
+                });
+            } else {
+                console.error("이미지 경로가 비어 있습니다.");
+            }
+        })
+        .catch(err => {
+            console.error('이미지 요청 실패:', err);
+        });
+    };
 });
+
 
 
 
@@ -81,7 +131,6 @@ function sendStudyKey(studyKey) {
             isRequestProgress = false; // 요청 완료 후 다시 활성화
         });
 }
-
 
 
 

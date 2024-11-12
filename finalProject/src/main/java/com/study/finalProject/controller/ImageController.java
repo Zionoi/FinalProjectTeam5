@@ -78,7 +78,9 @@ public class ImageController {
         }
     }
     
-    @GetMapping("/image/click/{studyKey}/series/{seriesKey}")
+   
+    
+    @GetMapping("/image/Thumbnail/{studyKey}/series/{seriesKey}")
     @ResponseBody  // JSON 형식으로 응답을 반환
     public List<String> clickImagesByStudyKeyAndSeriesKey(
             @PathVariable("studyKey") Long studyKey,
