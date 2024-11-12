@@ -11,6 +11,9 @@
     <!-- 버튼 레이아웃 프레그먼트 정의 -->
     <div th:fragment="buttonLayout">
         <div class="button-container">
+			<button class="btn" id="listBtn">리스트</button>
+			<button class="btn" id="prevBtn">이전</button>
+            <button class="btn" id="nextBtn">다음</button>
             <button class="btn" id="invertBtn">흑백반전</button>
             <button class="btn" id="brightnessBtn">밝기/대비조절</button>
             <button class="btn" id="playClipBtn">플레이클립</button>
@@ -28,6 +31,21 @@
 	        </div>
 	        
             <button class="btn" id="annotateBtn">주석</button>
+            <!-- 주석 드롭다운 메뉴 -->
+	        <div id="annotateDropdown" class="annotate-dropdown-menu" style="display: none;">
+	            <button id="angle" class="annotate-btn">각도</button>
+	            <button id="arrow" class="annotate-btn">화살표</button>
+	            <button id="bidirectional" class="annotate-btn">양방향</button>
+	            <button id="cobb" class="annotate-btn">Cobb(측만증)</button>
+	            <button id="ellipticalRoi" class="annotate-btn">타원형</button>
+	            <button id="freehandRoi" class="annotate-btn">자유형</button>
+	            <button id="length" class="annotate-btn">길이</button>
+	            <button id="probe" class="annotate-btn">프로브(위치 값)</button>
+	            <button id="rectangleRoi" class="annotate-btn">사각형</button>
+	            <button id="text" class="annotate-btn">텍스트</button>  
+	            <button id="delete" class="annotate-btn">지우기</button>            
+	        </div>
+	        
             <button class="btn" id="resetBtn">초기화</button>
             <button class="btn" id="downloadBtn">다운로드</button>
             
