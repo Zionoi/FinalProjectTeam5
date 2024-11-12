@@ -6,7 +6,7 @@
 
     <title>DView Layout</title>
 
-    <a class="logout" href="/logout"> 로그아웃</a>
+    <a class="logout" href="/logout">logout</a>
    	
     <script>
 		// 정렬 기능
@@ -138,7 +138,7 @@
             <div class="search-options">
 				<div class="section-title">환자 검색</div>
 				<form id="dateSearchForm" action="/studyList/dateSearch" method="get">
-				    <input type="text" name="datetimes" value="date" />
+				    <input class= "searchDate" type="button" name="datetimes" value="date" />
 				    <!-- 숨겨진 필드 -->
 				    <input type="hidden" name="startDate" id="startDate">
 				    <input type="hidden" name="endDate" id="endDate">
@@ -152,23 +152,23 @@
                         <option value="equipment">검사장비</option>
                         <option value="examName">검사이름</option>
                     </select>
-                    <input type="text" name="searchQuery" id="searchQuery" placeholder="검색어 입력">
+                    <input class="searchText" type="text" name="searchQuery" id="searchQuery" placeholder="검색어 입력">
                     <input type="submit" value="검색">
                 </form>
+        <div class="section-condition" th:if="${searchCriteria != null}">
+		    <p><strong>검색 조건 : </strong>
+		        <span th:each="criteria, stat : ${searchCriteria}">
+		            <a class="section-condition-ob" href="#" th:onclick="'removeCriteria(' + ${stat.index} + '); return false;'"
+		               th:text="${criteria} + ' '" style="cursor: pointer;"></a>
+		        </span>
+		    </p>
+
                 <form class="search-reset" action="/studyList/search/reset" method="get">
                     <input type="submit" value="검색 조건 초기화">
                 </form>
             </div>
         </div>
-
-		<div class="section-condition" th:if="${searchCriteria != null}">
-		    <p class="section-condition"><strong>검색 조건: </strong>
-		        <span th:each="criteria, stat : ${searchCriteria}">
-		            <a href="#" th:onclick="'removeCriteria(' + ${stat.index} + '); return false;'"
-		               th:text="${criteria} + ' '" style="cursor: pointer; text-decoration: underline;"></a>
-		        </span>
-		    </p>
-		</div>
+        </div>
 
         <div >
 			<div class="search-result">검색 결과</div>
