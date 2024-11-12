@@ -150,6 +150,24 @@ public class ImageController {
         return ResponseEntity.ok(seriesImagesMap);
     }
     
+    @GetMapping("/images/studies/{studyKey}/series/{seriesKey}/next")
+    public ResponseEntity<List<String>> getNextSeriesImages(
+    		@PathVariable("studyKey") Long studyKey,
+    	    @PathVariable("seriesKey") Long seriesKey
+    ) {
+        List<String> nextSeriesImages = imageService.getNextSeriesImages(studyKey, seriesKey);
+        return ResponseEntity.ok(nextSeriesImages);
+    }
+
+    @GetMapping("/images/studies/{studyKey}/series/{seriesKey}/previous")
+    public ResponseEntity<List<String>> getPreviousSeriesImages(
+    		@PathVariable("studyKey") Long studyKey,
+    	    @PathVariable("seriesKey") Long seriesKey
+    ) {
+        List<String> previousSeriesImages = imageService.getPreviousSeriesImages(studyKey, seriesKey);
+        return ResponseEntity.ok(previousSeriesImages);
+    }
+    
 //    
 //    
 // 

@@ -4,8 +4,6 @@ function initializeCornerstoneTools() {
 	const element = document.getElementById('dicomImage');  
     cornerstone.enable(element);
     
-    cornerstoneWADOImageLoader.external.cornerstone = cornerstone;
-    cornerstoneWADOImageLoader.external.cornerstoneTools = cornerstoneTools;
 	cornerstoneTools.external.cornerstone = cornerstone;
     cornerstoneTools.external.cornerstoneMath = cornerstoneMath;
     cornerstoneTools.external.Hammer = Hammer;
@@ -16,6 +14,9 @@ function initializeCornerstoneTools() {
 	document.addEventListener('click', () => {
 	    toolDropdown.style.display = 'none';    
 	});
+	
+	// 이전/다음 초기화
+	initializePrevNext(element);
 	
 	// 흑백 초기화
 	initializeInvert(element);	
@@ -31,6 +32,9 @@ function initializeCornerstoneTools() {
 	
 	// 도구 초기화
 	initializeToolDropdown(element);
+	
+	// 주석 초기화
+	initializeAnnotateDropdown(element);
 	
 	// 초기화 초기화
 	initializeReset(element);
