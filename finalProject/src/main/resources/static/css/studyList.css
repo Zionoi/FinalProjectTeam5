@@ -44,10 +44,10 @@ body {
 
 
 /* 섹션 설정 */
-.section-title, .studyChoice-title {
+.section-title, .studyChoice-title, .series-container-title {
 	color:#D8D8D8;
-	font-weight: 500;
-	font-size: 20px;
+	font-weight: 600;
+	font-size: 19px;
 }
 label {
 	background-color: transparent;
@@ -202,10 +202,17 @@ tr:nth-child(even) {
 .patient-list-section td a:hover {
     background-color: #45a049;
 }
-
+.pastStudyBtn {
+	background-color:transparent;
+	border:none;
+	color:#D8D8D8;
+    font-size: 14px;
+	font-weight: 500;
+	font-family: 'Pretendard-Regular';
+}
 
 /* studyChoice 프래그먼트 css*/
-.studyChoice-section{
+.choicebox{
 	width: 670px;
 	height: 450px;
 	border-radius: 4px;
@@ -223,6 +230,7 @@ tr:nth-child(even) {
 	font-size: 14px;
 	padding:1px 8px 1px 8px;
 	border:none;
+	margin-top:4px;
 }
 .studyChoice-detailBtn{
 	color:#D8D8D8;
@@ -233,10 +241,11 @@ tr:nth-child(even) {
 	color:white;
 }
 .dicom-table {
-	font-size:15px;
+	font-size:14px;
 	color:#D8D8D8;
 	width: 620px;
 	background-color:transparent;
+	margin-top:4px;
 }
 .historytbody{
  	font-weight: 400;
@@ -245,7 +254,7 @@ tr:nth-child(even) {
  	height: 108px;
  	border-radius: 4px;
  	position:absolute;
- 	top:120px;
+ 	top:124px;
 }
 .historytbody-section {
     border-collapse: collapse;
@@ -263,9 +272,11 @@ tr:nth-child(even) {
     overflow: hidden; /* 넘치는 텍스트 숨김 */
     text-overflow: ellipsis; /* 넘치는 텍스트를 생략 부호로 표시 (...) */
 }
-
+.historytbody-section tr:hover {
+	background-color:rgb(48, 63, 65);
+}
 /*series section css*/
-.series-container{
+.seriesbox{
 	width: 670px;
 	height: 320px;
 	background-color: #243235;
@@ -274,10 +285,7 @@ tr:nth-child(even) {
 	top:580px;
 	left:1172px;
 }
-.series-container h1 {
-	color:#D8D8D8;
-    font-size: 20px;
-}
+
 .series-table {
 	position:absolute;
 	top:68px;

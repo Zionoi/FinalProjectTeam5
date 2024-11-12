@@ -113,22 +113,22 @@
 		}
 		
 		$(document).ready(function () {
-	    
-		    $("button[name=pastStudy]").click((e)=>{
-			console.log('버튼 실행확인', e)
-			 const pid = $(e.target).val();
-			sendPid(pid)});
 			
-			$("#historyContainer").on("click", "button[name=seriesList]", function (e) {
-	        console.log('스터디초이스 안에 시리즈목록 버튼 실행확인', e);
-	        const studyKey = $(e.target).val();
-	        sendStudyKey(studyKey);
-	    	});
+			$(".patient-list-section tr").on("click", function (e) {
+                const pid = $(this).find("button[name=pastStudy]").val();
+                if (pid) {
+                    sendPid(pid);
+                }
+            });
+			
+			$("#historyContainer").on("click", ".historytbody-section tr", function () {
+				const studyKey = $(this).data("studyKey");
+				if (studyKey) {
+					sendStudyKey(studyKey);
+				}
+			});
 		
 	    });
-		
-		
-			
     </script>
 </head>
 <body>
@@ -181,9 +181,9 @@
                         <th onclick="sortTable(4)">생일</th>
                         <th onclick="sortTable(5)">검사이름</th>
                         <th onclick="sortTable(6)">검사장비</th>
-                        <th onclick="sortTable(7)">Verify</th>
+                        <th onclick="sortTable(7)">시리즈</th>
                         <th onclick="sortTable(8)">담당의사</th>
-                        <th>상세 보기</th>
+                        <th onclick="sortTable(9)">Verify</th>
                     </tr>
                 </table>
                 
@@ -197,23 +197,22 @@
                         <td th:text="${study.pBirthDateTime}"></td>
                         <td th:text="${study.studyDesc}"></td>
                         <td th:text="${study.modality}"></td>
-                        <td th:text="${study.verifyFlag}"></td>
+                        <td th:text="${study.seriesCnt}"></td>
                         <td th:text="${study.operatorsName}"></td>
-                       <!-- <td>
-	                    	<button name="seriesList"  th:value="${study.studyKey}">시리즈</button>
-	                	</td>-->
                       <td>
-						<!--<button th:onclick="sendPid('[[${study.pid}]]')">검사이력</button>-->
-						<button name="pastStudy" th:value="${study.pid}">검사이력</button>
-
+						<button name="pastStudy" th:value="${study.pid}" th:text="${study.verifyFlag}"
+						class="pastStudyBtn"/>
 	                </td>
                     </tr>
             </table>
          </div>
         </div>
       <!--<div id="historyContainer" th:replace="~{studyChoice.html :: studyChoice}"> 왜 아무것도 안뜨지</div>-->
-      <div id="historyContainer">    	</div>
-      <div id="seriesContainer">    	</div>
+      <div class="choicebox" id="historyContainer">
+		  <div class="studyChoice-title" style="position:relative; top:-4px">검사 이력</div>
+	  </div>
+	  
+      <div class="seriesbox" id="seriesContainer">            	</div>
     </div>
 
 </body>
