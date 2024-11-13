@@ -37,7 +37,7 @@
 			            th:data-study-key="${series.studyKey}"
 			            th:data-series-key="${series.seriesKey}"
 			            th:data-url="@{'/images/studies/' + ${series.studyKey} + '/series/' + ${series.seriesKey}}"
-			            ondblclick="window.location=this.getAttribute('data-url')">
+			            ondblclick="window.location=this.getAttribute('data-url')" onclick="Thumbnail(this.getAttribute('data-study-key'), this.getAttribute('data-series-key'))">
 			            <td th:text="${iterStat.index + 1}"></td>
 			            <td th:text="${series.seriesDesc}"></td>
 			            <td th:text="${series.modality}"></td>
