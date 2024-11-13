@@ -23,7 +23,7 @@ function initializeAnnotateDropdown(element) {
 }
 
 // 주석 제어 설정 함수
-function setupAnnotateControls() {
+function setupAnnotateControls(element) {
 	
 	// 각도 측정
     document.getElementById('angle').addEventListener('click', () => {
@@ -173,12 +173,47 @@ function setupAnnotateControls() {
 		        changeTextCallback,
 		    }})
     });
+    
+    
+    // 주석 저장 버튼 이벤트 추가
+    document.getElementById('save').addEventListener('click', async () => {
+        const element = document.getElementById('dicomImage');  // DICOM 이미지 요소
+        const imageId = getCurrentImageId();  // 현재 이미지 ID 가져오기
+        const annotations = getAnnotationsData(element); // 현재 주석 데이터 가져오기
+
+        try {
+            const response = await fetch(`/images/${imageId}/annotations`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(annotations)
+            });
+
+            if (response.ok) {
+                alert('주석이 성공적으로 저장되었습니다.');
+            } else {
+                alert('주석 저장에 실패했습니다.');
+            }
+        } catch (error) {
+            console.error('주석 저장 중 오류:', error);
+        }
+    });
+
+    // 주석 데이터를 가져오는 함수
+    function getAnnotationsData(element) {
+        const toolState = cornerstoneTools.globalImageIdSpecificToolStateManager.saveToolState();
+        return Object.keys(toolState).map(imageId => ({
+            imageId: imageId,
+            annotations: toolState[imageId]
+        }));
+    }
 
     // 선택된 주석을 저장할 객체
-	let selectedAnnotation = {
-	    toolType: null,
-	    uid: null,
-	};
+    let selectedAnnotation = {
+        toolType: null,
+        uid: null,
+    };
 	
 	// 주석 클릭 시 선택된 주석의 정보를 설정하는 함수
 	function onAnnotationSelected(event) {
@@ -246,5 +281,7 @@ document.getElementById('deleteSelectedAnnotation').addEventListener('click', ()
 
     deleteSelectedAnnotation(element, toolType, annotationId);
 });*/
+
+
 
 }
