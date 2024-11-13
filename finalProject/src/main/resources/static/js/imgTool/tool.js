@@ -28,17 +28,19 @@ function setupToolControls(element) {
 	// 돋보기 기능
     document.getElementById('magnifier').addEventListener('click', () => {
 		
+		activateTool(element, 'Magnify'); // `activateTool` 호출
 		cornerstoneTools.setToolActive('Magnify', { mouseButtonMask: 1 })
 		cornerstoneTools.addToolState('Magnify', {
 		      configuration: {
 			        magnifySize: 300,
 			        magnificationLevel: 2,
-		      }})
+		      }});
     });
 
     // 회전 기능
     document.getElementById('rotate').addEventListener('click', () => {
 		
+		activateTool(element, 'Rotate'); // `activateTool` 호출
 		cornerstoneTools.setToolActive('Rotate', { mouseButtonMask: 1 })
 		cornerstoneTools.addToolState('Rotate', {
 		      configuration: {
@@ -46,7 +48,7 @@ function setupToolControls(element) {
 			        flipHorizontal: false,
 			        flipVertical: false,
 			        rotateScale: 1,
-		      }})
+		      }});
     });
   
     document.getElementById('hFlip').addEventListener('click', () => {

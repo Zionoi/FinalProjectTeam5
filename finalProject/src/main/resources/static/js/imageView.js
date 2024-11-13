@@ -1,3 +1,30 @@
+let activeTool = null;
+
+function activateTool(element, toolName) {
+    if (activeTool === toolName) {
+        // 이미 활성화된 도구를 다시 클릭하면 비활성화하고 기본 도구로 전환
+        cornerstoneTools.setToolDisabledForElement(element, toolName);
+        activeTool = null;
+        setDefaultTools(element);
+    } else {
+        // 기존 활성 도구 비활성화
+        if (activeTool) {
+            cornerstoneTools.setToolDisabledForElement(element, activeTool);
+        }
+        // 새 도구 활성화
+        cornerstoneTools.setToolActiveForElement(element, toolName, { mouseButtonMask: 1 });
+        activeTool = toolName;
+    }
+}
+
+// 기본 도구 활성화 함수
+function setDefaultTools(element) {
+    cornerstoneTools.setToolActiveForElement(element, 'Pan', { mouseButtonMask: 1 });
+    cornerstoneTools.setToolActiveForElement(element, 'Zoom', { mouseButtonMask: 2 }); // 우클릭 클릭으로 확대
+    cornerstoneTools.setToolActiveForElement(element, 'Wwwc', { mouseButtonMask: 4 }); // 우클릭 클릭으로 확대
+    
+}
+
 // cornerstone 및 cornerstoneTools 초기화
 function initializeCornerstoneTools() {
 	
@@ -22,7 +49,7 @@ function initializeCornerstoneTools() {
 	initializeInvert(element);	
 	
 	// 밝기/대비 초기화
-	initializeBrightnessContrast(element);
+	//initializeBrightnessContrast(element);
 	
 	// 플레이 클립 초기화
 	initializePlayClip(element);
