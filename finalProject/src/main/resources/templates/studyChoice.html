@@ -50,7 +50,8 @@
 				     </table>
 				            <div class="historytbody">
 					            <table class="historytbody-section">
-					                 <tr th:each="study : ${choiceStudies}" th:data-study-key="${study.studyKey}" style="cursor: pointer;">
+					                 <tr th:each="study : ${choiceStudies}" th:data-study-key="${study.studyKey}" style="cursor: pointer;"
+					                 onclick="loadSeriesAndThumbnail(this)">
 					                    <td th:text="${study.studyDate}"></td>
 					                    <td th:text="${study.studyDesc}"></td>
 					                    <td th:text="${study.modality}" style=""></td>
