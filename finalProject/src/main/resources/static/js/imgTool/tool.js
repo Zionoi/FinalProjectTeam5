@@ -25,76 +25,30 @@ function initializeToolDropdown(element) {
 // 도구 제어 설정 함수
 function setupToolControls(element) {
 	
-	document.getElementById('magnifier').addEventListener('click', () => {
-        
-    });
-    
-    document.getElementById('zoom').addEventListener('click', () => { 
+	// 돋보기 기능
+    document.getElementById('magnifier').addEventListener('click', () => {
 		
-		 /*// Add event handlers to zoom the image in and out
-	    document.getElementById('zoomIn').addEventListener('click', function (e) {
-	        const viewport = cornerstone.getViewport(element);
-	        viewport.scale += 0.25;
-	        cornerstone.setViewport(element, viewport);
-	    });
-	    document.getElementById('zoomOut').addEventListener('click', function (e) {
-	        const viewport = cornerstone.getViewport(element);
-	        viewport.scale -= 0.25;
-	        cornerstone.setViewport(element, viewport);
-	    });
-	    document.getElementById('reset').addEventListener('click', function (e) {
-	        cornerstone.reset(element);
-	    });
-	
-	    */
-          
-        // add event handlers to pan image on mouse move
-	    element.addEventListener('mousedown', function (e) {
-	      let lastX = e.pageX;
-	      let lastY = e.pageY;
-	
-	      function mouseMoveHandler(e) {
-	        const deltaX = e.pageX - lastX;
-	        const deltaY = e.pageY - lastY;
-	        lastX = e.pageX;
-	        lastY = e.pageY;
-	
-	        const viewport = cornerstone.getViewport(element);
-	        viewport.translation.x += (deltaX / viewport.scale);
-	        viewport.translation.y += (deltaY / viewport.scale);
-	        cornerstone.setViewport(element, viewport);
-	      }
-	
-	      function mouseUpHandler() {
-	        document.removeEventListener('mousemove', mouseMoveHandler);
-	        document.removeEventListener('mouseup', mouseUpHandler);
-	      }
-	
-	      document.addEventListener('mousemove', mouseMoveHandler);
-	      document.addEventListener('mouseup', mouseUpHandler);
-	    });
-	
-	    const mouseWheelEvents = ['mousewheel', 'DOMMouseScroll'];
-	    mouseWheelEvents.forEach(function(eventType) {
-	      element.addEventListener(eventType, function (e) {
-	        // Firefox e.detail > 0 scroll back, < 0 scroll forward
-	        // chrome/safari e.wheelDelta < 0 scroll back, > 0 scroll forward
-	        let viewport = cornerstone.getViewport(element);
-	        if (e.wheelDelta < 0 || e.detail > 0) {
-	          viewport.scale -= 0.25;
-	        } else {
-	          viewport.scale += 0.25;
-	        }
-	
-	        cornerstone.setViewport(element, viewport);
-	
-	        // Prevent page from scrolling
-	        return false;
-	      });
-	    });
+		cornerstoneTools.setToolActive('Magnify', { mouseButtonMask: 1 })
+		cornerstoneTools.addToolState('Magnify', {
+		      configuration: {
+			        magnifySize: 300,
+			        magnificationLevel: 2,
+		      }})
     });
 
-
+    // 회전 기능
+    document.getElementById('rotate').addEventListener('click', () => {
+		
+		cornerstoneTools.setToolActive('Rotate', { mouseButtonMask: 1 })
+		cornerstoneTools.addToolState('Rotate', {
+		      configuration: {
+			        roundAngles: false,
+			        flipHorizontal: false,
+			        flipVertical: false,
+			        rotateScale: 1,
+		      }})
+    });
+  
     document.getElementById('hFlip').addEventListener('click', () => {
         const viewport = cornerstone.getViewport(element);
         viewport.hflip = !viewport.hflip;
