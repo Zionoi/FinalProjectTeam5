@@ -80,3 +80,11 @@ function initializeCornerstoneTools() {
 	initializeSeriesLayout();
     
 }
+
+    document.getElementById("ct3d").addEventListener("click", function() {
+        // imagePaths를 세션 스토리지에 저장
+        sessionStorage.setItem('imagePaths', JSON.stringify(imagePaths));
+
+        // ct3d.html로 페이지 이동
+        window.location.href = "/ct3d";
+    });

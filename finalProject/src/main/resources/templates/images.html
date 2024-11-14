@@ -11,6 +11,8 @@
 	<script src="https://unpkg.com/dicom-parser"></script>
 	<script src="https://unpkg.com/cornerstone-math"></script>
 	<script src="https://unpkg.com/hammerjs"></script>
+	<!-- vtk.js CDN을 불러오기 -->
+    <script src="https://unpkg.com/vtk.js"></script>
 
     
     <!--<script src="https://cdn.jsdelivr.net/npm/cornerstone-tools@3.0.0-b.641/dist/cornerstoneTools.js"></script>
@@ -61,99 +63,104 @@
     
  <!-- 아래로는 ct사진을 3d로 구현 테스트 중인 코드 프로젝트 제출시 완성 안되면 주석처리하기  -->   
     
+    <!--
     
-    
-    <canvas id="dicomCanvas" style="display:none;"></canvas>
-<div id="3dContainer"></div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-
-<script>
-    // DICOM 이미지가 렌더링될 <canvas>와 3D 씬이 렌더링될 <div> 요소를 가져옴
-    const dicomElement = document.getElementById('dicomCanvas');
-    const container = document.getElementById('3dContainer');
-
+     <div id="dicomCanvas"></div>  볼륨 렌더링을 위한 div 
+	<script>
     // cornerstoneWADOImageLoader 초기화
-    cornerstoneWADOImageLoader.external.cornerstone = cornerstone;  // Cornerstone을 WADO 로더와 연결
+    cornerstoneWADOImageLoader.external.cornerstone = cornerstone;
     cornerstoneWADOImageLoader.webWorkerManager.initialize({
-        maxWebWorkers: navigator.hardwareConcurrency || 1, // 시스템의 코어 수에 맞춰 Web Worker 개수 설정
-        startWebWorkersOnDemand: true, // 필요할 때만 Web Worker를 시작
-        webWorkerPath: 'https://unpkg.com/cornerstone-wado-image-loader/dist/cornerstoneWADOImageLoaderWebWorker.js', // Web Worker 파일 경로 설정
+        maxWebWorkers: navigator.hardwareConcurrency || 1,
+        startWebWorkersOnDemand: true,
+        webWorkerPath: 'https://unpkg.com/cornerstone-wado-image-loader/dist/cornerstoneWADOImageLoaderWebWorker.js',
         taskConfiguration: {
             decodeTask: {
-                codecsPath: 'https://unpkg.com/cornerstone-wado-image-loader/dist/cornerstoneWADOImageLoaderCodecs.js' // DICOM 디코딩 코덱 파일 경로 설정
+                codecsPath: 'https://unpkg.com/cornerstone-wado-image-loader/dist/cornerstoneWADOImageLoaderCodecs.js'
             }
         }
     });
 
-    // Cornerstone 활성화
-    cornerstone.enable(dicomElement); // DICOM 이미지를 렌더링할 <canvas> 요소 활성화
+   
+    
 
-    // 각 슬라이스 이미지를 저장할 배열
-    const slices = [];
+    // vtk.js 객체를 전역 객체로 사용하여 3D 볼륨 렌더링 초기화
+    const fullScreenRenderer = vtk.Rendering.Misc.vtkFullScreenRenderWindow.newInstance({
+        rootContainer: document.getElementById('dicomCanvas'),
+        background: [0, 0, 0],
+    });
 
-    // DICOM 슬라이스 이미지를 로드하는 비동기 함수
+    const renderer = fullScreenRenderer.getRenderer();
+    const renderWindow = fullScreenRenderer.getRenderWindow();
+
+    // vtkImageData 생성 및 슬라이스 데이터 설정
+    const imageData = vtk.Common.DataModel.vtkImageData.newInstance();
+    const dimensions = [256, 256, imagePaths.length];
+    const spacing = [1.0, 1.0, 8.0];
+    imageData.setDimensions(dimensions);
+    imageData.setSpacing(spacing);
+
+    const scalars = new Uint16Array(dimensions[0] * dimensions[1] * dimensions[2]);
+
     async function loadSlices() {
-        // imagePaths 배열의 각 파일에 대해 이미지 로드를 비동기로 처리
-        const promises = imagePaths.map(async filename => {
-            const imageId = `wadouri:/dicom-file/${filename}`; // 이미지 경로 구성
+        for (let z = 0; z < imagePaths.length; z++) {
+            const imageId = `wadouri:/dicom-file/${imagePaths[z]}`; // 이미지 경로 명확하게 지정
             try {
-                const image = await cornerstone.loadAndCacheImage(imageId); // DICOM 이미지 로드
-                slices.push(image); // 슬라이스 배열에 이미지 추가
+                const image = await cornerstone.loadAndCacheImage(imageId);
+                const pixelData = image.getPixelData();
+
+                for (let y = 0; y < dimensions[1]; y++) {
+                    for (let x = 0; x < dimensions[0]; x++) {
+                        const pixelValue = pixelData[y * dimensions[0] + x];
+                        scalars[z * dimensions[0] * dimensions[1] + y * dimensions[0] + x] = pixelValue;
+                    }
+                }
             } catch (error) {
-                console.error("Error loading image:", error); // 이미지 로드 오류 처리
+                console.error("Error loading image:", error);
             }
-        });
-
-        await Promise.all(promises); // 모든 슬라이스 로드가 완료될 때까지 대기
-        render3DVolume(); // 모든 슬라이스 로드 후 3D 볼륨 렌더링 시작
-    }
-
-    // Three.js를 사용해 3D 볼륨을 렌더링하는 함수
-    function render3DVolume() {
-        const scene = new THREE.Scene(); // 3D 씬 생성
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000); // 원근 카메라 생성
-        const renderer = new THREE.WebGLRenderer(); // WebGL 렌더러 생성
-        renderer.setSize(window.innerWidth, window.innerHeight); // 렌더러 크기 설정
-        container.appendChild(renderer.domElement); // 렌더러의 <canvas>를 화면에 추가
-
-        // 3D 볼륨을 위한 기본 상자 모양의 기하구조 생성 (가로 1, 세로 1, 깊이 slices.length / 10)
-        const geometry = new THREE.BoxGeometry(1, 1, slices.length / 10);
-
-        // 각 슬라이스에 대한 텍스처와 재질 생성
-        const materials = slices.map(slice => {
-            const pixelData = new Uint8Array(slice.getPixelData().buffer); // Cornerstone의 픽셀 데이터를 Uint8Array로 변환
-            const texture = new THREE.DataTexture(pixelData, slice.width, slice.height, THREE.LuminanceFormat); // DataTexture를 LuminanceFormat으로 생성
-            texture.needsUpdate = true; // 텍스처 업데이트 플래그 설정
-            return new THREE.MeshBasicMaterial({ map: texture, side: THREE.DoubleSide }); // 텍스처로 구성된 재질 생성
-        });
-
-        const volume = new THREE.Mesh(geometry, materials); // 기하구조와 재질로 3D 볼륨 생성
-        scene.add(volume); // 3D 볼륨을 씬에 추가
-
-        // 환경광(ambient light)을 추가해 씬 전체에 균일한 조명 적용
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.5); // 광원의 색상은 흰색, 강도는 0.5
-        scene.add(ambientLight);
-
-        // 방향광(directional light)을 추가해 특정 방향에서의 조명 적용
-        const directionalLight = new THREE.DirectionalLight(0xffffff, 1); // 광원의 색상은 흰색, 강도는 1
-        directionalLight.position.set(5, 5, 5).normalize(); // 광원의 위치 설정
-        scene.add(directionalLight);
-
-        camera.position.z = 3; // 카메라 위치 설정 (z 축을 따라 뒤로 이동해 3D 볼륨을 볼 수 있게 함)
-
-        // 애니메이션 함수로 3D 볼륨을 회전시키며 렌더링
-        function animate() {
-            requestAnimationFrame(animate); // 매 프레임마다 animate 함수를 호출
-            volume.rotation.y += 0.01; // y축을 기준으로 볼륨 회전
-            renderer.render(scene, camera); // 씬과 카메라를 사용해 렌더링
         }
-        animate(); // 애니메이션 시작
+
+        // vtkDataArray로 변환 후 imageData에 설정
+        const scalarArray = vtk.Common.Core.vtkDataArray.newInstance({
+            name: 'Scalars',
+            numberOfComponents: 1,
+            values: scalars,
+        });
+
+        imageData.getPointData().setScalars(scalarArray);
+        createVolumeRendering();
     }
 
-    loadSlices(); // DICOM 슬라이스 로드 함수 호출
-</script>
+    // 볼륨 렌더링 설정
+    function createVolumeRendering() {
+        const mapper = vtk.Rendering.Core.vtkVolumeMapper.newInstance();
+        mapper.setInputData(imageData);
 
+        const volume = vtk.Rendering.Core.vtkVolume.newInstance();
+        volume.setMapper(mapper);
+
+        // 컬러 전이 함수 및 투명도 설정
+        const colorTransferFunction = vtk.Rendering.Core.vtkColorTransferFunction.newInstance();
+        colorTransferFunction.addRGBPoint(0, 0.0, 0.0, 0.0);
+        colorTransferFunction.addRGBPoint(500, 1.0, 0.5, 0.3);
+        colorTransferFunction.addRGBPoint(1000, 1.0, 1.0, 1.0);
+
+        const opacityFunction = vtk.Common.DataModel.vtkPiecewiseFunction.newInstance();
+        opacityFunction.addPoint(0, 0.0);
+        opacityFunction.addPoint(500, 0.5);
+        opacityFunction.addPoint(1000, 1.0);
+
+        volume.getProperty().setRGBTransferFunction(0, colorTransferFunction);
+        volume.getProperty().setScalarOpacity(0, opacityFunction);
+        volume.getProperty().setScalarOpacityUnitDistance(0, 2.5);
+
+        renderer.addVolume(volume);
+        renderer.resetCamera();
+        renderWindow.render();
+    }
+
+    loadSlices();
+</script>
+-->
     <!-- JavaScript 파일 포함 -->
     <script src="/js/list.js"></script>
     <script src="/js/imgTool/prevNext.js"></script>
