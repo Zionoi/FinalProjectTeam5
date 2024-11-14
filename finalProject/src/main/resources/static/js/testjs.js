@@ -26,7 +26,11 @@ document.addEventListener('DOMContentLoaded', () => {
 	cornerstoneTools.init();
 
 
+	/* cornerstoneTool 설정 */
+	
 	// 이동
+	cornerstoneTools.addTool(cornerstoneTools.PanTool);
+	cornerstoneTools.setToolActive('Pan', { mouseButtonMask: 1 });
 	
 	// 확대
 	cornerstoneTools.addTool(cornerstoneTools.ZoomTool, {
@@ -38,8 +42,12 @@ document.addEventListener('DOMContentLoaded', () => {
 	    maxScale: 20.0,
 	  }
 	});
+	cornerstoneTools.setToolActive('Zoom', { mouseButtonMask: 2 });
+	//cornerstoneTools.setToolActive('Zoom', { mouseButtonMask: 4 });
 	
-	cornerstoneTools.setToolActive('Zoom', { mouseButtonMask: 1 })
+	// wwwc
+	cornerstoneTools.addTool(cornerstoneTools.WwwcTool);
+    cornerstoneTools.setToolActive('Wwwc', { mouseButtonMask: 4 });
 
     // 돋보기
     const MagnifyTool = cornerstoneTools.MagnifyTool;
@@ -59,8 +67,8 @@ document.addEventListener('DOMContentLoaded', () => {
 	cornerstoneTools.addTool(cornerstoneTools.RectangleRoiTool);
 	cornerstoneTools.addTool(cornerstoneTools.TextMarkerTool);
 
-    
-	console.log('테스트js imagePaths : ', imagePaths[0]);
+
+	/* 스크롤 설정 */
 	
     // 이미지 스택 정의
     const imageIds = imagePaths.map(filename => `wadouri:/dicom-file/${filename}`);

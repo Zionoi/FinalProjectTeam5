@@ -251,5 +251,9 @@ public class StudyController {
         // 나머지 조건으로 검색 수행
         return performSearch(searchCriteria, model);
     }
-
+    
+    @GetMapping("/ct3d")
+    public String showCT3DView() {
+        return "ct3d"; // ct3d.html을 반환 (templates 폴더 내에 위치해야 함)
+    }
 }

@@ -11,6 +11,8 @@
 	<script src="https://unpkg.com/dicom-parser"></script>
 	<script src="https://unpkg.com/cornerstone-math"></script>
 	<script src="https://unpkg.com/hammerjs"></script>
+	<!-- vtk.js CDN을 불러오기 -->
+    <script src="https://unpkg.com/vtk.js"></script>
 
     
     <!--<script src="https://cdn.jsdelivr.net/npm/cornerstone-tools@3.0.0-b.641/dist/cornerstoneTools.js"></script>
@@ -42,15 +44,128 @@
 	        <!-- DICOM 이미지 뷰어 영역 -->
 	        <div id="dicomImage" class="grid-container" oncontextmenu="return false" onmousedown="return false"></div>
 		</div>
+		
+        <!-- 플레이클립 재생바 -->
+		<div id="playControls" style="display: none;">
+		    <button id="togglePlayBtn">멈춤</button>
+		    <div style="display: inline-flex; align-items: center;">
+		        <button id="decreaseSpeedBtn">-</button>
+		        <input type="input" id="speedInput" min="10" max="500" value="50" step="10" style="width: 60px; text-align: center;">
+		        <button id="increaseSpeedBtn">+</button>
+		    </div>
+		    <label for="speedInput">속도 (ms) [최대속도 10ms/최소속도 500ms]</label>
+		</div>
 
         
     </div>
+    
+    
+    
+ <!-- 아래로는 ct사진을 3d로 구현 테스트 중인 코드 프로젝트 제출시 완성 안되면 주석처리하기  -->   
+    
+    <!--
+    
+     <div id="dicomCanvas"></div>  볼륨 렌더링을 위한 div 
+	<script>
+    // cornerstoneWADOImageLoader 초기화
+    cornerstoneWADOImageLoader.external.cornerstone = cornerstone;
+    cornerstoneWADOImageLoader.webWorkerManager.initialize({
+        maxWebWorkers: navigator.hardwareConcurrency || 1,
+        startWebWorkersOnDemand: true,
+        webWorkerPath: 'https://unpkg.com/cornerstone-wado-image-loader/dist/cornerstoneWADOImageLoaderWebWorker.js',
+        taskConfiguration: {
+            decodeTask: {
+                codecsPath: 'https://unpkg.com/cornerstone-wado-image-loader/dist/cornerstoneWADOImageLoaderCodecs.js'
+            }
+        }
+    });
 
+   
+    
+
+    // vtk.js 객체를 전역 객체로 사용하여 3D 볼륨 렌더링 초기화
+    const fullScreenRenderer = vtk.Rendering.Misc.vtkFullScreenRenderWindow.newInstance({
+        rootContainer: document.getElementById('dicomCanvas'),
+        background: [0, 0, 0],
+    });
+
+    const renderer = fullScreenRenderer.getRenderer();
+    const renderWindow = fullScreenRenderer.getRenderWindow();
+
+    // vtkImageData 생성 및 슬라이스 데이터 설정
+    const imageData = vtk.Common.DataModel.vtkImageData.newInstance();
+    const dimensions = [256, 256, imagePaths.length];
+    const spacing = [1.0, 1.0, 8.0];
+    imageData.setDimensions(dimensions);
+    imageData.setSpacing(spacing);
+
+    const scalars = new Uint16Array(dimensions[0] * dimensions[1] * dimensions[2]);
+
+    async function loadSlices() {
+        for (let z = 0; z < imagePaths.length; z++) {
+            const imageId = `wadouri:/dicom-file/${imagePaths[z]}`; // 이미지 경로 명확하게 지정
+            try {
+                const image = await cornerstone.loadAndCacheImage(imageId);
+                const pixelData = image.getPixelData();
+
+                for (let y = 0; y < dimensions[1]; y++) {
+                    for (let x = 0; x < dimensions[0]; x++) {
+                        const pixelValue = pixelData[y * dimensions[0] + x];
+                        scalars[z * dimensions[0] * dimensions[1] + y * dimensions[0] + x] = pixelValue;
+                    }
+                }
+            } catch (error) {
+                console.error("Error loading image:", error);
+            }
+        }
+
+        // vtkDataArray로 변환 후 imageData에 설정
+        const scalarArray = vtk.Common.Core.vtkDataArray.newInstance({
+            name: 'Scalars',
+            numberOfComponents: 1,
+            values: scalars,
+        });
+
+        imageData.getPointData().setScalars(scalarArray);
+        createVolumeRendering();
+    }
+
+    // 볼륨 렌더링 설정
+    function createVolumeRendering() {
+        const mapper = vtk.Rendering.Core.vtkVolumeMapper.newInstance();
+        mapper.setInputData(imageData);
+
+        const volume = vtk.Rendering.Core.vtkVolume.newInstance();
+        volume.setMapper(mapper);
+
+        // 컬러 전이 함수 및 투명도 설정
+        const colorTransferFunction = vtk.Rendering.Core.vtkColorTransferFunction.newInstance();
+        colorTransferFunction.addRGBPoint(0, 0.0, 0.0, 0.0);
+        colorTransferFunction.addRGBPoint(500, 1.0, 0.5, 0.3);
+        colorTransferFunction.addRGBPoint(1000, 1.0, 1.0, 1.0);
+
+        const opacityFunction = vtk.Common.DataModel.vtkPiecewiseFunction.newInstance();
+        opacityFunction.addPoint(0, 0.0);
+        opacityFunction.addPoint(500, 0.5);
+        opacityFunction.addPoint(1000, 1.0);
+
+        volume.getProperty().setRGBTransferFunction(0, colorTransferFunction);
+        volume.getProperty().setScalarOpacity(0, opacityFunction);
+        volume.getProperty().setScalarOpacityUnitDistance(0, 2.5);
+
+        renderer.addVolume(volume);
+        renderer.resetCamera();
+        renderWindow.render();
+    }
+
+    loadSlices();
+</script>
+-->
     <!-- JavaScript 파일 포함 -->
     <script src="/js/list.js"></script>
     <script src="/js/imgTool/prevNext.js"></script>
     <script src="/js/imgTool/invert.js"></script>   
-    <script src="/js/imgTool/brightness.js"></script>   
+    <!--<script src="/js/imgTool/brightness.js"></script>  --> 
     <script src="/js/imgTool/playClip.js"></script> 
     <script src="/js/imgTool/viewSeries.js"></script> 
     <script src="/js/imgTool/tool.js"></script>

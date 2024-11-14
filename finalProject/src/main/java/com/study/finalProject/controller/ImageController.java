@@ -21,9 +21,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.study.finalProject.domain.Annotation;
 import com.study.finalProject.domain.Image;
 import com.study.finalProject.service.ImageService;
 import com.study.finalProject.service.SeriesService;
@@ -33,8 +36,13 @@ import jakarta.servlet.http.HttpServletRequest;
 @Controller
 public class ImageController {
 
-    @Autowired
+    //@Autowired
     private ImageService imageService; // ImageService를 통해 데이터베이스 접근
+    
+    // 의존성 주입을 위한 코드
+    public ImageController(ImageService imageService) {
+        this.imageService = imageService;
+    }
     
     @Autowired
     private SeriesService seriesService; 
@@ -166,6 +174,18 @@ public class ImageController {
     ) {
         List<String> previousSeriesImages = imageService.getPreviousSeriesImages(studyKey, seriesKey);
         return ResponseEntity.ok(previousSeriesImages);
+    }
+    
+    
+    // 주석 저장 엔드포인트
+    @PostMapping("/images/{imageId}/annotations")
+    public ResponseEntity<?> saveAnnotations(@PathVariable Long imageId, @RequestBody List<Annotation> annotations) {
+        try {
+            imageService.saveAnnotations(imageId, annotations);
+            return ResponseEntity.ok("Annotations saved successfully.");
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Failed to save annotations.");
+        }
     }
     
 //    
