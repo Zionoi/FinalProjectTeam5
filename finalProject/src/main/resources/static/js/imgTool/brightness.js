@@ -1,4 +1,4 @@
-// 밝기/대비 조절 활성화 함수
+/*// 밝기/대비 조절 활성화 함수
 function initializeBrightnessContrast(element) {
 	
 	// 윈도우 레벨로 수정
@@ -43,3 +43,4 @@ function initializeBrightnessContrast(element) {
 	});
 
 }
+*/

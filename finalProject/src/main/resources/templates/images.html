@@ -42,6 +42,17 @@
 	        <!-- DICOM 이미지 뷰어 영역 -->
 	        <div id="dicomImage" class="grid-container" oncontextmenu="return false" onmousedown="return false"></div>
 		</div>
+		
+        <!-- 플레이클립 재생바 -->
+		<div id="playControls" style="display: none;">
+		    <button id="togglePlayBtn">멈춤</button>
+		    <div style="display: inline-flex; align-items: center;">
+		        <button id="decreaseSpeedBtn">-</button>
+		        <input type="input" id="speedInput" min="10" max="500" value="50" step="10" style="width: 60px; text-align: center;">
+		        <button id="increaseSpeedBtn">+</button>
+		    </div>
+		    <label for="speedInput">속도 (ms) [최대속도 10ms/최소속도 500ms]</label>
+		</div>
 
         
     </div>
@@ -147,7 +158,7 @@
     <script src="/js/list.js"></script>
     <script src="/js/imgTool/prevNext.js"></script>
     <script src="/js/imgTool/invert.js"></script>   
-    <script src="/js/imgTool/brightness.js"></script>   
+    <!--<script src="/js/imgTool/brightness.js"></script>  --> 
     <script src="/js/imgTool/playClip.js"></script> 
     <script src="/js/imgTool/viewSeries.js"></script> 
     <script src="/js/imgTool/tool.js"></script>
