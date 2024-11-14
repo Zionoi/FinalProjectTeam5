@@ -30,7 +30,7 @@ function setupToolControls(element) {
 		
 		activateTool(element, 'Magnify'); // `activateTool` 호출
 		cornerstoneTools.setToolActive('Magnify', { mouseButtonMask: 1 })
-		cornerstoneTools.addToolState('Magnify', {
+		cornerstoneTools.addToolState(element, 'Magnify', {
 		      configuration: {
 			        magnifySize: 300,
 			        magnificationLevel: 2,
@@ -42,7 +42,7 @@ function setupToolControls(element) {
 		
 		activateTool(element, 'Rotate'); // `activateTool` 호출
 		cornerstoneTools.setToolActive('Rotate', { mouseButtonMask: 1 })
-		cornerstoneTools.addToolState('Rotate', {
+		cornerstoneTools.addToolState(element, 'Rotate', {
 		      configuration: {
 			        roundAngles: false,
 			        flipHorizontal: false,
