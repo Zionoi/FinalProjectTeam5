@@ -25,25 +25,51 @@ function initializeAnnotateDropdown(element) {
 // 주석 제어 설정 함수
 function setupAnnotateControls(element) {
 	
+	// 좌표를 업데이트하는 이벤트 리스너 추가
+	element.addEventListener('cornerstonetoolsmousemove', (event) => {
+	    currentCoords = event.detail.currentPoints;
+	});
+	
 	// 각도 측정
     document.getElementById('angle').addEventListener('click', () => {
 		
-		cornerstoneTools.setToolActive('Angle', { mouseButtonMask: 1 })
-		cornerstoneTools.addToolState('Angle', {
+		activateTool(element, 'Angle'); // `activateTool` 호출
+		cornerstoneTools.setToolActive(element, 'Angle', { mouseButtonMask: 1 })
+		/*cornerstoneTools.addToolState(element, 'Angle', {
 			// 설정
 		    configuration: {
 		        drawHandles: true,
 		        drawHandlesOnHover: false,
 		        hideHandlesIfMoving: false,
 		        renderDashed: false,
-		    }})
+		    }})*/
+		cornerstoneTools.addToolState(element, 'Angle', {
+                      visible: true,
+                      active: false,
+                      color: undefined,
+                      invalidated: true,
+                      handles: {
+                          start: { x: 0, y: 0, highlight: true, active: false },
+                          middle: { x: 0, y: 0, highlight: true, active: false },
+                          end: { x: 0, y: 0, highlight: true, active: true },
+                          textBox: {
+                              active: false,
+                              hasMoved: false,
+                              movesIndependently: false,
+                              drawnIndependently: true,
+                              allowedOutsideImage: true,
+                              hasBoundingBox: true,
+                          }
+                      }
+                  });
     });
 
     // 화살표 주석
     document.getElementById('arrow').addEventListener('click', () => {
         
-        cornerstoneTools.setToolActive('ArrowAnnotate', { mouseButtonMask: 1 })
-		cornerstoneTools.addToolState('ArrowAnnotate', {
+        activateTool(element, 'ArrowAnnotate'); // `activateTool` 호출
+        cornerstoneTools.setToolActive(element, 'ArrowAnnotate', coords, { mouseButtonMask: 1 })
+		cornerstoneTools.addToolState(element, 'ArrowAnnotate', {
 			// 설정
 		    configuration: {
 		        getTextCallback,
@@ -61,8 +87,9 @@ function setupAnnotateControls(element) {
   	// 양방향 측정
     document.getElementById('bidirectional').addEventListener('click', () => {
 		
-        cornerstoneTools.setToolActive('Bidirectional', { mouseButtonMask: 1 })
-		cornerstoneTools.addToolState('Bidirectional', {
+		activateTool(element, 'Bidirectional'); // `activateTool` 호출
+        cornerstoneTools.setToolActive(element, 'Bidirectional', coords, { mouseButtonMask: 1 })
+		cornerstoneTools.addToolState(element, 'Bidirectional', {
 			// 설정
 		    configuration: {
 		        changeMeasurementLocationCallback: emptyLocationCallback,
@@ -80,8 +107,9 @@ function setupAnnotateControls(element) {
 	// Cobb 각도 (측만증 진단 시 사용되는 각도)
     document.getElementById('cobb').addEventListener('click', () => {
 		
-        cornerstoneTools.setToolActive('CobbAngle', { mouseButtonMask: 1 })
-		cornerstoneTools.addToolState('CobbAngle', {
+		activateTool(element, 'CobbAngle'); // `activateTool` 호출
+        cornerstoneTools.setToolActive(element, 'CobbAngle', coords, { mouseButtonMask: 1 })
+		cornerstoneTools.addToolState(element, 'CobbAngle', {
 			// 설정
 		    configuration: {
 		        drawHandles: true,
@@ -94,8 +122,9 @@ function setupAnnotateControls(element) {
 	// 타원형 관심 영역 (ROI) 지정
     document.getElementById('ellipticalRoi').addEventListener('click', () => {
 		
-        cornerstoneTools.setToolActive('EllipticalRoi', { mouseButtonMask: 1 })
-		cornerstoneTools.addToolState('EllipticalRoi', {
+		activateTool(element, 'EllipticalRoi'); // `activateTool` 호출
+        cornerstoneTools.setToolActive(element, 'EllipticalRoi', coords, { mouseButtonMask: 1 })
+		cornerstoneTools.addToolState(element, 'EllipticalRoi', {
 			// 설정
 		    configuration: {
 		        // showMinMax: false,
@@ -109,8 +138,9 @@ function setupAnnotateControls(element) {
 	// 자유형 관심 영역 (ROI) 지정
     document.getElementById('freehandRoi').addEventListener('click', () => {
 		
-        cornerstoneTools.setToolActive('FreehandRoi', { mouseButtonMask: 1 })
-		cornerstoneTools.addToolState('FreehandRoi', {
+		activateTool(element, 'FreehandRoi'); // `activateTool` 호출
+        cornerstoneTools.setToolActive(element, 'FreehandRoi', coords, { mouseButtonMask: 1 })
+		cornerstoneTools.addToolState(element, 'FreehandRoi', {
 			// 설정
 		    configuration: defaultFreehandConfiguration()
 		})
@@ -119,8 +149,9 @@ function setupAnnotateControls(element) {
     // 길이 측정
     document.getElementById('length').addEventListener('click', () => {
 		
-        cornerstoneTools.setToolActive('Length', { mouseButtonMask: 1 })
-		cornerstoneTools.addToolState('Length', {
+		activateTool(element, 'Length'); // `activateTool` 호출
+        cornerstoneTools.setToolActive(element, 'Length', coords, { mouseButtonMask: 1 })
+		cornerstoneTools.addToolState(element, 'Length', {
 			// 설정
 		    configuration: {
 		        drawHandles: true,
@@ -134,8 +165,9 @@ function setupAnnotateControls(element) {
 	// 프로브 (지정된 위치의 값을 확인하는 도구)
     document.getElementById('probe').addEventListener('click', () => {
 		
-        cornerstoneTools.setToolActive('Probe', { mouseButtonMask: 1 })
-		cornerstoneTools.addToolState('Probe', {
+		activateTool(element, 'Probe'); // `activateTool` 호출
+        cornerstoneTools.setToolActive(element, 'Probe', coords, { mouseButtonMask: 1 })
+		cornerstoneTools.addToolState(element, 'Probe', {
 			// 설정
 		    configuration: {
 		        drawHandles: true,
@@ -146,8 +178,9 @@ function setupAnnotateControls(element) {
 	// 사각형 관심 영역 (ROI) 지정
     document.getElementById('rectangleRoi').addEventListener('click', () => {
 		
-        cornerstoneTools.setToolActive('RectangleRoi', { mouseButtonMask: 1 })
-		cornerstoneTools.addToolState('RectangleRoi', {
+		activateTool(element, 'RectangleRoi'); // `activateTool` 호출
+        cornerstoneTools.setToolActive(element, 'RectangleRoi', coords, { mouseButtonMask: 1 })
+		cornerstoneTools.addToolState(element, 'RectangleRoi', {
 			// 설정
 		    configuration: {
 		        drawHandles: true,
@@ -158,12 +191,28 @@ function setupAnnotateControls(element) {
 		        // showHounsfieldUnits: true
 		    }})
     });
+    
+    // changeTextCallback 함수 정의
+	function changeTextCallback(data, eventData, doneCallback) {
+	    // 사용자가 입력할 텍스트를 프롬프트로 요청
+	    const newText = prompt("새로운 텍스트를 입력하세요:", data.text || '');
+	
+	    // 사용자가 취소를 누르지 않았다면 텍스트를 업데이트합니다.
+	    if (newText !== null) {
+	        data.text = newText;
+	        doneCallback();
+	    } else {
+	        doneCallback();
+	    }
+	}
+
 
 	// 텍스트 마커 (주석을 텍스트로 표시)
     document.getElementById('text').addEventListener('click', () => {
 		
-        cornerstoneTools.setToolActive('TextMarker', { mouseButtonMask: 1 })
-		cornerstoneTools.addToolState('TextMarker', {
+		activateTool(element, 'TextMarker'); // `activateTool` 호출
+        cornerstoneTools.setToolActive(element, 'TextMarker', coords, { mouseButtonMask: 1 })
+		cornerstoneTools.addToolState(element, 'TextMarker', {
 			// 설정
 		    configuration: {
 		        markers: [],
@@ -173,7 +222,6 @@ function setupAnnotateControls(element) {
 		        changeTextCallback,
 		    }})
     });
-    
     
     // 주석 저장 버튼 이벤트 추가
     document.getElementById('save').addEventListener('click', async () => {
