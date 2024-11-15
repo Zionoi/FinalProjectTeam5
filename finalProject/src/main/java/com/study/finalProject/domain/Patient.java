@@ -2,7 +2,10 @@ package com.study.finalProject.domain;
 
 
 
+import java.util.ArrayList;
+
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -10,6 +13,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+import lombok.Setter;
+import java.util.ArrayList;
+import java.util.List;
 @Entity
 @Table(name = "PATIENTTAB")
 @Getter
@@ -23,6 +33,13 @@ public class Patient {
 
     @Column(name = "PNAME", nullable = false, length = 64)
     private String pName;
+    
+    @ElementCollection
+      
+    @CollectionTable(name = "PATIENT_COMMENTS", joinColumns = @JoinColumn(name = "PATIENT_PID"))
+              
+    @Column(name = "PATIENT_COMMENT")               
+    private List<String> comments = new ArrayList<>();
 
     @Column(name = "PATKEY", length = 64)
     private String patKey;
@@ -44,9 +61,6 @@ public class Patient {
 
     @Column(name = "PBIRTHTIME", length = 8)
     private String pBirthTime;
-
-    @Column(name = "COMMENTS", length = 64)
-    private String comments;
 
     @Column(name = "INSERTDATE", length = 8)
     private String insertDate;

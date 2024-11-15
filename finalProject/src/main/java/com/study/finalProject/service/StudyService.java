@@ -1,17 +1,15 @@
 package com.study.finalProject.service;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.study.finalProject.domain.Series;
 import com.study.finalProject.domain.Study;
 import com.study.finalProject.repository.SeriesRepository;
 import com.study.finalProject.repository.StudyRepository;
-
-
 
 @Service
 public class StudyService {
@@ -40,16 +38,20 @@ public class StudyService {
 
     public List<Series> getSeriesByStudyKey(Long studyKey) {
         return seriesRepository.findByStudyKey(studyKey);
-    
-	}
+    }
 
-	public List<Study> searchStudiesByKeyword(String keyword) {
-		return studyRepository.findByStudyDescContainingOrModalityContainingOrPNameContaining(keyword, keyword, keyword);
-	}
+    public List<Study> searchStudiesByKeyword(String keyword) {
+        return studyRepository.findByStudyDescContainingOrModalityContainingOrPNameContaining(keyword, keyword, keyword);
+    }
 
-//	@Transactional(readOnly = true)
-	public List<Study> getStudyByPid(String pid) {
-		List<Study> study = studyRepository.findByPid(pid);
-		return study;
-	}
+    public List<Study> getStudyByPid(String pid) {
+        return studyRepository.findByPid(pid);
+    }
+
+    // 리포트를 설정하는 별도의 메서드 추가
+    public void setReportForStudy(Long studyKey, String report) {
+        Study study = studyRepository.findById(studyKey).orElseThrow(() -> new IllegalArgumentException("Study not found"));
+        study.setReport(report);
+        studyRepository.save(study);
+    }
 }
