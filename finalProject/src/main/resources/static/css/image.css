@@ -4,6 +4,7 @@
 body {    
 	font-family: 'Pretendard-Regular';
     background-color: #3E5254;
+    overflow: hidden;
 }
 /* 헤더 설정 */
 .header {
@@ -17,13 +18,8 @@ body {
 }
 #dicomImage {
 	position:absolute;
-	top:180px;
+	top:80px;
     left:152px;
-    width: 1600px;
-    height: 700px;
-    /*background-color: black;*/
-    display: grid;
-	grid-gap: 10px;  /* 그리드 셀 사이 간격 설정 */
 }
 .sidebar{
 	position:absolute;
@@ -32,15 +28,20 @@ body {
 	background-color: #243235;
 	width: 76px;
 	height: 800px;
+	text-align: center;
+	padding-top: 20px;
+}
+#toolbar{
+	display: none;
 }
 .toolbar {
 	position:absolute;
 	top:80px;
     left:152px;
-	flex:auto;
 	background-color: #243235;
 	width: 1600px;
 	height: 50px;
+	margin: auto;
 }
 .listBtn {
 	background:url(../img/ListBtn.png) no-repeat;
@@ -48,27 +49,97 @@ body {
 	background-size: cover;
 	height: 50px;
 }
-#listBtn {
+#listBtn,#toolbarBtn,#historyBtn,#reportBtn {
 	background-color: transparent;
-	border: none;
+	border: none;	
+	cursor: pointer;
+}
+#listBtn:hover,#toolbarBtn:hover,#historyBtn:hover,#reportBtn:hover {
+	background-color: #3E5254;
+	border-radius: 25px;
 }
 .toolbarBtn{
-	content: url(../img/ToolbarBtn.png);	
+	background:url(../img/ToolbarBtn.png) no-repeat;	
 	width: 50px;
+	background-size: cover;
+	height: 50px;
 }
 .historyBtn{
-	content: url(../img/HistoryBtn.png);	
+	background:url(../img/HistoryBtn.png) no-repeat;	
 	width: 50px;
+	background-size: cover;
+	height: 50px;
 }
 .reportBtn{
-	content: url(../img/ReportBtn.png);	
+	background:url(../img/ReportBtn.png) no-repeat;	
 	width: 50px;
+	background-size: cover;
+	height: 50px;
 }
-.label{
+.span{
 	color:#D8D8D8;
 	font-size: 12px;
-	background-color: antiquewhite;
-	text-align: center;
+	position: relative;
+	top:-16px;
+}
+.BTN{
+	border:none;
+	cursor: pointer;
+	padding:4px;
+}
+#prevBtn{
+	background:url(../img/BeforeBtn.png) no-repeat;	
+	width: 40px;
+	background-size: cover;
+	height: 40px;
+}
+#nextBtn{
+	background:url(../img/NextBtn.png) no-repeat;	
+	width: 40px;
+	background-size: cover;
+	height: 40px;
+}
+#playClipBtn{
+	background:url(../img/PlayclipBtn.png) no-repeat;	
+	width: 40px;
+	background-size: cover;
+	height: 40px;
+}
+#resetBtn{
+	background:url(../img/ResetBtn.png) no-repeat;	
+	width: 40px;
+	background-size: cover;
+	height: 40px;
+}
+#invertBtn{
+	background:url(../img/InvertBtn.png) no-repeat;	
+	width: 40px;
+	background-size: cover;
+	height: 40px;
+}
+#toolBtn{
+	background:url(../img/ToolBoxBtn.png) no-repeat;	
+	width: 40px;
+	background-size: cover;
+	height: 40px;
+}
+#downloadBtn{
+	background:url(../img/DownloadBtn.png) no-repeat;	
+	width: 40px;
+	background-size: cover;
+	height: 40px;
+}
+#seriesLayoutBtn{
+	background:url(../img/SeriesLayoutBtn.png) no-repeat;	
+	width: 40px;
+	background-size: cover;
+	height: 40px;
+}
+#imgLayoutBtn{
+	background:url(../img/ImgLayoutBtn.png) no-repeat;	
+	width: 40px;
+	background-size: cover;
+	height: 40px;
 }
 /* 드롭다운 상자 스타일링 (기본적으로 숨겨짐) */
 .dropdown {

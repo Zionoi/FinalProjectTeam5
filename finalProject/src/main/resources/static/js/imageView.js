@@ -88,3 +88,6 @@ function initializeCornerstoneTools() {
         // ct3d.html로 페이지 이동
         window.location.href = "/ct3d";
     });
+    
+
+
