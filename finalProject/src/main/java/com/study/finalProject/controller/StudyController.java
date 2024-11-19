@@ -161,4 +161,9 @@ public class StudyController {
         studyService.setReportForStudy(studyKey, report);
         return "Report updated successfully";
     }
+    
+    @GetMapping("/ct3d")
+    public String showCT3DView() {
+        return "ct3d"; 
+    }
 }

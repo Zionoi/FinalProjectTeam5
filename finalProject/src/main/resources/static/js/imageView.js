@@ -82,6 +82,7 @@ function initializeCornerstoneTools() {
 }
 
     document.getElementById("ct3d").addEventListener("click", function() {
+		console.log('3d버튼 실행확인')
         // imagePaths를 세션 스토리지에 저장
         sessionStorage.setItem('imagePaths', JSON.stringify(imagePaths));
 
