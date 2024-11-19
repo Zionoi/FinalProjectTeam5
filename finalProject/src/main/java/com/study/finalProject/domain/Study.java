@@ -1,4 +1,5 @@
 package com.study.finalProject.domain;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -17,12 +18,9 @@ public class Study {
     private Long studyKey;
 
     @ManyToOne
-    @JoinColumn(name = "pid", insertable = false, updatable = false)
+    @JoinColumn(name = "pid", referencedColumnName = "pid", insertable = false, updatable = false)
     private Patient patient;
     
-    public String getPName() {
-        return patient != null ? patient.getPName() : "이름 정보 없음";
-    }
     @Column(name = "STUDYINSUID", nullable = false, length = 64)
     private String studyInsUid;
 
@@ -61,6 +59,10 @@ public class Study {
 
     @Column(name = "PNAME", length = 64)
     private String PName;
+
+    // 추가된 리포트 필드
+    @Column(name = "REPORT", length = 4000)
+    private String report;
 
     @Column(name = "PLASTNAME", length = 64)
     private String pLastName;
@@ -214,6 +216,11 @@ public class Study {
 
     @Column(name = "COMMENTS", length = 255)
     private String comments;
+    
+    // getPName() 메서드는 한 번만 정의
+    public String getPName() {
+        return patient != null ? patient.getPName() : PName;
+    }
 
     @Column(name = "STUDYTYPE", length = 64)
     private String studyType;
@@ -266,102 +273,6 @@ public class Study {
     @Column(name = "REQREADSTATUS", columnDefinition = "NUMBER(10, 0) DEFAULT 0")
     private Integer reqReadStatus = 0;
 
-    @Column(name = "TBFLAG", columnDefinition = "NUMBER(10, 0) DEFAULT 0")
-    private Integer tbFlag = 0;
-
-    @Column(name = "MOVIEFLAG", columnDefinition = "NUMBER(10, 0) DEFAULT 0")
-    private Integer movieFlag = 0;
-
-    @Column(name = "OTHERSCPSENDSTATUS", columnDefinition = "NUMBER(10, 0) DEFAULT 0")
-    private Integer otherScpSendStatus = 0;
-
-    @Column(name = "STATIONFILMROOM", length = 64)
-    private String stationFilmRoom;
-
-    @Column(name = "RESERVED1")
-    private Integer reserved1;
-
-    @Column(name = "RESERVED2")
-    private Integer reserved2;
-
-    @Column(name = "RESERVED3")
-    private Integer reserved3;
-
-    @Column(name = "RESERVED4", length = 255)
-    private String reserved4;
-
-    @Column(name = "RESERVED5", length = 255)
-    private String reserved5;
-
-    @Column(name = "RESERVED6", length = 255)
-    private String reserved6;
-
-    @Column(name = "RESERVED7", length = 255)
-    private String reserved7;
-
-    @Column(name = "RESERVED8", length = 255)
-    private String reserved8;
-
-    @Column(name = "RESERVED9", length = 255)
-    private String reserved9;
-
-    @Column(name = "RESERVED10", length = 255)
-    private String reserved10;
-
-    @Column(name = "AETITLE", length = 64)
-    private String aeTitle;
-
-    @Column(name = "OPENSTATUS")
-    private Integer openStatus;
-
-    @Column(name = "DAP")
-    private Float dap;
-
-    @Column(name = "FILESIZE")
-    private Long fileSize;
-
-    @Column(name = "INSERTED", length = 14)
-    private String inserted;
-
-    @Column(name = "UPDATED", length = 14)
-    private String updated;
-
-    @Column(name = "REMOTE_FLAG")
-    private Integer remoteFlag;
-
-    @Column(name = "AI_COMPANY", length = 64)
-    private String aiCompany;
-
-    @Column(name = "AI_MODEL_NAME", length = 64)
-    private String aiModelName;
-
-    @Column(name = "AI_UPDATED", length = 14)
-    private String aiUpdated;
-
-    @Column(name = "AI_SCORE")
-    private Float aiScore;
-
-    @Column(name = "AI_PRIORITY")
-    private Integer aiPriority;
-
-    @Column(name = "AI_NUMBER_OF_FINDINGS")
-    private Integer aiNumberOfFindings;
-
-    @Column(name = "AI_ABNORMAL_YN", length = 1)
-    private String aiAbnormalYn;
-
-    @Column(name = "AI_FINDING", length = 64)
-    private String aiFinding;
-
-    @Column(name = "AI_REPORT", length = 4000)
-    private String aiReport;
-
-    @Column(name = "AI_VERSION", length = 16)
-    private String aiVersion;
-
-    @Column(name = "AI_RESULT_CODE")
-    private Integer aiResultCode;
-
-    @Column(name = "STORAGECOMPLETION", length = 1)
-    private String storageCompletion;
+    @Column(name = "PRIMARYSTUDY", length = 64)
+    private String primaryStudy;
 }
