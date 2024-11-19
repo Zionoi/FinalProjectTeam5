@@ -29,15 +29,31 @@
 <body>
     <div id="dicomCanvas"></div> <!-- 3D 볼륨 렌더링 영역 -->
     <div id="controls">
-        <label for="skinOpacity">Skin Opacity</label>
+        <label for="skinOpacity">Skin Opacity: <span id="skinOpacityLabel">0.05</span></label>
         <input type="range" id="skinOpacity" min="0" max="1" step="0.01" value="0.05"><br>
+		
+		<!-- 추가된 내장 투명도 슬라이더 -->
+		<label for="organOpacity">Organ Opacity: <span id="organOpacityLabel">0.6</span></label>
+		<input type="range" id="organOpacity" min="0" max="1" step="0.01" value="0.6"><br>
 
-        <label for="muscleOpacity">Muscle Opacity</label>
+        <label for="muscleOpacity">Muscle Opacity: <span id="muscleOpacityLabel">0.5</span></label>
         <input type="range" id="muscleOpacity" min="0" max="1" step="0.01" value="0.5"><br>
 
-        <label for="boneOpacity">Bone Opacity</label>
+        <label for="boneOpacity">Bone Opacity: <span id="boneOpacityLabel">1.0</span></label>
         <input type="range" id="boneOpacity" min="0" max="1" step="0.01" value="1"><br>
-
+        
+        <label for="denseBoneOpacity">Dense Bone Opacity: <span id="denseBoneOpacityLabel">1.0</span></label>
+		<input type="range" id="denseBoneOpacity" min="0" max="1" step="0.01" value="1.0"><br>
+		
+		<label for="ambientLight">Ambient Light: <span id="ambientLightLabel">0.2</span></label>
+		<input type="range" id="ambientLight" min="0" max="1" step="0.01" value="0.2"><br>
+		
+		<label for="diffuseLight">Diffuse Light: <span id="diffuseLightLabel">0.7</span></label>
+		<input type="range" id="diffuseLight" min="0" max="1" step="0.01" value="0.7"><br>
+		
+		<label for="specularLight">Specular Light: <span id="specularLightLabel">0.3</span></label>
+		<input type="range" id="specularLight" min="0" max="1" step="0.01" value="0.3"><br>
+		
         <label for="startSlice">Start Slice Position (Z-axis)</label>
         <input type="range" id="startSlice" min="0" step="1" value="0"><br>
 
@@ -53,7 +69,7 @@
 
     <script>
         cornerstoneWADOImageLoader.external.cornerstone = cornerstone;
-    
+
         cornerstoneWADOImageLoader.webWorkerManager.initialize({
             maxWebWorkers: navigator.hardwareConcurrency || 1,
             startWebWorkersOnDemand: true,
@@ -103,6 +119,7 @@
         let skinOpacity = 0.05;
         let muscleOpacity = 0.5;
         let boneOpacity = 1.0;
+        let denseBoneOpacity = 1.0;
 
         async function loadSlices() {
             if (volume) {
@@ -143,52 +160,104 @@
         }
 
         function createVolumeRendering() {
-            const mapper = vtk.Rendering.Core.vtkVolumeMapper.newInstance();
-            mapper.setInputData(imageData);
+		    const mapper = vtk.Rendering.Core.vtkVolumeMapper.newInstance();
+		    mapper.setInputData(imageData);
+		
+		    // 샘플링 설정
+		    mapper.setSampleDistance(0.1);
+		
+		    volume = vtk.Rendering.Core.vtkVolume.newInstance();
+		    volume.setMapper(mapper);
+		
+		    const colorTransferFunction = vtk.Rendering.Core.vtkColorTransferFunction.newInstance();
+		    colorTransferFunction.addRGBPoint(0, 0.0, 0.0, 0.0);
+		    colorTransferFunction.addRGBPoint(300, 0.5, 0.3, 0.3);
+		    colorTransferFunction.addRGBPoint(700, 0.8, 0.5, 0.4);
+		    colorTransferFunction.addRGBPoint(1200, 1.0, 1.0, 1.0);
+		    colorTransferFunction.addRGBPoint(3000, 1.0, 1.0, 1.0);
+		
+		    opacityFunction = vtk.Common.DataModel.vtkPiecewiseFunction.newInstance();
+		    updateOpacityFunction();
+		
+		    volume.getProperty().setRGBTransferFunction(0, colorTransferFunction);
+		    volume.getProperty().setScalarOpacity(0, opacityFunction);
+		
+		    // 조명 및 그림자 활성화
+		    volume.getProperty().setShade(true); // 조명 활성화
+		    volume.getProperty().setAmbient(0.2); // 주변광
+		    volume.getProperty().setDiffuse(0.7); // 확산광
+		    volume.getProperty().setSpecular(0.3); // 반사광
+		    volume.getProperty().setSpecularPower(50.0); // 반사광 강도
+		
+		    // 그림자 효과 활성화
+		    volume.getProperty().setUseGradientOpacity(0, true); // 그림자 활성화
+		    volume.getProperty().setGradientOpacityMinimumValue(0, 5); // 최소 그라디언트 값
+		    volume.getProperty().setGradientOpacityMaximumValue(0, 50); // 최대 그라디언트 값
+		
+		    // Interpolation 설정
+		    volume.getProperty().setInterpolationTypeToLinear();
+		
+		    volume.getProperty().setScalarOpacityUnitDistance(0, 0.5); // 샘플링 간격 축소
+		
+		    renderer.addVolume(volume);
+		    renderer.resetCamera();
+		    renderWindow.render();
+		}
 
-            volume = vtk.Rendering.Core.vtkVolume.newInstance();
-            volume.setMapper(mapper);
+        function updateOpacityFunction() {
+		    opacityFunction.removeAllPoints();
+		     // 공기: 투명
+		    opacityFunction.addPoint(-1000, 0.0); // 공기
+		    opacityFunction.addPoint(-700, 0.0); // 공기
+		
+		    // 공기와 물 사이의 경계
+		    opacityFunction.addPoint(-300, 0.0); // 지방과 물 사이
+		    opacityFunction.addPoint(0, 0.0);    // 물
+		    // 내장: 슬라이더로 조정
 
-            const colorTransferFunction = vtk.Rendering.Core.vtkColorTransferFunction.newInstance();
-            colorTransferFunction.addRGBPoint(0, 0.0, 0.0, 0.0);
-            colorTransferFunction.addRGBPoint(500, 0.8, 0.5, 0.3);
-            colorTransferFunction.addRGBPoint(1200, 1.0, 1.0, 1.0);
-
-            opacityFunction = vtk.Common.DataModel.vtkPiecewiseFunction.newInstance();
-            opacityFunction.addPoint(0, 0.0);
-            opacityFunction.addPoint(500, skinOpacity);
-            opacityFunction.addPoint(800, muscleOpacity);
-            opacityFunction.addPoint(1200, boneOpacity);
-
-            volume.getProperty().setRGBTransferFunction(0, colorTransferFunction);
-            volume.getProperty().setScalarOpacity(0, opacityFunction);
-            volume.getProperty().setScalarOpacityUnitDistance(0, 2.5);
-
-            renderer.addVolume(volume);
-            renderer.resetCamera();
-            renderWindow.render();
-        }
-
+		    opacityFunction.addPoint(500, skinOpacity); // 피부
+		    opacityFunction.addPoint(600, organOpacity);  // 내장 시작
+		    opacityFunction.addPoint(700, organOpacity); // 내장 끝
+		    opacityFunction.addPoint(800, muscleOpacity); // 근육
+		    opacityFunction.addPoint(1200, boneOpacity); // 일반 뼈
+		    opacityFunction.addPoint(3000, denseBoneOpacity); // 고밀도 뼈
+		    renderWindow.render();
+		}
+		
         loadSlices();
+        
+        
+		// 내장 투명도 슬라이더 이벤트 리스너 추가
+		document.getElementById('organOpacity').addEventListener('input', (event) => {
+		    organOpacity = parseFloat(event.target.value);
+		    document.getElementById('organOpacityLabel').innerText = organOpacity.toFixed(2);
+		    updateOpacityFunction();
+		});
 
-        // 각 슬라이더 이벤트 리스너
+        // 슬라이더 이벤트 리스너
         document.getElementById('skinOpacity').addEventListener('input', (event) => {
             skinOpacity = parseFloat(event.target.value);
-            opacityFunction.addPoint(500, skinOpacity);
-            renderWindow.render();
+            document.getElementById('skinOpacityLabel').innerText = skinOpacity.toFixed(2);
+            updateOpacityFunction();
         });
 
         document.getElementById('muscleOpacity').addEventListener('input', (event) => {
             muscleOpacity = parseFloat(event.target.value);
-            opacityFunction.addPoint(800, muscleOpacity);
-            renderWindow.render();
+            document.getElementById('muscleOpacityLabel').innerText = muscleOpacity.toFixed(2);
+            updateOpacityFunction();
         });
 
         document.getElementById('boneOpacity').addEventListener('input', (event) => {
             boneOpacity = parseFloat(event.target.value);
-            opacityFunction.addPoint(1200, boneOpacity);
-            renderWindow.render();
+            document.getElementById('boneOpacityLabel').innerText = boneOpacity.toFixed(2);
+            updateOpacityFunction();
         });
+        
+        document.getElementById('denseBoneOpacity').addEventListener('input', (event) => {
+		    denseBoneOpacity = parseFloat(event.target.value);
+		    document.getElementById('denseBoneOpacityLabel').innerText = denseBoneOpacity.toFixed(2);
+		    updateOpacityFunction();
+		});
 
         document.getElementById('startSlice').addEventListener('input', (event) => {
             startSliceIndex = parseInt(event.target.value);
@@ -212,6 +281,28 @@
             imageData.setSpacing(spacing);
             renderWindow.render();
         });
+        
+        // 조명 슬라이더 이벤트 리스너
+		document.getElementById('ambientLight').addEventListener('input', (event) => {
+		    const value = parseFloat(event.target.value);
+		    document.getElementById('ambientLightLabel').innerText = value.toFixed(2);
+		    volume.getProperty().setAmbient(value);
+		    renderWindow.render();
+		});
+		
+		document.getElementById('diffuseLight').addEventListener('input', (event) => {
+		    const value = parseFloat(event.target.value);
+		    document.getElementById('diffuseLightLabel').innerText = value.toFixed(2);
+		    volume.getProperty().setDiffuse(value);
+		    renderWindow.render();
+		});
+		
+		document.getElementById('specularLight').addEventListener('input', (event) => {
+		    const value = parseFloat(event.target.value);
+		    document.getElementById('specularLightLabel').innerText = value.toFixed(2);
+		    volume.getProperty().setSpecular(value);
+		    renderWindow.render();
+		});
     </script>
 </body>
 </html>
