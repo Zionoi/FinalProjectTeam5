@@ -26,28 +26,6 @@ public class ImageService {
 		return imageRepository.getImagesByStudyKeyAndSeriesKey(studyKey, seriesKey);
 	}
 	
-	// 다음 시리즈
-	public List<String> getNextSeriesImages(Long studyKey, Long seriesKey) {
-        List<Image> images = imageRepository.findNextSeriesImages(studyKey, seriesKey);
-        List<String> imagePaths = new ArrayList<>();
-        for (Image image : images) {
-            String fullPath = Paths.get(image.getPath(), image.getFName()).toString().replace("\\", "/");
-            imagePaths.add(fullPath);
-        }
-        return imagePaths;
-    }
-
-	// 이전 시리즈
-    public List<String> getPreviousSeriesImages(Long studyKey, Long seriesKey) {
-        List<Image> images = imageRepository.findPreviousSeriesImages(studyKey, seriesKey);
-        List<String> imagePaths = new ArrayList<>();
-        for (Image image : images) {
-            String fullPath = Paths.get(image.getPath(), image.getFName()).toString().replace("\\", "/");
-            imagePaths.add(fullPath);
-        }
-        return imagePaths;
-    }
-    
     public void saveAnnotations(Long imageId, List<Annotation> annotations) {
         Image image = imageRepository.findById(imageId).orElseThrow(() -> new IllegalArgumentException("Image not found"));
         image.setAnnotations(annotations);  // 주석 데이터 저장
