@@ -121,7 +121,7 @@ function generateSeriesLayout(rows, cols, seriesImagesMap) {
     disableImageLayoutButton(); // 시리즈 레이아웃 선택 시 이미지 레이아웃 버튼 비활성화
 
     const totalCells = rows * cols;
-    let currentIndex = 0;
+    //let currentIndex = currentImageIndex;  // 현재 인덱스를 시작 지점으로 사용
 
      Object.keys(seriesImagesMap).slice(0, totalCells).forEach(seriesKey => {
         const gridItem = document.createElement('div');
@@ -132,14 +132,14 @@ function generateSeriesLayout(rows, cols, seriesImagesMap) {
 
         const imagePaths = seriesImagesMap[seriesKey];
         if (imagePaths && imagePaths.length > 0) {
-            let filename = imagePaths[currentIndex % imagePaths.length];
+            const filename = imagePaths[currentImageIndex % imagePaths.length];
             loadAndDisplayImage(gridItem, filename, seriesKey);
 
-            // 마우스 휠 이벤트로 이미지 전환
+            // 휠 이벤트로 currentImageIndex 업데이트
             gridItem.addEventListener('wheel', event => {
                 event.preventDefault();
-                currentIndex = (currentIndex + (event.deltaY > 0 ? 1 : -1) + imagePaths.length) % imagePaths.length;
-                loadAndDisplayImage(gridItem, imagePaths[currentIndex], seriesKey);
+                currentImageIndex = (currentImageIndex + (event.deltaY > 0 ? 1 : -1) + imagePaths.length) % imagePaths.length;
+                loadAndDisplayImage(gridItem, imagePaths[currentImageIndex], seriesKey);
             });
             
              // 더블 클릭 이벤트로 1x1 레이아웃 전환
@@ -198,15 +198,8 @@ async function fetchImagesAndGenerateLayout(rows, cols) {
 // 선택된 시리즈에 대해 1x1 레이아웃을 적용하는 함수
 // applySingleSeriesLayout 함수 - axios 버전
 function applySingleSeriesLayout(seriesKey) {
-    if (!studyKey || !seriesKey) {
-        console.error("StudyKey 또는 SeriesKey가 정의되지 않았습니다.");
-        return;
-    }
-
-	console.log('스터디 키 ', studyKey);
-	console.log('시리즈 키 ', seriesKey);
-    const gridContainer = document.getElementById('dicomImage');
-
+	const gridContainer = document.getElementById('dicomImage');
+    
     // 기존 콘텐츠 완전히 제거
     gridContainer.innerHTML = '';
     gridContainer.style.display = 'block';
@@ -214,7 +207,6 @@ function applySingleSeriesLayout(seriesKey) {
     // cornerstone 활성화 - 중복 활성화를 방지하기 위해 gridContainer가 이미 활성화되었는지 확인
     if (!cornerstone.getEnabledElements().some(el => el.element === gridContainer)) {
         cornerstone.enable(gridContainer);
-        console.log("Cornerstone 활성화됨");
     }
 
     // axios를 사용하여 이미지 정보 요청
@@ -230,13 +222,13 @@ function applySingleSeriesLayout(seriesKey) {
 			console.log('imagePaths 타입:', Array.isArray(imagePaths))
             // cornerstone을 통해 이미지를 로드하고 표시
             const stack = {
-	        currentImageIdIndex: 0,
+	        currentImageIdIndex: currentImageIndex,
 	        imageIds: imageIds,
 	        preload: false	// 프리로딩을 비활성화
 	    };
 	
 	    // 첫 번째 이미지를 로드하고 스택 상태 설정
-	    cornerstone.loadImage(imageIds[0]).then((image) => {
+	    cornerstone.loadImage(imageIds[currentImageIndex]).then((image) => {
 	        console.log('더블클릭한 시리즈 이미지 경로 image : ', image);
 	        cornerstone.displayImage(gridContainer, image);
 	        cornerstoneTools.addStackStateManager(gridContainer, ['stack']);
@@ -253,8 +245,6 @@ function applySingleSeriesLayout(seriesKey) {
         gridContainer.style.backgroundColor = 'black';
     });
 }
-
-
 
 
 // 초기화 호출
