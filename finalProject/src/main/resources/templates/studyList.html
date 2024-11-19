@@ -17,7 +17,7 @@
     <title>DView Layout</title>
 
     <a class="logout" href="/logout">logout</a>
-   	
+   	<a class="setting">logout</a>
     <script>
 		// 정렬 기능
 	    function sortTable(columnIndex) {
@@ -235,6 +235,13 @@
       <!--<div id="historyContainer" th:replace="~{studyChoice.html :: studyChoice}"> 왜 아무것도 안뜨지</div>-->
       <div class="choicebox" id="historyContainer">
 		  <div class="studyChoice-title" style="position:relative; top:-4px">검사 이력</div>
+	  			<table class="studyChoice-titleSection">
+				    <div>
+					    <td><p>환자 아이디: </p></td>
+					    <td><p>환자 이름: </p></td>
+						<td style="text-align:right ;">상세 보기</td>
+					</div>
+				</table>
 	  </div>
 	  
       <div class="seriesbox" id="seriesContainer">            	</div>
