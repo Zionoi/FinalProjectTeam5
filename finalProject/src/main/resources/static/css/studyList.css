@@ -7,13 +7,22 @@
 }
 .logout{
 	position:absolute;
-	left:1850px;
+	left:1795px;
 	content:url(../img/logoutBtn2.png);
-	width: 52px;
+	width: 50px;
 }
 .logout:hover{
+	width: 50px;
+	border-radius: 25px;
+	background-color:#A4BBBC;
+}
+.setting{
 	position:absolute;
-	left:1850px;
+	left:1740px;
+	content:url(../img/settingBtn2.png);
+	width: 52px;
+}
+.setting:hover {
 	width: 52px;
 	border-radius: 25px;
 	background-color:#A4BBBC;
