@@ -1,69 +1,109 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <meta charset="UTF-8">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-	<script th:src="@{/js/studyList.js}"></script>
-	<script th:src="@{/js/seriesList.js}"></script>
-	<link rel="stylesheet" href="/css/studyChoice.css">
+    <script th:src="@{/js/studyList.js}"></script>
+    <script th:src="@{/js/seriesList.js}"></script>
+    <link rel="stylesheet" href="/css/studyChoice.css">
     <title>검사 이력</title>
     <script>
-		$(document).ready(function () {
-	    // 스터디 목록 클릭 시 상세 페이지로 이동
-		
-		
-	    });
-	</script>
+        $(document).ready(function () {
+            const pid = /* Your PID value here */
+
+            // 코멘트 데이터를 가져오는 API 호출
+            $.ajax({
+                url: '/patients/getComments?pid=' + pid,
+                method: 'GET',
+                success: function(data) {
+                    const commentList = $('#comment-list');
+                    data.comments.forEach((comment, index) => {
+                        let commentItem = `<li>
+                                               <span>${comment}</span>
+                                               <button class="delete-btn" onclick="deleteComment('${pid}', ${index})">삭제</button>
+                                           </li>`;
+                        commentList.append(commentItem);
+                    });
+                }
+            });
+        });
+
+        // 코멘트 삭제 함수
+        function deleteComment(pid, commentIndex) {
+            fetch('/patients/deleteComment', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    pid: pid,
+                    commentIndex: commentIndex
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    location.reload();
+                } else {
+                    alert('코멘트 삭제 중 오류가 발생했습니다.');
+                }
+            });
+        }
+    </script>
 </head>
 <body>
-	<div th:fragment="studyChoice">
-		<div class="studyChoice-section">
-				<div class="studyChoice-title" style="position:relative; top:-4px">검사 이력</div>
-				<table class="studyChoice-titleSection">
-				    <div th:if="${choiceStudies != null and !choiceStudies.isEmpty()}">
-					    <td><p>환자 아이디: <span th:text="${choiceStudies[0].pid}"></span></p></td>
-					    <td><p>환자 이름: <span th:text="${choiceStudies[0].pName}"></span></p></td>
-												<td style="text-align:right ;"><a class="studyChoice-detailBtn" th:href="@{/patients/studyList/{pid}/patientDetail(pid=${choiceStudies[0].pid})}">상세 보기</a></td>
-					</div>
-				</table>
-				<table  class="studyChoice-titleSection">
-					<div th:if="${choiceStudies == null or choiceStudies.isEmpty()}">
-					    <td><p>환자 아이디: 정보 없음</p></td>
-					    <td><p>환자 이름: 정보 없음</p></td>
-					</div>
-				</table>
-			        <table class="dicom-table">
-				            <thead>
-				                <tr>
-				                    <th>검사날짜</th>
-				                    <th>검사이름</th>
-				                    <th>검사장비</th>
-				                    <th>성별</th>
-				                    <th>담당의사</th>
-				                    <th>Verify</th>
-				                </tr>
-				            </thead>
-				     </table>
-				            <div class="historytbody">
-					            <table class="historytbody-section">
-					                 <tr th:each="study : ${choiceStudies}" th:data-study-key="${study.studyKey}" style="cursor: pointer;"
-					                 onclick="loadSeriesAndThumbnail(this)">
-					                    <td th:text="${study.studyDate}"></td>
-					                    <td th:text="${study.studyDesc}"></td>
-					                    <td th:text="${study.modality}" style=""></td>
-					                    <td th:text="${study.pSex}"></td>
-					                    <td th:text="${study.refPhysicianName}"></td>
-					                    <td th:text="${study.verifyFlag}"></td>
-
-					                </tr>
-					            </table>
-					        </div>
-			    </div>
+    <div th:fragment="studyChoice">
+        <div class="studyChoice-section">
+            <div class="studyChoice-title" style="position:relative; top:-4px">검사 이력</div>
+            <table class="studyChoice-titleSection">
+                <div th:if="${choiceStudies != null and !choiceStudies.isEmpty()}">
+                    <td><p>환자 아이디: <span th:text="${choiceStudies[0].pid}"></span></p></td>
+                    <td><p>환자 이름: <span th:text="${choiceStudies[0].pName}"></span></p></td>
+                    <td style="text-align:right ;"><a class="studyChoice-detailBtn" th:href="@{/patients/studyList/{pid}/patientDetail(pid=${choiceStudies[0].pid})}">상세 보기</a></td>
+                </div>
+            </table>
+            <table class="studyChoice-titleSection">
+                <div th:if="${choiceStudies == null or choiceStudies.isEmpty()}">
+                    <td><p>환자 아이디: 정보 없음</p></td>
+                    <td><p>환자 이름: 정보 없음</p></td>
+                </div>
+            </table>
+            <table class="dicom-table">
+                <thead>
+                    <tr>
+                        <th>검사날짜</th>
+                        <th>검사이름</th>
+                        <th>검사장비</th>
+                        <th>성별</th>
+                        <th>담당의사</th>
+                        <th>Verify</th>
+                    </tr>
+                </thead>
+            </table>
+            <div class="historytbody">
+                <table class="historytbody-section">
+                    <tr th:each="study : ${choiceStudies}" th:data-study-key="${study.studyKey}" style="cursor: pointer;" onclick="loadSeriesAndThumbnail(this)">
+                        <td th:text="${study.studyDate}"></td>
+                        <td th:text="${study.studyDesc}"></td>
+                        <td th:text="${study.modality}" style=""></td>
+                        <td th:text="${study.pSex}"></td>
+                        <td th:text="${study.refPhysicianName}"></td>
+                        <td th:text="${study.verifyFlag}"></td>
+                    </tr>
+                </table>
+            </div>
+            
+            <!-- 코멘트 이력을 표시하는 섹션 -->
+            <div class="comment-history">
+                <h3>코멘트 이력</h3>
+                <ul id="comment-list"></ul>
+            </div>
+        </div>
     </div>
-
 </body>
 </html>
