@@ -1,3 +1,5 @@
+let currentImageIndex = 0;  // 현재 이미지 인덱스
+
 document.addEventListener('DOMContentLoaded', () => {
 	
 	// cornerstone 초기화 함수 호출
@@ -94,4 +96,11 @@ document.addEventListener('DOMContentLoaded', () => {
     cornerstoneTools.setToolActiveForElement(element, 'StackScrollMouseWheel', {}); // setToolActive 대신 setToolActiveForElement 사용
 
     console.log("StackScrollTool 활성화 완료 - 마우스 휠 사용");
+    
+    // 마우스 휠 이벤트를 사용해 currentImageIndex 업데이트
+	element.addEventListener('wheel', (event) => {
+	    event.preventDefault();
+	    currentImageIndex = (currentImageIndex + (event.deltaY > 0 ? 1 : -1) + imageIds.length) % imageIds.length;
+	    console.log("현재 이미지 인덱스 업데이트:", currentImageIndex);
+	});
 });
