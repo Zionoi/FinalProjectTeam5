@@ -170,8 +170,8 @@
 		    volume.setMapper(mapper);
 		
 		    const colorTransferFunction = vtk.Rendering.Core.vtkColorTransferFunction.newInstance();
-		    colorTransferFunction.addRGBPoint(0, 0.0, 0.0, 0.0);
-		    colorTransferFunction.addRGBPoint(300, 0.5, 0.3, 0.3);
+		    colorTransferFunction.addRGBPoint(0, 0.5, 0.3, 0.3);
+		    colorTransferFunction.addRGBPoint(500, 0.5, 0.3, 0.3);
 		    colorTransferFunction.addRGBPoint(700, 0.8, 0.5, 0.4);
 		    colorTransferFunction.addRGBPoint(1200, 1.0, 1.0, 1.0);
 		    colorTransferFunction.addRGBPoint(3000, 1.0, 1.0, 1.0);
@@ -206,23 +206,36 @@
 
         function updateOpacityFunction() {
 		    opacityFunction.removeAllPoints();
-		     // 공기: 투명
+		
+		    // 공기: 무조건 투명
 		    opacityFunction.addPoint(-1000, 0.0); // 공기
 		    opacityFunction.addPoint(-700, 0.0); // 공기
 		
-		    // 공기와 물 사이의 경계
+		    // 물: 기본 투명
 		    opacityFunction.addPoint(-300, 0.0); // 지방과 물 사이
 		    opacityFunction.addPoint(0, 0.0);    // 물
-		    // 내장: 슬라이더로 조정
-
-		    opacityFunction.addPoint(500, skinOpacity); // 피부
-		    opacityFunction.addPoint(600, organOpacity);  // 내장 시작
-		    opacityFunction.addPoint(700, organOpacity); // 내장 끝
-		    opacityFunction.addPoint(800, muscleOpacity); // 근육
-		    opacityFunction.addPoint(1200, boneOpacity); // 일반 뼈
-		    opacityFunction.addPoint(3000, denseBoneOpacity); // 고밀도 뼈
-		    renderWindow.render();
+		
+		    // 피부
+		    opacityFunction.addPoint(200, skinOpacity); // 피부 시작
+		    opacityFunction.addPoint(500, skinOpacity); // 피부 끝
+		
+		    // 근육
+		    opacityFunction.addPoint(600, muscleOpacity); // 근육 시작
+		    opacityFunction.addPoint(800, muscleOpacity); // 근육 끝
+		
+		    // 장기(뇌 포함)
+		    opacityFunction.addPoint(400, organOpacity);  // 장기 시작
+		    opacityFunction.addPoint(700, organOpacity); // 장기 끝
+		
+		    // 뼈
+		    opacityFunction.addPoint(1000, boneOpacity); // 일반 뼈 시작
+		    opacityFunction.addPoint(1200, boneOpacity); // 일반 뼈 끝
+		    opacityFunction.addPoint(2000, denseBoneOpacity); // 고밀도 뼈 시작
+		    opacityFunction.addPoint(3000, denseBoneOpacity); // 고밀도 뼈 끝
+		
+		    renderWindow.render(); // 렌더링 갱신
 		}
+
 		
         loadSlices();
         
