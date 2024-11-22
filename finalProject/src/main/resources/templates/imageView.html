@@ -25,8 +25,9 @@
 					<label class="span">검사이력</label>
 				</div>
 				<div class="sidebarBtn">
-					<button id="reportBtn" class="reportBtn"></button><br>
-					<label class="span">리포트</label>
+				    <button id="reportBtn" class="reportBtn" 
+				            th:onclick="'location.href=\'/patients/' + ${patientId} + '/reports\''"></button><br>
+				    <label class="span">리포트</label>
 				</div>
 			</div>
 			<div id="toolbar" class="toolbar">
