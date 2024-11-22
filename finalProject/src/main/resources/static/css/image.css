@@ -20,6 +20,8 @@ body {
 	position:absolute;
 	top:80px;
     left:152px;
+    border: solid 2px #A4BBBC;
+    border-radius: 4px;
 }
 .sidebar{
 	position:absolute;
@@ -29,7 +31,8 @@ body {
 	width: 76px;
 	height: 800px;
 	text-align: center;
-	padding-top: 20px;
+	padding-top: 20px;	
+	border-radius: 4px;    
 }
 #toolbar{
 	display: none;
@@ -40,8 +43,10 @@ body {
     left:152px;
 	background-color: #243235;
 	width: 1600px;
-	height: 50px;
+	height: 72px;
 	margin: auto;
+	border-radius: 4px;
+	border: solid 2px rgb(94, 94, 94);
 }
 .listBtn {
 	background:url(../img/ListBtn.png) no-repeat;
@@ -49,13 +54,13 @@ body {
 	background-size: cover;
 	height: 50px;
 }
-#listBtn,#toolbarBtn,#historyBtn,#reportBtn {
+#listBtn,#toolbarBtn,#historyBtn,#reportBtn, .tool-btn {
 	background-color: transparent;
 	border: none;	
 	cursor: pointer;
 }
 #listBtn:hover,#toolbarBtn:hover,#historyBtn:hover,#reportBtn:hover {
-	background-color: #3E5254;
+	background-color:  rgb(111, 148, 149);
 	border-radius: 25px;
 }
 .toolbarBtn{
@@ -85,61 +90,239 @@ body {
 .BTN{
 	border:none;
 	cursor: pointer;
-	padding:4px;
+	margin:12px 8px 0px 12px;
+	float: left;  display: flex;
+  	align-items: center;
+}
+#prevBtn:hover,#nextBtn:hover,#playClipBtn:hover,#resetBtn:hover,#invertBtn:hover,#toolBtn:hover,
+#downloadBtn:hover,#seriesLayoutBtn:hover,#imgLayoutBtn:hover,#annotateBtn:hover,
+#ct3d:hover,#viewSeriesBtn:hover {
+	background-color: rgb(111, 148, 149);
+	border-radius: 25px;
+}
+span {
+	color:#D8D8D8;
+	font-size: 10px;
+	position:relative;
+	top:46px; left:2px;
+	width: 45px;
+	margin:0px 7px 0px 4px;
+	line-height: 120%;
 }
 #prevBtn{
 	background:url(../img/BeforeBtn.png) no-repeat;	
-	width: 40px;
+	width: 36px;
 	background-size: cover;
-	height: 40px;
+	height: 36px;
 }
 #nextBtn{
 	background:url(../img/NextBtn.png) no-repeat;	
-	width: 40px;
+	width: 36px;
 	background-size: cover;
-	height: 40px;
+	height: 36px;
 }
 #playClipBtn{
 	background:url(../img/PlayclipBtn.png) no-repeat;	
-	width: 40px;
+	width: 36px;
 	background-size: cover;
-	height: 40px;
+	height: 36px;
 }
 #resetBtn{
 	background:url(../img/ResetBtn.png) no-repeat;	
-	width: 40px;
+	width: 36px;
 	background-size: cover;
-	height: 40px;
+	height: 36px;
 }
 #invertBtn{
 	background:url(../img/InvertBtn.png) no-repeat;	
-	width: 40px;
+	width: 36px;
 	background-size: cover;
-	height: 40px;
+	height: 36px;
 }
 #toolBtn{
 	background:url(../img/ToolBoxBtn.png) no-repeat;	
-	width: 40px;
+	width: 36px;
 	background-size: cover;
-	height: 40px;
+	height: 36px;
 }
 #downloadBtn{
 	background:url(../img/DownloadBtn.png) no-repeat;	
-	width: 40px;
+	width: 36px;
 	background-size: cover;
-	height: 40px;
+	height: 36px;
 }
 #seriesLayoutBtn{
 	background:url(../img/SeriesLayoutBtn.png) no-repeat;	
-	width: 40px;
+	width: 36px;
 	background-size: cover;
-	height: 40px;
+	height: 36px;
 }
 #imgLayoutBtn{
 	background:url(../img/ImgLayoutBtn.png) no-repeat;	
-	width: 40px;
+	width: 36px;
 	background-size: cover;
-	height: 40px;
+	height: 36px;
+}
+#annotateBtn {
+	background:url(../img/PenBtn.png) no-repeat;	
+	width: 36px;
+	background-size: cover;
+	height: 36px;
+}
+#ct3d {
+	background:url(../img/3dBtn.png) no-repeat;	
+	width: 36px;
+	background-size: cover;
+	height: 36px;
+}
+#viewSeriesBtn {
+	background:url(../img/SeriesGroupBtn.png) no-repeat;	
+	width: 36px;
+	background-size: cover;
+	height: 36px;
+}
+.tool-dropdown-menu {
+	position: absolute;
+	top:-70px;
+	left:500px;
+	background-color:  #243235;
+	width: 300px;
+	height: 64px;
+	margin: auto;
+	border-radius: 4px;
+	border: solid 2px rgb(94, 94, 94);
+}
+.tool-btn{
+	margin:4px;	position: relative;
+	top:4px; left:4px;
+}
+.label{
+	color:#D8D8D8;
+	font-size: 10px;
+	font-weight: 400;
+	width: 45px;
+	position: relative;
+	left:-10px;
+	top:8px;
+}
+#magnifier {
+	background:url(../img/GlassesBtn.png) no-repeat;	
+	width: 36px;
+	background-size: cover;
+	height: 36px;
+}
+#rotate{
+	background:url(../img/RotateBtn.png) no-repeat;	
+	width: 36px;
+	background-size: cover;
+	height: 36px;
+}
+#hFlip {
+	background:url(../img/LRInvertBtn.png) no-repeat;	
+	width: 36px;
+	background-size: cover;
+	height: 36px;
+}
+
+#vFlip {
+	background:url(../img/UDInvertBtn.png) no-repeat;	
+	width: 36px;
+	background-size: cover;
+	height: 36px;
+}
+
+#lRotate {
+	background:url(../img/LeftRotateBtn.png) no-repeat;	
+	width: 36px;
+	background-size: cover;
+	height: 36px;
+}
+
+#rRotate {
+	background:url(../img/RightRotateBtn.png) no-repeat;	
+	width: 36px;
+	background-size: cover;
+	height: 36px;
+}
+.annotate-dropdown-menu{
+	background-color: #A4BBBC;
+	width: 800px;
+	height: 74px;
+	position: absolute;
+	top:0px;
+	left:700px;
+}
+#angle {
+	background:url(../img/AngleBtn.png) no-repeat;	
+	width: 36px;
+	background-size: cover;
+	height: 36px;
+}
+#arrow {
+	background:url(../img/ArrowBtn.png) no-repeat;	
+	width: 36px;
+	background-size: cover;
+	height: 36px;
+}
+#bidirectional {
+	background:url(../img/BidirectionalBtn.png) no-repeat;	
+	width: 36px;
+	background-size: cover;
+	height: 36px;
+}
+#cobb {
+	background:url(../img/CobbBtn.png) no-repeat;	
+	width: 36px;
+	background-size: cover;
+	height: 36px;
+}
+#ellipticalRoi {
+	background:url(../img/EllipticalRoiBtn.png) no-repeat;	
+	width: 36px;
+	background-size: cover;
+	height: 36px;
+}
+#freehandRoi {
+	background:url(../img/FreehandRoiBtn.png) no-repeat;	
+	width: 36px;
+	background-size: cover;
+	height: 36px;
+}
+#length {
+	background:url(../img/LengthBtn.png) no-repeat;	
+	width: 36px;
+	background-size: cover;
+	height: 36px;
+}
+#probe {
+	background:url(../img/ProbeBtn.png) no-repeat;	
+	width: 36px;
+	background-size: cover;
+	height: 36px;
+}
+#rectangleRoi {
+	background:url(../img/RectangleRoiBtn.png) no-repeat;	
+	width: 36px;
+	background-size: cover;
+	height: 36px;
+}
+#text {
+	background:url(../img/TextBtn.png) no-repeat;	
+	width: 36px;
+	background-size: cover;
+	height: 36px;
+}
+#save {
+	background:url(../img/SaveBtn.png) no-repeat;	
+	width: 36px;
+	background-size: cover;
+	height: 36px;
+}
+#delete {
+	background:url(../img/DeleteBtn.png) no-repeat;	
+	width: 36px;
+	background-size: cover;
+	height: 36px;
 }
 /* 드롭다운 상자 스타일링 (기본적으로 숨겨짐) */
 .dropdown {

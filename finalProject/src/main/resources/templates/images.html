@@ -40,11 +40,11 @@ document.addEventListener("DOMContentLoaded", function () {
         // toolbar 표시 상태 토글
         if (toolbar.style.display === "none" || toolbar.style.display === "") {
             toolbar.style.display = "block"; // toolbar 활성화
-            dic.style.height = "790px"; // dicomImage 높이 조정
-            dicomImage.style.top = "140px";
+            dic.style.height = "736px"; // dicomImage 높이 조정
+            dicomImage.style.top = "160px";
         } else {
             toolbar.style.display = "none"; // toolbar 비활성화
-            dic.style.height = "850px"; // dicomImage 높이 조정
+            dic.style.height = "816px"; // dicomImage 높이 조정
             dicomImage.style.top = "80px";
         }
     });
@@ -56,12 +56,12 @@ document.addEventListener("DOMContentLoaded", function () {
     <div class="container">
         <h2  class="header">DView</h2>
         
-        <div class="wadoBox" style="position: relative; height: 900px; overflow: hidden;">
+        <div class="wadoBox" style="position: relative; height: 1000px; overflow: hidden;">
 			<!-- 버튼 레이아웃을 프레그먼트에서 불러오기 -->
 	        <div th:replace="imageView :: buttonLayout"></div>
 	        
 	        <!-- DICOM 이미지 뷰어 영역 -->
-	        <div id="dic"  style="height: 850px; width: 1600px;">
+	        <div id="dic"  style="height: 816px; width: 1600px;">
 	        	<div id="dicomImage" style="height:100%; width:100%; object-fit: cover; overflow: hidden; position: relative; "class="grid-container" oncontextmenu="return false" onmousedown="return false"></div>
 			</div>
 		</div>
