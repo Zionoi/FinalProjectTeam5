@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	cornerstoneTools.addTool(cornerstoneTools.ProbeTool);
 	cornerstoneTools.addTool(cornerstoneTools.RectangleRoiTool);
 	cornerstoneTools.addTool(cornerstoneTools.TextMarkerTool);
-
+	cornerstoneTools.addTool(cornerstoneTools.EraserTool);
 
 	/* 스크롤 설정 */
 	
