@@ -23,14 +23,14 @@
 			</div>
 			<div id="toolbar" class="toolbar">
 				<div style="position:relative; left:12px; top:-4px;">
-					<button class="BTN" id="prevBtn"></button>
-		            <button class="BTN" id="nextBtn"></button>
-		            <button class="BTN" id="playClipBtn"></button>
-		            <button class="BTN" id="resetBtn"></button>
-		            <button class="BTN" id="invertBtn"></button>
+					<button class="BTN" id="prevBtn"><h6 class="label2">이전</h6></button>
+		            <button class="BTN" id="nextBtn"><h6 class="label2">다음</h6></button>
+		            <button class="BTN" id="playClipBtn"><h6 class="label2">재생</h6></button>
+		            <button class="BTN" id="resetBtn"><h6 class="label2">초기화</h6></button>
+		            <button class="BTN" id="invertBtn"><h6 class="label2">흑백반전</h6></button>
 		            <!--<button class="btn" id="brightnessBtn">밝기/대비조절</button>-->
 			
-		            <button class="BTN" id="viewSeriesBtn"></button>
+		            <button class="BTN" id="viewSeriesBtn"><h6 class="label2">시리즈모음</h6></button>
 		            
 		            <!-- 도구 드롭다운 메뉴 -->
 			        <div id="toolDropdown" class="tool-dropdown-menu" style="display: none;">
@@ -44,38 +44,35 @@
 			        </div>
 		            <!-- 주석 드롭다운 메뉴 -->
 			        <div id="annotateDropdown" class="annotate-dropdown-menu" style="display: none;">
-			            <button id="angle" class="annotate-btn"></button>
-			            <button id="arrow" class="annotate-btn"></button>
-			            <button id="bidirectional" class="annotate-btn"></button>
-			            <button id="cobb" class="annotate-btn"></button>
-			            <button id="ellipticalRoi" class="annotate-btn"></button>
-			            <button id="freehandRoi" class="annotate-btn"></button>
-			            <button id="length" class="annotate-btn"></button>
-			            <button id="probe" class="annotate-btn"></button>
-			            <button id="rectangleRoi" class="annotate-btn"></button>
-			            <button id="text" class="annotate-btn"></button>
-			            <button id="save" class="annotate-btn"></button>
-			            <button id="delete" class="annotate-btn"></button>            
+
+			            <button id="angle" class="annotate-btn"><h6 class="dlabel">각도</h6></button>
+			            <button id="arrow" class="annotate-btn"><h6 class="dlabel">화살표</h6></button>
+			            <button id="bidirectional" class="annotate-btn"><h6 class="dlabel">양방향</button>
+			            <button id="cobb" class="annotate-btn"><h6 class="dlabel">휘어짐</h6></button>
+			            <button id="ellipticalRoi" class="annotate-btn"><h6 class="dlabel">타원</h6></button>
+			            <button id="freehandRoi" class="annotate-btn"><h6 class="dlabel">자유형</h6></button>
+			            <button id="length" class="annotate-btn"><h6 class="dlabel">길이</h6></button>
+			            <button id="probe" class="annotate-btn"><h6 class="dlabel">위치좌표</h6></button>
+			            <button id="rectangleRoi" class="annotate-btn"><h6 class="dlabel">사각형</h6></button>
+			            <button id="text" class="annotate-btn"><h6 class="dlabel">텍스트</h6></button>
+			            <button id="save" class="annotate-btn"><h6 class="dlabel">저장</h6></button>
+			            <button id="delete" class="annotate-btn"><h6 class="dlabel">지우기</h6></button>            
+
 			        </div>
 			        
-		            <button class="BTN" id="ct3d"></button>
+		            <button class="BTN" id="ct3d"><h6 class="label2">Viewer</h6></button>
 		            
-		            <button class="BTN" id="seriesLayoutBtn"></button>
+		            <button class="BTN" id="seriesLayoutBtn"><h6 class="label2">시리즈</h6></button>
 		            <!-- 시리즈 레이아웃 영역 -->
 			        <div id="seriesDropdown" class="dropdown" style="display: none;">
 			            <div class="grid-selector-container" id="series-grid-selector"></div>
 			        </div>
 		            
-		            <button class="BTN" id="imgLayoutBtn"></button>
-		            <button class="BTN" id="downloadBtn"></button>
-		           			        <button class="BTN" id="toolBtn"></button>
-		            <button class="BTN" id="annotateBtn"></button>
+		            <button class="BTN" id="imgLayoutBtn"><h6 class="label2">이미지</h6></button>
+		            <button class="BTN" id="downloadBtn"><h6 class="label2">다운로드</h6></button>
+		           	<button class="BTN" id="toolBtn"><h6 class="label2">도구</h6><div id="under-boxT" style="width: 44px; height: 4px; position: absolute; top:-5px; left:-5px;"/></button>
+		            <button class="BTN" id="annotateBtn"><h6 class="label2">주석</h6><div id="under-boxA" style="width: 44px; height: 4px; position: absolute; top:-5px; left:-5px;"/></button>
 		            <!-- 이미지 레이아웃 영역 -->
-		            <div style="display: flex; text-align: center; position:absolute;">
-			            <span>이전</span><span>다음</span><span>재생</span><span>초기화</span><span>흑백반전</span>
-			            <span>시리즈<br>모음</span><span>Viewer</span><span>시리즈<br>레이아웃</span></span><span>이미지<br>레이아웃</span></span>
-			            <span>다운로드</span><span>도구</span><span>주석</span>
-		            </div>
 	            </div>
 		        <div id="dropdown" class="dropdown" style="display: none;">
 		            <div class="grid-selector-container" id="grid-selector"></div>
