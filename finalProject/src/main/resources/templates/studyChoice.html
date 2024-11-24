@@ -67,13 +67,13 @@
                     <td style="text-align:right ;"><a class="studyChoice-detailBtn" th:href="@{/patients/studyList/{pid}/patientDetail(pid=${choiceStudies[0].pid})}">상세 보기</a></td>
                 </div>
             </table>
-            <table class="studyChoice-titleSection">
+            <table class="studyChoice-TitleSection">
                 <div th:if="${choiceStudies == null or choiceStudies.isEmpty()}">
                     <td><p>환자 아이디: 정보 없음</p></td>
                     <td><p>환자 이름: 정보 없음</p></td>
                 </div>
             </table>
-            <table class="dicom-table">
+            <table class="dicomtable">
                 <thead>
                     <tr>
                         <th>검사날짜</th>
@@ -100,8 +100,10 @@
             
             <!-- 코멘트 이력을 표시하는 섹션 -->
             <div class="comment-history">
-                <h3>코멘트 이력</h3>
-                <ul id="comment-list"></ul>
+                <h3 class="comment-title">코멘트 이력</h3>
+                <div class="comment-box">
+                	<ul id="comment-list"></ul>
+                </div>
             </div>
         </div>
     </div>
