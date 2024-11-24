@@ -10,12 +10,12 @@
     <script src="https://unpkg.com/cornerstone-math"></script>
     <script src="https://unpkg.com/hammerjs"></script>
     <script src="https://unpkg.com/vtk.js"></script>
-
+  	<link rel="stylesheet" th:href="@{/css/imageView.css}">
     <title>ct3dView</title>
     <style>
         #dicomCanvas {
-            width: 800px;
-            height: 600px;
+			height: 816px;
+			width: 1470px;
             background-color: black;
             display: inline-block;
         }
@@ -27,45 +27,61 @@
     </style>
 </head>
 <body>
+	<h2  class="header">DView</h2>
+        <div class="sidebar">
+			<button id="historyBtn" class="historyBtn" onclick="window.history.back();">
+    <h6 class="label">돌아가기</h6>
+</button>
+
+		</div>
     <div id="dicomCanvas"></div> <!-- 3D 볼륨 렌더링 영역 -->
-    <div id="controls">
-        <label for="skinOpacity">Skin Opacity: <span id="skinOpacityLabel">0.05</span></label>
-        <input type="range" id="skinOpacity" min="0" max="1" step="0.01" value="0.05"><br>
+    <div id="controls" class="controls">
+		<h6 class="controlsTitle" style="position:relative; top:-40px;">Opacity</h6>
+		<div style="position:relative; top:-68px;">
+	        <label class="tool3d" for="skinOpacity">Skin Opacity</label>
+	        <input type="range" id="skinOpacity" min="0" max="1" step="0.01" value="0.05"><span id="skinOpacityLabel" class="Pspan">0.05</span>
+			
+			<!-- 추가된 내장 투명도 슬라이더 -->
+			<label class="tool3d" for="organOpacity">Organ Opacity</label>
+			<input type="range" id="organOpacity" min="0" max="1" step="0.01" value="0.6"><span id="organOpacityLabel" class="Pspan">0.6</span>
+	
+	        <label class="tool3d" for="muscleOpacity">Muscle Opacity</label>
+	        <input type="range" id="muscleOpacity" min="0" max="1" step="0.01" value="0.5"><span id="muscleOpacityLabel" class="Pspan">0.5</span>
+	
+	        <label class="tool3d" for="boneOpacity">Bone Opacity</label>
+	        <input type="range" id="boneOpacity" min="0" max="1" step="0.01" value="1"><span id="boneOpacityLabel" class="Pspan">0.5</span>
+	        
+	        <label class="tool3d" for="denseBoneOpacity">Dense Bone Opacity</label>
+			<input type="range" id="denseBoneOpacity" min="0" max="1" step="0.01" value="1.0"><span id="denseBoneOpacityLabel" class="Pspan">0.5</span>
+		</div>
+			
+		<h6 class="controlsTitle" style="position:relative; top:-80px;" >Light</h6>
+		<div style="position:relative; top:-108px;">
+			<label class="tool3d" for="ambientLight">Ambient Light</label>
+			<input type="range" id="ambientLight" min="0" max="1" step="0.01" value="0.2"><span id="ambientLightLabel" class="Pspan">0.2</span>
+			
+			<label class="tool3d" for="diffuseLight">Diffuse Light</label>
+			<input type="range" id="diffuseLight" min="0" max="1" step="0.01" value="0.7"><span id="diffuseLightLabel" class="Pspan">0.7</span>
+			
+			<label class="tool3d" for="specularLight">Specular Light</label>
+			<input type="range" id="specularLight" min="0" max="1" step="0.01" value="0.3"><span id="specularLightLabel" class="Pspan">0.3</span>
+		</div>
 		
-		<!-- 추가된 내장 투명도 슬라이더 -->
-		<label for="organOpacity">Organ Opacity: <span id="organOpacityLabel">0.6</span></label>
-		<input type="range" id="organOpacity" min="0" max="1" step="0.01" value="0.6"><br>
-
-        <label for="muscleOpacity">Muscle Opacity: <span id="muscleOpacityLabel">0.5</span></label>
-        <input type="range" id="muscleOpacity" min="0" max="1" step="0.01" value="0.5"><br>
-
-        <label for="boneOpacity">Bone Opacity: <span id="boneOpacityLabel">1.0</span></label>
-        <input type="range" id="boneOpacity" min="0" max="1" step="0.01" value="1"><br>
-        
-        <label for="denseBoneOpacity">Dense Bone Opacity: <span id="denseBoneOpacityLabel">1.0</span></label>
-		<input type="range" id="denseBoneOpacity" min="0" max="1" step="0.01" value="1.0"><br>
-		
-		<label for="ambientLight">Ambient Light: <span id="ambientLightLabel">0.2</span></label>
-		<input type="range" id="ambientLight" min="0" max="1" step="0.01" value="0.2"><br>
-		
-		<label for="diffuseLight">Diffuse Light: <span id="diffuseLightLabel">0.7</span></label>
-		<input type="range" id="diffuseLight" min="0" max="1" step="0.01" value="0.7"><br>
-		
-		<label for="specularLight">Specular Light: <span id="specularLightLabel">0.3</span></label>
-		<input type="range" id="specularLight" min="0" max="1" step="0.01" value="0.3"><br>
-		
-        <label for="startSlice">Start Slice Position (Z-axis)</label>
-        <input type="range" id="startSlice" min="0" step="1" value="0"><br>
-
-        <label for="spacingX">Spacing X</label>
-        <input type="range" id="spacingX" min="0.5" max="10" step="0.1" value="1"><br>
-
-        <label for="spacingY">Spacing Y</label>
-        <input type="range" id="spacingY" min="0.5" max="10" step="0.1" value="1"><br>
-
-        <label for="spacingZ">Spacing Z</label>
-        <input type="range" id="spacingZ" min="0.5" max="10" step="0.1" value="8"><br>
-    </div>
+			<h6 class="controlsTitle" style="position:relative; top:-110px;">Position</h6>
+		<div style="position:relative; top:-138px;">
+	        <label class="tool3d" for="startSlice">Start Slice Position (Z-axis)</label>
+	        <input type="range" id="startSlice" min="0" step="1" value="0"><br>
+	
+	        <label class="tool3d" for="spacingX">Spacing X</label>
+	        <input type="range" id="spacingX" min="0.5" max="10" step="0.1" value="1"><br>
+	
+	        <label class="tool3d" for="spacingY">Spacing Y</label>
+	        <input type="range" id="spacingY" min="0.5" max="10" step="0.1" value="1"><br>
+	
+	        <label class="tool3d" for="spacingZ">Spacing Z</label>
+	        <input type="range" id="spacingZ" min="0.5" max="10" step="0.1" value="8"><br>
+		</div>
+	    </div>
 
     <script>
         cornerstoneWADOImageLoader.external.cornerstone = cornerstone;
