@@ -207,67 +207,129 @@ function setupAnnotateControls(element) {
 	}
 
 
-	/*document.getElementById('text').addEventListener('click', () => {
+	// 텍스트 마커 (주석을 텍스트로 표시)
+    document.getElementById('text').addEventListener('click', () => {
 		
 		activateTool(element, 'TextMarker'); // `activateTool` 호출
         cornerstoneTools.setToolActive(element, 'TextMarker', coords, { mouseButtonMask: 1 })
 		cornerstoneTools.addToolState(element, 'TextMarker', {
 			// 설정
-		   configuration: {
+		    configuration: {
 		        markers: [],
 		        current: '',
 		        ascending: true,
 		        loop: false,
-		        changeTextCallback: changeTextCallback
-		      }
-		 })
-    });*/
+		        changeTextCallback,
+		    }})
+    });
     
-    // 텍스트 마커 (주석을 텍스트로 표시)
-	/*document.getElementById('text').addEventListener('click', () => {
-		cornerstone.enable(element);
-		cornerstoneTools.init();
-	    activateTool(element, 'TextMarker'); // `activateTool` 호출
-	    cornerstoneTools.setToolActive('TextMarker', { mouseButtonMask: 1 });
+    // 주석 저장 버튼 이벤트 추가
+    document.getElementById('save').addEventListener('click', async () => {
+        const element = document.getElementById('dicomImage');  // DICOM 이미지 요소
+        const imageId = getCurrentImageId();  // 현재 이미지 ID 가져오기
+        const annotations = getAnnotationsData(element); // 현재 주석 데이터 가져오기
+
+        try {
+            const response = await fetch(`/images/${imageId}/annotations`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(annotations)
+            });
+
+            if (response.ok) {
+                alert('주석이 성공적으로 저장되었습니다.');
+            } else {
+                alert('주석 저장에 실패했습니다.');
+            }
+        } catch (error) {
+            console.error('주석 저장 중 오류:', error);
+        }
+    });
+
+    // 주석 데이터를 가져오는 함수
+    function getAnnotationsData(element) {
+        const toolState = cornerstoneTools.globalImageIdSpecificToolStateManager.saveToolState();
+        return Object.keys(toolState).map(imageId => ({
+            imageId: imageId,
+            annotations: toolState[imageId]
+        }));
+    }
+
+    // 선택된 주석을 저장할 객체
+    let selectedAnnotation = {
+        toolType: null,
+        uid: null,
+    };
 	
-	    try {
-	        
-	        // 주석 도구 상태 추가
-	        cornerstoneTools.addToolState(element, 'TextMarker', {
-	            // 설정
-	            drawHandles: true,
-	        		renderDashed: false,
-					visible: true,
-					active: true,
-					text: '바로 이거야~',
-					color: undefined,
-					markers: ['F5', 'F4', 'F3', 'F2', 'F1'],
-					current: 'F5',
-	                ascending: true,
-	                loop: true,
-	                changeTextCallback,
-	                handles: {
-					  start: {x: 0, y: 0},
-			          end: {
-			            x: 1000,
-			            y: 1000,
-			            highlight: true,
-			            active: true,
-			            hasBoundingBox: true
-			          }
-			        }
-	            });
-	    } catch (error) {
-	        console.warn("TextMarker configuration 오류:", error);
+	// 주석 클릭 시 선택된 주석의 정보를 설정하는 함수
+	function onAnnotationSelected(event) {
+	    const { toolType, measurementData } = event.detail;
+	    selectedAnnotation.toolType = toolType;
+	    selectedAnnotation.uid = measurementData.uid;
+	    console.log(`Selected Annotation - Tool: ${toolType}, UID: ${measurementData.uid}`);
+	}
+	
+	// 선택된 주석만 삭제하는 함수
+	function deleteSelectedAnnotation(element) {
+	    if (!selectedAnnotation.toolType || !selectedAnnotation.uid) {
+	        console.warn("No annotation selected.");
+	        return;
 	    }
-	});*/
-    
-    // 주석 지우기
+	
+	    const toolState = cornerstoneTools.getToolState(element, selectedAnnotation.toolType);
+	    if (!toolState || !toolState.data) return;
+	
+	    // 선택된 주석 ID를 찾아 삭제
+	    for (let i = 0; i < toolState.data.length; i++) {
+	        if (toolState.data[i].uid === selectedAnnotation.uid) {
+	            toolState.data.splice(i, 1);  // 선택된 주석 삭제
+	            cornerstone.updateImage(element);  // 이미지 업데이트
+	            console.log(`Deleted Annotation - Tool: ${selectedAnnotation.toolType}, UID: ${selectedAnnotation.uid}`);
+	            break;
+	        }
+	    }
+	
+	    // 선택된 주석 정보 초기화
+	    selectedAnnotation.toolType = null;
+	    selectedAnnotation.uid = null;
+	}
+	
+	// 주석 클릭 이벤트 리스너 설정
+	document.getElementById('dicomImage').addEventListener('cornerstonetoolsmeasurementselected', onAnnotationSelected);
+	
+	// 삭제 버튼 클릭 시 선택된 주석 삭제
 	document.getElementById('delete').addEventListener('click', () => {
-		
-		activateTool(element, 'Eraser'); // `activateTool` 호출
-	    cornerstoneTools.setToolActive(element, 'Eraser', coords, { mouseButtonMask: 1 })
-		cornerstoneTools.addToolState(element, 'Eraser')
+	    const element = document.getElementById('dicomImage');
+	    deleteSelectedAnnotation(element);
 	});
+	
+	// 특정 주석 삭제 기능
+/*function deleteSelectedAnnotation(element, toolType, annotationId) {
+    const toolState = cornerstoneTools.getToolState(element, toolType);
+    
+    if (!toolState || !toolState.data) return;
+
+    // toolState.data 배열에서 선택한 주석의 ID를 찾아 삭제
+    for (let i = 0; i < toolState.data.length; i++) {
+        if (toolState.data[i].uid === annotationId) {
+            toolState.data.splice(i, 1);  // 선택된 주석 삭제
+            cornerstone.updateImage(element);  // 화면 업데이트
+            break;
+        }
+    }
+}
+
+// 주석을 선택하고 삭제할 수 있도록 설정하는 이벤트 리스너
+document.getElementById('deleteSelectedAnnotation').addEventListener('click', () => {
+    const element = document.getElementById('dicomImage');
+    const toolType = 'Angle';  // 예시로 Angle 주석을 삭제할 때
+    const annotationId = '선택한_주석의_ID'; // 실제로는 사용자가 선택한 주석의 ID를 가져와야 함
+
+    deleteSelectedAnnotation(element, toolType, annotationId);
+});*/
+
+
 
 }
