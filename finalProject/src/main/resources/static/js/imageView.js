@@ -1,13 +1,22 @@
 let activeTool = null;
 
 function activateTool(element, toolName) {
-    // cornerstone 요소가 활성화되었는지 확인
     if (!cornerstone.getEnabledElement(element)) {
-        cornerstone.enable(element);  // 필요 시 cornerstone 활성화
+        cornerstone.enable(element);
     }
 
     console.log("현재 activeTool:", activeTool, "설정하려는 toolName:", toolName);
 
+    // 주석 도구인 경우 활성화 리스트에 추가
+    const annotationTools = ['Angle', 'ArrowAnnotate', 'Bidirectional', 'CobbAngle', 'EllipticalRoi', 'FreehandRoi', 'Length', 'Probe', 'RectangleRoi'];
+
+    if (annotationTools.includes(toolName)) {
+        console.log("주석 도구 활성화:", toolName);
+        cornerstoneTools.setToolActiveForElement(element, toolName, { mouseButtonMask: 1 });
+        return; // 기존 주석 도구는 비활성화하지 않음
+    }
+
+    // 주석 도구가 아닌 경우 기존 도구를 비활성화
     if (activeTool === toolName) {
         console.log("활성화된 도구를 다시 클릭하여 비활성화합니다:", toolName);
         cornerstoneTools.setToolDisabledForElement(element, toolName);
