@@ -239,8 +239,7 @@ tr:nth-child(even) {
 	font-size: 14px;
 	padding:1px 8px 1px 8px;
 	border:none;
-	margin-top:8px;
-	margin-bottom: 4px;
+	margin-top:4px;
 }
 .studyChoice-detailBtn{
 	color:#D8D8D8;
@@ -250,7 +249,7 @@ tr:nth-child(even) {
 	background-color:#3E5254;
 	color:white;
 }
-.dicomtable {
+.dicom-table {
 	font-size:14px;
 	color:#D8D8D8;
 	width: 620px;
@@ -277,7 +276,7 @@ tr:nth-child(even) {
 }
 .historytbody-section td {
 	text-align: center;
-	height: 32px;
+	height: 28px;
     white-space: nowrap; /* 줄바꿈 없이 한 줄로 표시 */
     overflow: hidden; /* 넘치는 텍스트 숨김 */
     text-overflow: ellipsis; /* 넘치는 텍스트를 생략 부호로 표시 (...) */

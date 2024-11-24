@@ -2,8 +2,6 @@
 function initializeAnnotateDropdown(element) {
     const toolBtn = document.getElementById('annotateBtn');
     const toolDropdown = document.getElementById('annotateDropdown');
-    const underA = document.getElementById('under-boxA');
-    const toolDropdownT = document.getElementById('toolDropdown');
 
     // cornerstone 활성화 확인
     if (!cornerstone.getEnabledElement(element)) {
@@ -13,16 +11,7 @@ function initializeAnnotateDropdown(element) {
     // 도구 버튼 클릭 시 드롭다운 토글
     toolBtn.addEventListener('click', (event) => {
         event.stopPropagation();
-        
-       	if (toolDropdown.style.display === 'block') {
-            toolDropdown.style.display = 'none';
-            underA.style.backgroundColor = ''; // 배경색 초기화
-            toolDropdownT.style.top = '4px';
-        } else {
-            toolDropdown.style.display = 'block';
-            underA.style.backgroundColor = ' rgb(111, 148, 149)'; // 배경색을 흰색으로 설정
-            toolDropdownT.style.top = '-70px';
-        }
+        toolDropdown.style.display = toolDropdown.style.display === 'block' ? 'none' : 'block';
     });
 
     // 드롭다운 내부 클릭 시 닫히지 않도록 설정
