@@ -1,27 +1,21 @@
-body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 20px;
-            padding: 20px;
-        }
 
-        h1 {
-            text-align: center;
-            color:whitesmoke;
-        }
-
-        h3 {
-            margin-bottom: 5px;
-            color:whitesmoke;
-        }
-
-        p {
-            margin-bottom: 20px;
-            font-weight: bold;
-            color:whitesmoke;
-        }
-
-        /* 테이블 스타일 */
+.comment-history {
+	position: relative;
+	top:148px;
+}
+.comment-title {
+	color:#D8D8D8;
+	font-weight: 600;
+	font-size: 19px;
+} 
+.comment-box {
+	margin-top:12px;
+	background-color:rgba(84,106,109,0.4);
+	width: 620px;
+ 	height: 108px;
+	border-radius: 4px;
+}
+     /* 테이블 스타일 */
         .dicom-table {
             width: 100%;
             border-collapse: collapse;
