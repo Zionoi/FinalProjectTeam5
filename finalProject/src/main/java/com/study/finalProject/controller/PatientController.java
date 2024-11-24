@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.study.finalProject.domain.Patient;
+import com.study.finalProject.domain.Report;
 import com.study.finalProject.domain.Study;
 import com.study.finalProject.service.PatientService;
 
@@ -104,6 +105,33 @@ public class PatientController {
         } catch (Exception e) {
             response.put("success", false);
             response.put("error", "Error deleting comment");
+        }
+        return response;
+    }
+    
+    // 특정 환자에 대한 리포트 페이지
+    @GetMapping("/{pid}/reports")
+    public String getReportsByPatient(@PathVariable("pid") String pid, Model model) {
+        Optional<Patient> patient = patientService.getPatientById(pid);
+        if (patient.isPresent()) {
+            List<Report> reports = patient.get().getReports();
+            model.addAttribute("reports", reports);
+            model.addAttribute("patientId", pid);
+        }
+        return "report"; // report.html
+    }
+
+    // 리포트 추가
+    @PostMapping("/{pid}/addReport")
+    @ResponseBody
+    public Map<String, Object> addReport(@PathVariable String pid, @RequestBody Report report) {
+        Map<String, Object> response = new HashMap<>();
+        try {
+            patientService.addReportToPatient(pid, report);
+            response.put("success", true);
+        } catch (Exception e) {
+            response.put("success", false);
+            response.put("error", "Error adding report");
         }
         return response;
     }
