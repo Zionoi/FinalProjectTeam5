@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.study.finalProject.domain.Patient;
+import com.study.finalProject.domain.Report;
 import com.study.finalProject.repository.PatientRepository;
 
 import jakarta.transaction.Transactional;
@@ -75,5 +76,14 @@ public class PatientService {
     
     private String getCurrentTimestamp() {
         return LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    }
+    
+    // 특정 환자에 리포트 추가
+    public void addReportToPatient(String pid, Report report) {
+        Patient patient = patientRepository.findByPid(pid);
+        if (patient != null) {
+            patient.addReport(report);
+            patientRepository.save(patient);
+        }
     }
 }
