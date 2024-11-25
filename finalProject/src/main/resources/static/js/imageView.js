@@ -50,8 +50,7 @@ function initializeCornerstoneTools() {
 	cornerstoneTools.external.cornerstone = cornerstone;
     cornerstoneTools.external.cornerstoneMath = cornerstoneMath;
     cornerstoneTools.external.Hammer = Hammer;
-    cornerstoneTools.init();
-
+	cornerstoneTools.init({ showSVGCursors : true });
 
 	// 페이지 다른 곳 클릭 시 드롭다운 닫기
 	/*document.addEventListener('click', () => {

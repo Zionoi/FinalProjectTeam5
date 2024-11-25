@@ -18,9 +18,26 @@
 					<label class="span">툴바</label>
 					<button id="historyBtn" class="historyBtn"></button><br>
 					<label class="span">검사이력</label>
+        
+					<button id="reportBtn" class="reportBtn"
+                  th:onclick="'location.href=\'/patients/' + ${patientId} + '/reports\''"></button><br>
+					<label class="span">리포트</label>
+					<div>
+						<div id="thumbnailSidebar" class="thumbnail-sidebar">
+						    <div class="sidebar-header">
+						        <h4>Series Thumbnails</h4>
+						    </div>
+						    <div id="thumbnailContainer" class="thumbnail-container">
+						        <!-- 썸네일 이미지가 동적으로 추가됩니다 -->
+						    </div>
+						</div>
+					</div>
+        
+          <!--
                 <button id="reportBtn" class="reportBtn" 
                         th:onclick="'location.href=\'/patients/' + ${patientId} + '/reports\''"></button><br>
                 <label class="span">리포트</label>
+            -->
 			</div>
 			<div id="toolbar" class="toolbar">
 				<div style="position:relative; left:12px; top:-4px;">
