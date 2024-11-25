@@ -31,24 +31,24 @@
     	console.log('Series Keys:', seriesKeys);
     </script>
    <script>
-		document.addEventListener("DOMContentLoaded", function () {
-		    const toolbarBtn = document.getElementById("toolbarBtn");
-		    const toolbar = document.getElementById("toolbar");
-		    const dicomImage = document.getElementById("dicomImage");
-			const dic = document.getElementById("dic");
-		    toolbarBtn.addEventListener("click", function () {
-		        // toolbar 표시 상태 토글
-		        if (toolbar.style.display === "none" || toolbar.style.display === "") {
-		            toolbar.style.display = "block"; // toolbar 활성화
-		            dic.style.height = "736px"; // dicomImage 높이 조정
-		            dicomImage.style.top = "160px";
-		        } else {
-		            toolbar.style.display = "none"; // toolbar 비활성화
-		            dic.style.height = "816px"; // dicomImage 높이 조정
-		            dicomImage.style.top = "80px";
-		        }
-		    });
-		});
+document.addEventListener("DOMContentLoaded", function () {
+    const toolbarBtn = document.getElementById("toolbarBtn");
+    const toolbar = document.getElementById("toolbar");
+    const dicomImage = document.getElementById("dicomImage");
+	const dic = document.getElementById("dic");
+    toolbarBtn.addEventListener("click", function () {
+        // toolbar 표시 상태 토글
+        if (toolbar.style.display === "none" || toolbar.style.display === "") {
+            toolbar.style.display = "block"; // toolbar 활성화
+            dic.style.height = "736px"; // dicomImage 높이 조정
+            dicomImage.style.top = "160px";
+        } else {
+            toolbar.style.display = "none"; // toolbar 비활성화
+            dic.style.height = "816px"; // dicomImage 높이 조정
+            dicomImage.style.top = "80px";
+        }
+    });
+});
    </script>
 
 </head>
@@ -61,7 +61,7 @@
 	        <div th:replace="imageView :: buttonLayout"></div>
 	        
 	        <!-- DICOM 이미지 뷰어 영역 -->
-	        <div id="dic"  style="height: 816px; width: 1680px;">
+	        <div id="dic"  style="height: 816px; width: 1600px;">
 	        	<div id="dicomImage" style="height:100%; width:100%; object-fit: cover; overflow: hidden; position: relative; "class="grid-container" oncontextmenu="return false" onmousedown="return false"></div>
 			</div>
 		</div>
