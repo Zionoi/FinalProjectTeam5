@@ -6,8 +6,12 @@
     <link rel="stylesheet" th:href="@{/css/patientDetail.css}">
 </head>
 <body>
+	<div class="header">DView</div>
     <div class="details-container">
         <h1>상세정보</h1>
+			<div class="text-center">
+	            <button onclick="history.back()" class="btn-secondary" id="btn-secondary"><h6 class="dlabel">돌아가기</h6></button>
+	        </div>
 <!--         수정 버튼 추가 
         <div class="text-center mt-3">
             <button class="btn btn-primary" onclick="toggleEditMode()">수정</button>
@@ -16,8 +20,10 @@
 
         <div class="patient-info">
             <p>환자 ID: <span th:text="${patient.pid}">USER01</span></p>
-            <p>생일: <span th:text="${patient.pBirthDate}">2000-12-31</span></p>
+            <p>환자 이름: <span th:text="${patient.pName}">강감찬</span></p>
             <p>성별: <span th:text="${patient.pSex}">남</span></p>
+             <p>생년월일: <span th:text="${patient.pBirthDate}">2000-12-31</span></p>
+            
         </div>
 
         <!-- 코멘트 입력 폼 -->
@@ -26,28 +32,25 @@
             <form th:action="@{/patients/updateComment}" method="post" id="commentForm">
                 <input type="hidden" th:name="pid" th:value="${patient.pid}">
                 <textarea id="comment-input" name="comments" rows="4" cols="50" placeholder="코멘트를 입력하세요"></textarea>
-                <button type="submit">저장</button>
+                <button type="submit" class="bt">저장</button>
             </form>
         </div>
 
         <!-- 저장된 코멘트 목록 -->
-        <div class="comment-list">
             <h2>리포트</h2>
+       <div class="comment-list">
             <ul>
                 <li th:each="comment, iterStat : ${patient.comments}">
                     <span th:text="${comment}"></span>
                     <form th:action="@{/patients/deleteComment}" method="post" style="display:inline;">
                         <input type="hidden" name="pid" th:value="${patient.pid}" />
                         <input type="hidden" name="commentIndex" th:value="${iterStat.index}" />
-                        <button type="submit" class="delete-btn">삭제</button>
+                        <button type="submit" class="bt">삭제</button>
                     </form>
                 </li>
             </ul>
         </div>
 
-        <div class="text-center mt-3">
-            <button onclick="history.back()" class="btn btn-secondary">돌아가기</button>
-        </div>
     </div>
 
     <script>

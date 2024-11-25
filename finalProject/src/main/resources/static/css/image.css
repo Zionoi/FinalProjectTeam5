@@ -42,8 +42,8 @@ body {
 	top:80px;
     left:152px;
 	background-color: #243235;
-	width: 1600px;
-	height: 72px;
+	width: 1680px;
+	height: 70px;
 	margin: auto;
 	border-radius: 4px;
 	border: solid 2px rgb(94, 94, 94);
@@ -54,7 +54,7 @@ body {
 	background-size: cover;
 	height: 50px;
 }
-#listBtn,#toolbarBtn,#historyBtn,#reportBtn, .tool-btn {
+#listBtn,#toolbarBtn,#historyBtn,#reportBtn, .tool-btn, .annotate-btn {
 	background-color: transparent;
 	border: none;	
 	cursor: pointer;
@@ -90,24 +90,27 @@ body {
 .BTN{
 	border:none;
 	cursor: pointer;
-	margin:12px 8px 0px 12px;
-	float: left;  display: flex;
-  	align-items: center;
+  	margin:8px;
+  	position: relative;
+  	top:4px;
+  	justify-content: center;
 }
 #prevBtn:hover,#nextBtn:hover,#playClipBtn:hover,#resetBtn:hover,#invertBtn:hover,#toolBtn:hover,
 #downloadBtn:hover,#seriesLayoutBtn:hover,#imgLayoutBtn:hover,#annotateBtn:hover,
-#ct3d:hover,#viewSeriesBtn:hover {
-	background-color: rgb(111, 148, 149);
+#ct3d:hover,#viewSeriesBtn:hover, #angle:hover,#arrow:hover,#bidirectional:hover,#cobb:hover,#ellipticalRoi:hover
+,#freehandRoi:hover,#length:hover,#probe:hover,#rectangleRoi:hover,#text:hover,#save:hover
+,#delete:hover,#magnifier:hover,#rotate:hover,#hFlip:hover,#vFlip:hover,#lRotate:hover,#rRotate:hover {
+	background-color: rgb(85, 114, 115);
 	border-radius: 25px;
 }
-span {
+.label2 {
 	color:#D8D8D8;
 	font-size: 10px;
-	position:relative;
-	top:46px; left:2px;
-	width: 45px;
-	margin:0px 7px 0px 4px;
-	line-height: 120%;
+	font-weight: 400;
+	width: 50px;
+	position: relative;
+	left:-13px;
+	top:12px;
 }
 #prevBtn{
 	background:url(../img/BeforeBtn.png) no-repeat;	
@@ -183,18 +186,17 @@ span {
 }
 .tool-dropdown-menu {
 	position: absolute;
-	top:-70px;
-	left:500px;
+	top:4px;
+	left:680px;
 	background-color:  #243235;
-	width: 300px;
+	width: 320px;
 	height: 64px;
-	margin: auto;
 	border-radius: 4px;
-	border: solid 2px rgb(94, 94, 94);
+	border: solid 2px rgb(111, 148, 149);
 }
 .tool-btn{
 	margin:4px;	position: relative;
-	top:4px; left:4px;
+	top:4px; left:12px;
 }
 .label{
 	color:#D8D8D8;
@@ -245,12 +247,17 @@ span {
 	height: 36px;
 }
 .annotate-dropdown-menu{
-	background-color: #A4BBBC;
-	width: 800px;
-	height: 74px;
+	background-color: #243235;
+	border-radius: 4px;
+	border: solid 2px rgb(111, 148, 149);
+	width: 610px;
+	height: 64px;
 	position: absolute;
-	top:0px;
-	left:700px;
+	top:4px;
+	left:680px;
+}
+.annotate-btn{
+	margin:4px;	position: relative; top:6px; left:12px;
 }
 #angle {
 	background:url(../img/AngleBtn.png) no-repeat;	
@@ -324,17 +331,36 @@ span {
 	background-size: cover;
 	height: 36px;
 }
+.dlabel {
+	color:#D8D8D8;
+	font-size: 10px;
+	font-weight: 400;
+	width: 45px;
+	position: relative;
+	left:-10px;
+	top:8px;
+}
 /* 드롭다운 상자 스타일링 (기본적으로 숨겨짐) */
 .dropdown {
+	width: 160px;
+	height: 160px;
     display: none;
-    position: absolute;
     background-color: white;
     border: 1px solid #ccc;
     padding: 10px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     z-index: 1;
 }
-
+#seriesDropdown {
+	position: absolute;
+	left:300px;
+	top:80px;
+}
+#dropdown {
+	position: absolute;
+	left:420px;
+	top:76px;
+}
 /* 그리드 셀렉터 스타일 (5x5 그리드) */
 .grid-selector-container {
     display: grid;
@@ -404,8 +430,8 @@ span {
 .grid-option {
     width: 30px;
     height: 30px;
-    border: 1px solid #ccc;
-    background-color: white;
+    border: 1px solid white;
+    background-color: rgb(202, 202, 202);
     cursor: pointer;
 }
 .grid-option.selected {
