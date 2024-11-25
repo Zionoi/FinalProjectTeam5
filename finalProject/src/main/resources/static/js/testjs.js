@@ -2,6 +2,9 @@ let currentImageIndex = 0;  // 현재 이미지 인덱스
 
 document.addEventListener('DOMContentLoaded', () => {
 	
+	// 검사이력 초기화
+	initializeHistoryDropdown();
+	
 	// cornerstone 초기화 함수 호출
     initializeCornerstoneTools();
     
@@ -25,8 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     cornerstone.enable(element);
     
-	cornerstoneTools.init();
-
+	cornerstoneTools.init({ showSVGCursors : true });
 
 	/* cornerstoneTool 설정 */
 	
