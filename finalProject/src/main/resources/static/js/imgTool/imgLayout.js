@@ -46,48 +46,69 @@ function setupImageGridSelector(gridSelector) {
 }
 
 // 그리드 레이아웃 생성 및 이미지 로드 (스택 적용)
+// 그리드 레이아웃 생성 및 이미지 로드
 function generateImageGrid(rows, cols) {
     const gridContainer = document.getElementById('dicomImage');
-    gridContainer.innerHTML = '';  // 기존의 그리드를 초기화
+    gridContainer.innerHTML = ''; // 기존의 그리드를 초기화
 
     gridContainer.style.display = 'grid';
     gridContainer.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
     gridContainer.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
 
-    // 이미지 스택 설정
     const imageIds = imagePaths.map(filename => `wadouri:/dicom-file/${filename}`);
-    const stack = { currentImageIdIndex: 0, imageIds: imageIds };
+    const totalImages = imageIds.length;
+    const totalCells = rows * cols;
+    let currentStartIndex = 0; // 현재 시작 인덱스
 
-    // 그리드 항목 생성 및 스택 할당
-    for (let i = 0; i < rows * cols; i++) {
+    // 각 셀의 이미지를 초기화
+    function loadGridImages(startIndex) {
+        for (let i = 0; i < totalCells; i++) {
+            const gridItem = gridContainer.children[i];
+            const imageIndex = startIndex + i;
+
+            if (imageIndex < totalImages) {
+                cornerstone.loadImage(imageIds[imageIndex]).then(image => {
+                    cornerstone.displayImage(gridItem, image);
+                }).catch(err => {
+                    console.error('이미지 로드 실패:', err);
+                });
+            } else {
+                // 이미지가 없으면 검은색 배경
+                gridItem.style.backgroundColor = 'black';
+            }
+        }
+    }
+
+    // 초기 그리드 생성
+    for (let i = 0; i < totalCells; i++) {
         const gridItem = document.createElement('div');
         gridItem.classList.add('grid-item');
         gridContainer.appendChild(gridItem);
 
         cornerstone.enable(gridItem);
-
-        if (i < imageIds.length) {
-            cornerstone.loadImage(imageIds[i]).then(image => {
-                cornerstone.displayImage(gridItem, image);
-                cornerstoneTools.addStackStateManager(gridItem, ['stack']);
-                cornerstoneTools.addToolState(gridItem, 'stack', stack);
-            }).catch(err => {
-                console.error('이미지 로드 실패:', err);
-            });
-        } else {
-            gridItem.style.backgroundColor = 'black';
-        }
     }
 
-    // StackScrollTool 추가 및 마우스 휠로 활성화
-    cornerstoneTools.addTool(cornerstoneTools.StackScrollTool);
-    cornerstoneTools.setToolActive('StackScroll', { bindings: [{ mouseButtonMask: 1 }] });
-    console.log("StackScrollTool 활성화 완료 - 마우스 휠로 이미지 스택 전환");
-    
-    // 드롭다운 닫기
-    const dropdown = document.getElementById('dropdown');
-    dropdown.style.display = 'none';
+    // 초기 이미지 로드
+    loadGridImages(currentStartIndex);
+
+    // 휠 이벤트로 이미지 전환
+    gridContainer.addEventListener('wheel', (event) => {
+        event.preventDefault();
+
+        const direction = event.deltaY > 0 ? 1 : -1; // 휠 방향 감지
+        const newStartIndex = currentStartIndex + direction * totalCells;
+
+        // 첫 번째 및 마지막 범위를 초과하지 않도록 제한
+        if (newStartIndex < 0 || newStartIndex >= totalImages) {
+            console.log('이미지 전환 제한: 첫 번째 또는 마지막 이미지 범위입니다.');
+            return;
+        }
+
+        currentStartIndex = newStartIndex;
+        loadGridImages(currentStartIndex);
+    });
 }
+
 
 // 선택된 그리드 강조 표시 함수
 function highlightGridSelection(rows, cols) {

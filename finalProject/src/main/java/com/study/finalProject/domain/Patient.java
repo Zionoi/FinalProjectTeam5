@@ -34,10 +34,17 @@ public class Patient {
     @Column(name = "PNAME", nullable = false, length = 64)
     private String pName;
     
-    @ElementCollection
-      
-    @CollectionTable(name = "PATIENT_COMMENTS", joinColumns = @JoinColumn(name = "PATIENT_PID"))
-              
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Report> reports = new ArrayList<>();
+
+    // 리포트 추가 메서드
+    public void addReport(Report report) {
+        reports.add(report);
+        report.setPatient(this);
+    }
+    
+    @ElementCollection     
+    @CollectionTable(name = "PATIENT_COMMENTS", joinColumns = @JoinColumn(name = "PATIENT_PID"))              
     @Column(name = "PATIENT_COMMENT")               
     private List<String> comments = new ArrayList<>();
 
@@ -119,4 +126,5 @@ public class Patient {
 
     @Column(name = "RESERVED10", length = 255)
     private String reserved10;
+    
 }
