@@ -12,73 +12,80 @@
     <div th:fragment="buttonLayout">
         <div class="button-container">
 			<div class="sidebar">
-				<div class="sidebarBtn">
 					<button id="listBtn" class="listBtn"></button><br>
 					<label class="span">목록</label>
-				</div>
-				<div class="sidebarBtn">
 					<button id="toolbarBtn" class="toolbarBtn"></button><br>
 					<label class="span">툴바</label>
-				</div>
-				<div class="sidebarBtn">
 					<button id="historyBtn" class="historyBtn"></button><br>
 					<label class="span">검사이력</label>
+<<<<<<< HEAD
 				</div>
 				<div class="sidebarBtn">
 				    <button id="reportBtn" class="reportBtn" 
 				            th:onclick="'location.href=\'/patients/' + ${patientId} + '/reports\''"></button><br>
 				    <label class="span">리포트</label>
 				</div>
+=======
+					<button id="reportBtn" class="reportBtn"></button><br>
+					<label class="span">리포트</label>
+>>>>>>> main
 			</div>
 			<div id="toolbar" class="toolbar">
-				<button class="BTN" id="prevBtn"></button>
-	            <button class="BTN" id="nextBtn"></button>
-	            <button class="BTN" id="playClipBtn"></button>
-	            <button class="BTN" id="resetBtn"></button>
-	            <button class="BTN" id="invertBtn"></button>
-	            <!--<button class="btn" id="brightnessBtn">밝기/대비조절</button>-->
-		
-	            <button class="viewSeriesBtn" id="viewSeriesBtn">시리즈모아보기</button>
-	            
-	            <!-- 도구 드롭다운 메뉴 -->
-		        <div id="toolDropdown" class="tool-dropdown-menu" style="display: none;">
-		            <button id="magnifier" class="tool-btn">돋보기</button>
-		            <!--<button id="zoom" class="tool-btn">확대</button>-->
-		            <button id="rotate" class="tool-btn">회전</button>
-		            <button id="hFlip" class="tool-btn">HFlip</button>
-		            <button id="vFlip" class="tool-btn">VFlip</button>
-		            <button id="lRotate" class="tool-btn">Rotate Left</button>
-		            <button id="rRotate" class="tool-btn">Rotate Right</button>
-		        </div>
-		        <button class="BTN" id="toolBtn"></button>
-	            <button class="annotateBtn" id="annotateBtn">주석</button>
-	            <!-- 주석 드롭다운 메뉴 -->
-		        <div id="annotateDropdown" class="annotate-dropdown-menu" style="display: none;">
-		            <button id="angle" class="annotate-btn">각도</button>
-		            <button id="arrow" class="annotate-btn">화살표</button>
-		            <button id="bidirectional" class="annotate-btn">양방향</button>
-		            <button id="cobb" class="annotate-btn">Cobb(측만증)</button>
-		            <button id="ellipticalRoi" class="annotate-btn">타원형</button>
-		            <button id="freehandRoi" class="annotate-btn">자유형</button>
-		            <button id="length" class="annotate-btn">길이</button>
-		            <button id="probe" class="annotate-btn">프로브(위치 값)</button>
-		            <button id="rectangleRoi" class="annotate-btn">사각형</button>
-		            <button id="text" class="annotate-btn">텍스트</button>
-		            <button id="save" class="annotate-btn">저장</button>
-		            <button id="delete" class="annotate-btn">지우기</button>            
-		        </div>
-		        
-	            <button class="BTN" id="ct3d">3Dview</button>
-	            <button class="BTN" id="downloadBtn"></button>
-	            
-	            <button class="BTN" id="seriesLayoutBtn"></button>
-	            <!-- 시리즈 레이아웃 영역 -->
-		        <div id="seriesDropdown" class="dropdown" style="display: none;">
-		            <div class="grid-selector-container" id="series-grid-selector"></div>
-		        </div>
-	            
-	            <button class="BTN" id="imgLayoutBtn"></button>
-	            <!-- 이미지 레이아웃 영역 -->
+				<div style="position:relative; left:12px; top:-4px;">
+					<button class="BTN" id="prevBtn"></button>
+		            <button class="BTN" id="nextBtn"></button>
+		            <button class="BTN" id="playClipBtn"></button>
+		            <button class="BTN" id="resetBtn"></button>
+		            <button class="BTN" id="invertBtn"></button>
+		            <!--<button class="btn" id="brightnessBtn">밝기/대비조절</button>-->
+			
+		            <button class="BTN" id="viewSeriesBtn"></button>
+		            
+		            <!-- 도구 드롭다운 메뉴 -->
+			        <div id="toolDropdown" class="tool-dropdown-menu" style="display: none;">
+			            <button id="magnifier" class="tool-btn"><h6 class="label">돋보기</h6></button>
+			            <!--<button id="zoom" class="tool-btn">확대</button>-->
+			            <button id="rotate" class="tool-btn"><h6 class="label">회전</h6></button>
+			            <button id="hFlip" class="tool-btn"><h6 class="label">좌우반전</h6></button>
+			            <button id="vFlip" class="tool-btn"><h6 class="label">상하반전</h6></button>
+			            <button id="lRotate" class="tool-btn"><h6 class="label">좌측회전</h6></button>
+			            <button id="rRotate" class="tool-btn"><h6 class="label">우측회전</h6></button>
+			        </div>
+		            <!-- 주석 드롭다운 메뉴 -->
+			        <div id="annotateDropdown" class="annotate-dropdown-menu" style="display: none;">
+			            <button id="angle" class="annotate-btn"></button>
+			            <button id="arrow" class="annotate-btn"></button>
+			            <button id="bidirectional" class="annotate-btn"></button>
+			            <button id="cobb" class="annotate-btn"></button>
+			            <button id="ellipticalRoi" class="annotate-btn"></button>
+			            <button id="freehandRoi" class="annotate-btn"></button>
+			            <button id="length" class="annotate-btn"></button>
+			            <button id="probe" class="annotate-btn"></button>
+			            <button id="rectangleRoi" class="annotate-btn"></button>
+			            <button id="text" class="annotate-btn"></button>
+			            <button id="save" class="annotate-btn"></button>
+			            <button id="delete" class="annotate-btn"></button>            
+			        </div>
+			        
+		            <button class="BTN" id="ct3d"></button>
+		            
+		            <button class="BTN" id="seriesLayoutBtn"></button>
+		            <!-- 시리즈 레이아웃 영역 -->
+			        <div id="seriesDropdown" class="dropdown" style="display: none;">
+			            <div class="grid-selector-container" id="series-grid-selector"></div>
+			        </div>
+		            
+		            <button class="BTN" id="imgLayoutBtn"></button>
+		            <button class="BTN" id="downloadBtn"></button>
+		           			        <button class="BTN" id="toolBtn"></button>
+		            <button class="BTN" id="annotateBtn"></button>
+		            <!-- 이미지 레이아웃 영역 -->
+		            <div style="display: flex; text-align: center; position:absolute;">
+			            <span>이전</span><span>다음</span><span>재생</span><span>초기화</span><span>흑백반전</span>
+			            <span>시리즈<br>모음</span><span>Viewer</span><span>시리즈<br>레이아웃</span></span><span>이미지<br>레이아웃</span></span>
+			            <span>다운로드</span><span>도구</span><span>주석</span>
+		            </div>
+	            </div>
 		        <div id="dropdown" class="dropdown" style="display: none;">
 		            <div class="grid-selector-container" id="grid-selector"></div>
 		        </div>
