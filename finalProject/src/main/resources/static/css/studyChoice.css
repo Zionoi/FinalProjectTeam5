@@ -15,6 +15,19 @@
  	height: 108px;
 	border-radius: 4px;
 }
+
+/*position:absolute;
+    left: 72px;
+    top:270px;
+    border-collapse: collapse;
+    margin-top: 20px;
+    color:#D8D8D8;
+    font-size: 15px;
+    font-weight: 200;
+    width: 1088px;
+    height: 44px;
+    table-layout: fixed;
+   	background-color: #192426;*/
      /* 테이블 스타일 */
         .dicom-table {
             width: 100%;
@@ -26,12 +39,11 @@
 
         .dicom-table th, .dicom-table td {
             padding: 12px 15px;
-            border: 1px solid #ddd;
             text-align: left;
         }
 
         .dicom-table thead th {
-            background-color: #4CAF50;
+            background-color: #192426;
             color: white;
         }
 
