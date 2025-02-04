@@ -70,7 +70,7 @@ CT 데이터를 3D로 렌더링하여 직관적인 시각 정보를 제공합니
 
 - **트러블슈팅:**
   - 검색 시 다중 필터링이 적용되지 않는 문제 발생
-  - 필터 조건을 동적으로 업데이트하여 해결
+  - JPA의 Specification을 활용하여 동적 쿼리를 적용해 해결
 
 ### DCM 이미지 출력 페이지  
 <img src="https://github.com/user-attachments/assets/29f86cbe-1d3f-4431-83d9-f5bc0044cf99" width="66%" />
