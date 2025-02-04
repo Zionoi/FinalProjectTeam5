@@ -49,33 +49,53 @@ CT 데이터를 3D로 렌더링하여 직관적인 시각 정보를 제공합니
 
 ## ⚙️ 기술 스택
 
-- **Frontend:** Thymeleaf, VTK.js, Cornerstone.js  
+- **Frontend:** HTML5, CSS, JavaScript, Thymeleaf, VTK.js, Cornerstone.js  
 - **Backend:** Spring Boot (JPA)  
 - **Database:** Oracle  
-- **Deployment:** AWS
+- **Deployment:** AWS  
+- **Version Control & Communication:** GitHub, Discord  
+
 
 ---
 
 ## 📸 **D-VIEW의 주요 화면**  
 
-> **아래는 D-VIEW의 주요 화면 예시입니다.**  
+### 메인 페이지  
+<img src="https://github.com/user-attachments/assets/6859c86f-eca4-4f7e-a1e2-c76c7cd7f42e" width="66%" />
 
-### 메인 페이지
-![메인 페이지](https://github.com/user-attachments/assets/6859c86f-eca4-4f7e-a1e2-c76c7cd7f42e)
+- **설명:**
+  - 환자 검색, 전체 목록 조회, 검사 이력 확인 기능 제공
+  - 다중 검색 기능을 지원하며, 날짜, 환자 이름, 검사 장비, 담당 의사 이름, 검사명을 검색 조건으로 추가 가능
+  - 검색 조건이 추가될 때마다 실시간으로 리스트를 재렌더링하여 검색 속도 및 편의성을 향상
 
----
+- **트러블슈팅:**
+  - 검색 시 다중 필터링이 적용되지 않는 문제 발생
+  - 필터 조건을 동적으로 업데이트하여 해결
 
-### DCM 이미지 출력
-![DViewImgAnnotate](https://github.com/user-attachments/assets/29f86cbe-1d3f-4431-83d9-f5bc0044cf99)
-![DViewImgTool2](https://github.com/user-attachments/assets/1cd58f74-90e4-43be-9ec1-a890be235a5d)
+### DCM 이미지 출력 페이지  
+<img src="https://github.com/user-attachments/assets/29f86cbe-1d3f-4431-83d9-f5bc0044cf99" width="66%" />
 
+- **설명:**
+  - 선택한 의료 촬영의 세부 내용을 확인할 수 있는 페이지
+  - 여러 주석 및 도구를 활용하여 이미지 분석 가능
+  - 마우스 버튼 별 기능을 할당하여 사용자의 편의성 증대 (드래그, 회전, 확대, 휠 스크롤 이동 기능 제공)
 
----
+- **트러블슈팅:**
+  - 클라이언트에서 서버 로컬 저장소의 PACSStorage 폴더에 직접 접근할 수 없는 문제 발생
+  - Spring Boot 컨트롤러에서 이미지 파일 경로를 반환하는 API를 생성하여 해결
 
-### CT 데이터 3D 렌더링
-![DView3D](https://github.com/user-attachments/assets/192cca35-6a91-4baf-977a-c7114a184d1d)
+### CT 데이터 3D 렌더링 페이지  
+<img src="https://github.com/user-attachments/assets/192cca35-6a91-4baf-977a-c7114a184d1d" width="66%" />
 
+- **설명:**
+  - DICOM 파일의 CT 데이터를 3D로 렌더링하여 직관적인 시각 정보 제공
+  - VTK.js를 활용하여 각 신체 조직(피부, 근육, 뼈 등)의 밀도값을 기준으로 부위별 투명도 실시간 조절 가능
+  - 명도, 채도 등의 조명값 조정 및 CT 데이터의 슬라이드 배열을 조절하여 단면도를 확인하는 기능 구현
 
+- **트러블슈팅:**
+  - CT 데이터의 색상 및 투명도 매핑이 부정확하여 시각화가 직관적이지 않은 문제 발생
+  - Color Transfer Function 및 Opacity Transfer Function을 세분화하여 정확한 HU 값 범위 적용 및 사용자 피드백 기반 조정
+  - UI에 밀도 조절 슬라이더를 추가하여 사용자가 직접 조정 가능하도록 개선
 
 ---
 
@@ -101,5 +121,23 @@ CT 데이터를 3D로 렌더링하여 직관적인 시각 정보를 제공합니
   각 조직의 HU 값 범위를 명확히 정의하고, 이를 기반으로 Color Transfer Function과 Opacity Transfer Function을 더욱 세분화해 설정했습니다.
 사용자 피드백을 기반으로 HU 값 범위와 매핑을 조정했습니다.
 UI에 설정한 밀도값 별 슬라이더를 추가하여 사용자 스스로 투명도를 조정할 수 있도록 구현했습니다
+
+---
+## ✨ 프로젝트 소감  
+
+D-VIEW 프로젝트를 통해 의료 데이터를 웹에서 직관적으로 다룰 수 있도록 하는 과정을 경험하며 많은 성장을 이뤘습니다.  
+
+- **기술적 성장**  
+  Cornerstone.js와 VTK.js를 활용하여 DICOM 데이터를 2D/3D로 시각화하면서, 의료 데이터의 구조와 DICOM 표준에 대해 깊이 이해할 수 있었습니다.  
+  또한, Spring Boot와 Thymeleaf를 활용한 서버-클라이언트 간 데이터 흐름을 최적화하고, 검색 기능과 실시간 렌더링을 개선하면서 사용자 경험을 극대화하는 방법에 대해 여러 방향으로 생각해 볼 수 있었습니다.  
+
+- **협업과 문제 해결**  
+  팀원들과의 협업 과정에서 코드 리뷰와 문서화를 적극 활용하여 원활한 개발 프로세스를 유지할 수 있었습니다.  
+  특히, 검색 기능과 PACSStorage 이미지 접근 문제 등에서 다양한 해결 방안을 논의하고 적용하면서, 실제 의료 데이터 시스템을 다룰 때 발생할 수 있는 문제를 해결하는 경험을 할 수 있었습니다.  
+
+- **향후 개선 방향**  
+  - DICOM 파일의 메타데이터를 활용하여 사용자 맞춤형 분석 기능 추가  
+  - 3D 렌더링의 성능 최적화를 통해 대용량 데이터에서도 부드러운 조작 지원  
+ 
 
 ---
